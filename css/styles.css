@@ -111,7 +111,7 @@ nav .email a:focus::after {
   position: absolute;
   display: flex;
   top: 65px;
-  background-color: #e6f0ff;
+  background-color: #ffffff;
   padding: 2px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   animation: slideIn 0.8s ease-in-out;
@@ -130,13 +130,13 @@ nav .email a:focus::after {
   border: none;
   padding: 5px 8px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   margin-left: 0;
 }
 .install-buttons button#dismiss-btn {
   background-color: transparent;
   color: #333;
-  border: 1px solid #ccc;
+  border: 1px solid #858585;
 }
 .install-buttons button:hover {
   opacity: 0.9;
