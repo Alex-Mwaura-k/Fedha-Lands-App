@@ -1,0 +1,21 @@
+{
+  "name": "Fedha Land Ventures",
+  "version": "5.0.0",
+  "short_name": "Fedha",
+  "start_url": ".",
+  "background_color": "#000000",
+  "theme_color": "#ff0000",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "icons/appIcon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/standAloneIcon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
