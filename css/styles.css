@@ -108,7 +108,7 @@ nav .email a:focus::after {
   transform: rotate(90deg) !important;
 }
 .install-card {
-  position: absolute;
+  position: fixed;
   display: flex;
   top: 65px;
   background-color: #ffffff;
