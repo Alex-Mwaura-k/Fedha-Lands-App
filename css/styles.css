@@ -257,6 +257,8 @@ body {
   }
 }
 /* END OF SCROLLING TEXT BANNER */
+
+/* PROPERTY CARDS */
 .property-card {
   position: relative;
   overflow: hidden;
@@ -300,4 +302,8 @@ body {
   background-color: red !important;
   color: #fff !important;
   border-color: red !important;
+}
+#properties .text-start {
+  border-left: 6px solid red;
+  padding-left: 6px;
 }
