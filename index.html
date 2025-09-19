@@ -9,30 +9,31 @@
       content="Fedha Land Ventures offers prime, affordable land for sale in Kenya. Explore plots in Fadhili Gardens, Ufanisi Haven, Amani Gardens, and Kithyoko. Schedule a site visit today and invest in your future!"
     />
     <title>Fedha Land Ventures</title>
+
     <!-- STYLES -->
     <link rel="stylesheet" href="/css/styles.css" />
-    <!--BOOTSTRAP CSS -->
+
+    <!-- BOOTSTRAP CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
     />
-    <!-- PWA PROPERTIES -->
+
+    <!-- PWA -->
     <link rel="apple-touch-icon" href="icons/icon.png" />
     <meta name="theme-color" content="#ff0000" />
-    <link rel="manifest" href="manifest.json" /
+    <link rel="manifest" href="manifest.json" />
   </head>
-  <!-- BEGINNING -->
+
   <body>
     <nav
-      class="navbar navbar-expand-lg fixed-top"
+      class="navbar navbar-expand-lg fixed-top site-navbar"
       data-bs-theme="dark"
-      style="background-color: black"
     >
       <div class="container-md">
         <a class="navbar-brand" href="#">
@@ -52,7 +53,7 @@
           data-bs-target="#offcanvasNavbar"
           aria-controls="offcanvasNavbar"
         >
-          <i class="bi bi-list" style="font-size: 2.3rem"></i>
+          <i class="bi bi-list"></i>
         </button>
 
         <!-- Offcanvas Menu -->
@@ -63,13 +64,7 @@
           aria-labelledby="offcanvasNavbarLabel"
         >
           <div class="offcanvas-header">
-            <h5
-              class="offcanvas-title"
-              style="font-size: 1.1rem"
-              id="offcanvasNavbarLabel"
-            >
-              Menu
-            </h5>
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
             <button
               type="button"
               class="btn-close"
@@ -77,11 +72,13 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="offcanvas-body" style="background-color: black">
+
+          <div class="offcanvas-body">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
               </li>
+
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
@@ -93,7 +90,6 @@
                   Properties
                 </a>
                 <ul class="dropdown-menu mt-2">
-                  <!-- Fadhili Gardens with submenu -->
                   <li class="dropdown-submenu">
                     <a class="dropdown-item dropdown-toggle" href="#"
                       >Fadhili Gardens</a
@@ -107,7 +103,6 @@
                   <li><a class="dropdown-item" href="#">Ufanisi Haven</a></li>
                   <li><a class="dropdown-item" href="#">Amani Gardens</a></li>
 
-                  <!-- Kithyoko with submenu -->
                   <li class="dropdown-submenu">
                     <a class="dropdown-item dropdown-toggle" href="#"
                       >Kithyoko</a
@@ -123,59 +118,47 @@
               <li class="nav-item">
                 <a class="nav-link" href="#about-us">About</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Blog</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Gallery</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
-              </li>
+              <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Gallery</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
             </ul>
 
             <div class="phone d-flex flex-column align-items-end mt-lg-0">
-              <div class="d-flex align-items-center gap-2">
-                <a
-                  href="tel:+254729497153"
-                  class="nav-link p-0"
-                  style="font-size: 0.8rem"
+              <div class="p-number d-flex align-items-center gap-2">
+                <a href="tel:+254729497152" class="nav-link p-0 contact-link"
+                  >+254729497152</a
                 >
-                  +254729497152
-                </a>
 
                 <a
                   href="https://www.instagram.com"
                   target="_blank"
-                  class="text-decoration-none"
-                  style="color: #ff0000"
+                  rel="noopener noreferrer"
+                  class="text-decoration-none social-icon"
                 >
-                  <i class="bi bi-instagram" style="font-size: 1rem"></i>
+                  <i class="bi bi-instagram"></i>
                 </a>
                 <a
                   href="https://www.facebook.com"
                   target="_blank"
-                  class="text-decoration-none"
-                  style="color: #ff0000"
+                  rel="noopener noreferrer"
+                  class="text-decoration-none social-icon"
                 >
-                  <i class="bi bi-facebook" style="font-size: 1rem"></i>
+                  <i class="bi bi-facebook"></i>
                 </a>
                 <a
                   href="https://www.tiktok.com"
                   target="_blank"
-                  class="text-decoration-none"
-                  style="color: #ff0000"
+                  rel="noopener noreferrer"
+                  class="text-decoration-none social-icon"
                 >
-                  <i class="bi bi-tiktok" style="font-size: 1rem"></i>
+                  <i class="bi bi-tiktok"></i>
                 </a>
               </div>
 
-              <!-- Email below -->
               <div class="email small">
                 <a
                   href="mailto:info@fedhalandventures.com"
-                  class="nav-link p-0"
-                  style="font-size: 0.8rem"
+                  class="nav-link p-0 contact-link"
                 >
                   info@fedhalandventures.com
                 </a>
@@ -185,8 +168,9 @@
         </div>
       </div>
     </nav>
-    <!-- Custom Install Banner -->
-    <div class="container d-flex justify-content-end">
+
+    <!-- Install Banner -->
+    <div class="container-md d-flex justify-content-end">
       <div class="install-card" id="install-banner">
         <div class="install-buttons">
           <button id="install-btn">Install App</button>
@@ -194,10 +178,9 @@
         </div>
       </div>
     </div>
-    <!-- End OF NAVBAR -->
 
-    <!-- CAROUSEL -->
     <main>
+      <!-- Modal -->
       <div class="modal fade" tabindex="-1" id="booking-Modal">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -210,6 +193,7 @@
                 aria-label="Close"
               ></button>
             </div>
+
             <div class="modal-body">
               <form action="/" id="bookingForm">
                 <div class="row mb-3">
@@ -263,6 +247,7 @@
                       >Schedule Date</label
                     >
                   </div>
+
                   <div class="form-floating col">
                     <select id="destinationSelector" class="form-select">
                       <option selected disabled></option>
@@ -280,6 +265,7 @@
                 </div>
               </form>
             </div>
+
             <div class="modal-footer">
               <button
                 type="button"
@@ -299,7 +285,8 @@
           </div>
         </div>
       </div>
-      <!-- END OF MODAL -->
+
+      <!-- Carousel -->
       <div
         id="carouselCaptions"
         class="carousel slide"
@@ -329,10 +316,11 @@
             aria-label="Slide 3"
           ></button>
         </div>
+
         <div class="carousel-inner">
           <div class="carousel-item active css-item">
             <img
-              src="https://picsum.photos/id/219/2400"
+              src="/img/carousels/slide_1.png"
               class="d-block w-100 css-img"
               alt="carousel_image"
             />
@@ -347,9 +335,10 @@
               </button>
             </div>
           </div>
+
           <div class="carousel-item css-item">
             <img
-              src="https://picsum.photos/id/666/2400"
+              src="/img/carousels/slide_2.png"
               class="d-block w-100 css-img"
               alt="carousel_image"
             />
@@ -364,9 +353,10 @@
               </button>
             </div>
           </div>
+
           <div class="carousel-item css-item">
             <img
-              src="https://picsum.photos/id/1011/2400"
+              src="/img/carousels/slide_3.png"
               class="d-block w-100 css-img"
               alt="carousel_image"
             />
@@ -382,6 +372,7 @@
             </div>
           </div>
         </div>
+
         <button
           class="carousel-control-prev"
           type="button"
@@ -402,8 +393,8 @@
         </button>
       </div>
     </main>
-    <!-- END OF CAROUSEL -->
-    <!-- SCROLLING TEXT BANNER -->
+
+    <!-- Scrolling banner -->
     <section>
       <div class="scroll-strip p-0">
         <span class="scroll-text">
@@ -414,33 +405,26 @@
         </span>
       </div>
     </section>
-    <!-- END OF SCROLLING TEXT BANNER -->
-    <!-- PROPERTIES SECTION-->
 
+    <!-- Properties -->
     <section id="properties" class="container-md mt-2">
       <h1 class="text-start mb-3 h4">Featured Properties</h1>
       <div class="row g-4 mb-3">
-        <!-- Property Card -->
         <div class="col-lg-4 col-md-6 col-sm-12">
           <a href="#" class="text-decoration-none text-dark">
-            <div
-              class="card property-card h-100 border-0"
-              style="height: 400px !important; border-radius: 0"
-            >
+            <div class="card property-card h-100 border-0 fixed-height">
               <div class="position-relative overflow-hidden">
                 <img
                   src="https://picsum.photos/id/1015/600/400"
                   class="card-img-top property-img"
                   alt="Fadhili Gardens"
-                  style="height: 200px; object-fit: cover; border-radius: 0"
                 />
-                <!-- Status Badge -->
                 <span
                   class="badge position-absolute top-0 start-0 m-2 px-3 py-2 bg-deep-green text-white"
+                  >Available</span
                 >
-                  Available
-                </span>
               </div>
+
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">Fadhili Gardens</h5>
                 <div
@@ -453,10 +437,12 @@
                     <i class="bi bi-arrows-angle-expand me-1"></i> 50x100
                   </div>
                 </div>
+
                 <p class="card-text small">
                   Prime 50x100 plots located at Makutano, offering serene
                   environment and excellent investment opportunities.
                 </p>
+
                 <div
                   class="d-flex justify-content-between align-items-center mt-auto"
                 >
@@ -469,9 +455,10 @@
         </div>
       </div>
     </section>
+
     <!-- SCRIPTS -->
     <script src="/js/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/functional.js"></script>
   </body>
 </html>
