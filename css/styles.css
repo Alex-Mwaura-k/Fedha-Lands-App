@@ -80,6 +80,9 @@ nav .email a:focus::after {
 nav i {
   color: var(--primary-color);
 }
+nav i:hover {
+  color: var(--text-light) !important;
+}
 .navbar-toggler i {
   color: var(--text-grey);
   font-size: 24px;
@@ -238,7 +241,7 @@ body {
 }
 .css-img {
   object-fit: cover;
-  filter: brightness(70%);
+  filter: brightness(90%);
 }
 #booking-Modal .form-control:focus,
 #booking-Modal .form-select:focus {
@@ -278,18 +281,24 @@ button {
   overflow: hidden;
   white-space: nowrap;
   font-size: 14px;
+  position: relative;
 }
+
 .scroll-text {
-  display: inline-block;
-  padding-left: 100%;
-  animation: scroll-left 60s linear infinite;
+  display: inline-flex;
+  animation: scroll-left 30s linear infinite;
 }
+
+.scroll-text span {
+  padding-right: 2rem;
+}
+
 @keyframes scroll-left {
   from {
-    transform: translateX(0%);
+    transform: translateX(0);
   }
   to {
-    transform: translateX(-200%);
+    transform: translateX(-50%);
   }
 }
 
@@ -316,6 +325,9 @@ button {
 .bg-deep-green {
   background: var(--deep-green);
 }
+.bg-deep-red {
+  background: var(--primary-color);
+}
 .btn-custom-red {
   border: 1px solid var(--secondary-color) !important;
   color: var(--secondary-color);
@@ -331,4 +343,11 @@ button {
 #properties .text-start {
   border-left: 6px solid var(--hover-color);
   padding-left: 6px;
+}
+.card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
