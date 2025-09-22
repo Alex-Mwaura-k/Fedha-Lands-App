@@ -262,9 +262,13 @@ body {
 button {
   border-radius: 0 !important;
 }
+
 @media (max-width: 768px) {
-  .carousel-caption button {
-    padding: 2px 5px;
+  @media (max-width: 768px) {
+    .carousel-caption .btn {
+      padding: 2px 10px !important;
+      font-size: 12px !important;
+    }
   }
 }
 
@@ -301,7 +305,11 @@ button {
     transform: translateX(-50%);
   }
 }
-
+/* Removing Border Radius from Bootstrap Cards */
+.badge,
+.btn-custom-red {
+  border-radius: 0 !important;
+}
 /* Property Cards */
 .property-card {
   position: relative;
@@ -340,7 +348,7 @@ button {
   color: var(--text-light);
   border-color: var(--hover-color);
 }
-#properties .text-start {
+.text-start {
   border-left: 6px solid var(--hover-color);
   padding-left: 6px;
 }
