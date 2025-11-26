@@ -29,3 +29,37 @@ document.querySelectorAll('.dropdown').forEach(function (dropdown) {
   });
 });
 // END OF NAVBAR
+
+
+// Gallery
+/* =========================================
+   GALLERY FILTER LOGIC
+   ========================================= */
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            
+            // 1. Remove 'active' class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // 2. Add 'active' class to clicked button
+            button.classList.add('active');
+
+            const filterValue = button.getAttribute('data-filter');
+
+            // 3. Loop through items
+            galleryItems.forEach(item => {
+                if (filterValue === 'all' || item.classList.contains(filterValue)) {
+                    item.classList.remove('hide');
+                    item.classList.add('show');
+                } else {
+                    item.classList.add('hide');
+                    item.classList.remove('show');
+                }
+            });
+        });
+    });
+});

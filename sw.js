@@ -11,7 +11,7 @@ self.addEventListener('install', e => {
   '/icons/icon.png',
   '/icons/sicon.png',
   '/icons/logo.png',
-  '/icons/favicon.ico',
+  '/icons/favicon.ico'
 ];
       return Promise.all(
         assets.map(url => 
