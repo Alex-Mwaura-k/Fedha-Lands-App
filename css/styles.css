@@ -899,14 +899,119 @@ button {
   .contact-dual-cards { padding: 2rem 0; height: auto; }
 }
 /* =========================================
-   MOBILE FIXES (Add this at the very end)
+   MOBILE FIX: FORCE SOLID TEXT
    ========================================= */
 @media (max-width: 768px) {
-  /* Make stroke thinner on phones so text is readable */
-  #about-us .text-outline-red,
-  #about-us .text-outline-red2,
-  #blog .text-outline-red-dark,
-  #about-us .process-step h2 {
-    -webkit-text-stroke-width: 0.5px !important;
+  
+  /* Target all the outlined text classes */
+  .text-outline-red,
+  .text-outline-red-dark,
+  .text-outline-red2,
+  .process-step h2,
+  .num {
+    /* 1. Remove the stroke/outline */
+    -webkit-text-stroke: 0 !important;
+    
+    /* 2. Reset the fill color so it's not transparent */
+    -webkit-text-fill-color: initial !important; 
+    
+    /* 3. Force it to be Solid Red */
+    color: var(--primary-color) !important;
+    
+    /* 4. Ensure it's bold */
+    font-weight: 800 !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Footer section  */
+/* =========================================
+   MODERN FOOTER SECTION
+   ========================================= */
+
+/* 1. Main Container */
+.footer-section {
+  background-color: #050505; /* Deepest Matte Black */
+  color: #fff;
+  padding-top: 5rem;
+  font-size: 0.9rem;
+  border-top: 1px solid #111;
+}
+
+/* 2. Typography & Links */
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: #888;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+/* Hover Effect: Slide Right & Turn Red */
+.footer-links a:hover {
+  color: #fff;
+  transform: translateX(5px);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Hover White Utility */
+.hover-white:hover {
+  color: #fff !important;
+}
+
+/* 3. Social Buttons */
+.social-btn {
+  width: 40px;
+  height: 40px;
+  background: #111;
+  border: 1px solid #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  border-radius: 50%; /* Circular */
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-btn:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+}
+
+/* 4. Newsletter Form */
+.footer-form input::placeholder {
+  color: #555;
+}
+.footer-form input:focus {
+  background-color: #000;
+  border-color: var(--primary-color);
+  color: #fff;
+  box-shadow: none;
+}
+
+/* 5. Divider Line */
+.footer-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #222, transparent);
+  margin-top: 2rem;
+}
+
+/* Mobile Tweak */
+@media (max-width: 768px) {
+  .footer-section {
+    text-align: center;
+  }
+  .d-flex.gap-2 {
+    justify-content: center;
+  }
+  .footer-links a:hover {
+    transform: none; /* Disable slide on mobile */
   }
 }
