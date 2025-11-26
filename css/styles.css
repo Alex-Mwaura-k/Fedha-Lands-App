@@ -45,6 +45,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  font-weight: bolder;
 }
 nav .phone,
 nav .email {
@@ -54,7 +55,7 @@ nav .email {
 }
 nav .phone a,
 nav .email a {
-  font-size: 13px;
+  font-size: 14px;
   position: relative;
 }
 nav .phone a::after,
@@ -896,4 +897,16 @@ button {
 /* Mobile */
 @media (max-width: 991px) {
   .contact-dual-cards { padding: 2rem 0; height: auto; }
+}
+/* =========================================
+   MOBILE FIXES (Add this at the very end)
+   ========================================= */
+@media (max-width: 768px) {
+  /* Make stroke thinner on phones so text is readable */
+  #about-us .text-outline-red,
+  #about-us .text-outline-red2,
+  #blog .text-outline-red-dark,
+  #about-us .process-step h2 {
+    -webkit-text-stroke-width: 0.5px !important;
+  }
 }

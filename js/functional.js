@@ -63,3 +63,70 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const counters = document.querySelectorAll('.counter-animate');
+    
+    // speed variable: The LOWER this number, the FASTER/BIGGER the chunks.
+    // 200 = Slow (increments of 1 or 2)
+    // 40 = Fast (increments of 10 or 15)
+    const speed = 40; 
+
+    const animateCounters = (counter) => {
+        const target = +counter.getAttribute('data-target');
+        
+        // Get current number
+        let count = +counter.innerText.replace(/\D/g, '');
+        
+        // Get the suffix (+ or %) to preserve it
+        const suffix = counter.innerText.replace(/[0-9]/g, ''); 
+
+        // Calculate chunk size
+        const inc = Math.ceil(target / speed);
+
+        if (count < target) {
+            // Add the chunk
+            count += inc;
+            
+            // If we overshot the target, clamp it to the target
+            if (count > target) count = target;
+
+            counter.innerText = count + suffix;
+            
+            // Run next frame fast (20ms)
+            setTimeout(() => {
+                // Only continue if we haven't hit target yet
+                if (+counter.innerText.replace(/\D/g, '') < target) {
+                    animateCounters(counter);
+                }
+            }, 20);
+        } else {
+            counter.innerText = target + suffix;
+        }
+    };
+
+    const observerOptions = {
+        threshold: 0.5 // Trigger when 50% visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const counter = entry.target;
+            const suffix = counter.innerText.replace(/[0-9]/g, '');
+
+            if (entry.isIntersecting) {
+                // SECTION VISIBLE: Start Counting
+                animateCounters(counter);
+            } else {
+                // SECTION HIDDEN: Reset to 0 so it can replay next time
+                counter.innerText = "0" + suffix;
+            }
+        });
+    }, observerOptions);
+
+    counters.forEach(counter => {
+        observer.observe(counter);
+    });
+
+});
