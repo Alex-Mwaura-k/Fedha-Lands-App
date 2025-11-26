@@ -385,13 +385,20 @@ button {
 /* Hollow Red Text */
 #about-us .text-outline-red {
   color: transparent;
+  -webkit-text-stroke: 1px white;
+  font-weight: 900;
+  font-family: sans-serif;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+#about-us .text-outline-red2{
+  color: transparent;
   -webkit-text-stroke: 1px var(--primary-color);
   font-weight: 900;
   font-family: sans-serif;
   display: inline-block;
   transition: all 0.3s ease;
 }
-
 /* 3. Reduce Spacing Between Blocks */
 #about-us .section-header {
   margin-bottom: 1.5rem !important; /* Forces tighter header space */
