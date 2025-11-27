@@ -776,154 +776,209 @@ button {
   margin-bottom: 2px;
 }
 
-/* Contact Section */
 /* =========================================
-   CONTACT: Dual Floating Cards
+   CONTACT SECTION: COMPLETE STYLES (Compact)
    ========================================= */
+   /* =========================================
+   BACKGROUND PATTERN (The Tech Grid)
+   ========================================= */
+.tech-grid-bg {
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;
+  /* Creates the grid lines */
+  background-image: 
+    linear-gradient(#e0e0e0 1px, transparent 1px),
+    linear-gradient(90deg, #e0e0e0 1px, transparent 1px);
+  background-size: 40px 40px; /* Size of the squares */
+  opacity: 0.4; /* Makes it faint */
+  z-index: 1; /* Sits behind the content */
+  pointer-events: none; /* Ensures you can still click things */
+}
 
-/* 1. Background Setup */
-.contact-dual-cards {
-  padding: 3rem 0;   /* Space top and bottom */
+/* 1. Main Section Container - TIGHTER PADDING */
+.contact-feature {
+  padding: 3rem 0; /* Reduced from 5rem */
   background-color: #f4f4f4;
+  position: relative;
+}
+/* 2. Text Outline (Stroke Style) */
+.text-outline-red-dark {
+  color: transparent; /* See-through inside */
+  -webkit-text-stroke: 1.5px var(--primary-color); /* Red Outline */
+  font-weight: 900;
+  font-family: sans-serif;
+  display: inline-block;
+  letter-spacing: 1px;
+}
+
+/* 2. Standalone Map (Left Column) */
+.map-standalone {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border: 4px solid #fff;
+}
+
+.map-standalone iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(100%);
+  transition: filter 0.5s;
+  display: block;
+}
+
+.map-standalone:hover iframe {
+  filter: grayscale(0%);
+}
+
+.map-tag {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  pointer-events: none;
   display: flex;
   align-items: center;
 }
 
-/* 2. Shared Card Styling */
+/* 3. Form Card (Right Column) - TIGHTER PADDING */
 .floating-card {
   background: #ffffff;
-  padding: 2rem;
-  border-radius: 16px; /* Smooth rounded corners */
-  border-left: 5px solid var(--primary-color); /* The Red Accent Line */
-  box-shadow: 0 10px 40px rgba(0,0,0,0.08); /* Deep floating shadow */
+  padding: 2rem; /* Reduced from 2.5rem */
+  border-radius: 16px;
+  border-left: 5px solid var(--primary-color);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
   height: 100%;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center;
 }
 
-/* 3. Indicators */
+/* 4. "Online" Indicator */
 .live-indicator {
   font-size: 0.75rem;
   color: #28a745;
-  font-weight: bold;
-  display: flex; align-items: center; gap: 5px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   background: #e6f9e9;
-  padding: 2px 8px;
-  border-radius: 20px;
-}
-.live-indicator-grey {
-  font-size: 0.75rem;
-  color: #666;
-  font-weight: bold;
-  display: flex; align-items: center; gap: 5px;
-  background: #eee;
-  padding: 2px 8px;
+  padding: 5px 12px;
   border-radius: 20px;
 }
 
 .pulse-dot {
-  width: 8px; height: 8px;
+  width: 8px;
+  height: 8px;
   background-color: #28a745;
   border-radius: 50%;
-  animation: pulse 1.5s infinite;
+  display: block;
+  animation: pulse-green 2s infinite;
 }
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4); }
+
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
   70% { box-shadow: 0 0 0 6px rgba(40, 167, 69, 0); }
   100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
 }
 
-/* 4. Form Inputs (Your preferred style) */
-.input-float { position: relative; }
+/* 5. Input Fields & Icons */
+.input-float {
+  position: relative;
+  width: 100%;
+}
 
 .form-control-float {
   width: 100%;
   background: #f8f9fa;
   border: 1px solid #e9ecef;
   border-radius: 8px;
-  padding: 10px 10px 10px 35px; /* Left padding for icon */
-  font-size: 0.9rem;
-  outline: none;
-  transition: all 0.3s;
+  padding: 10px 15px 10px 45px; /* Slightly tighter vertical padding */
+  font-size: 0.95rem;
   color: #333;
+  outline: none;
+  transition: all 0.3s ease;
+  appearance: none;
 }
 
 .form-control-float:focus {
-  background: #fff;
+  background: #ffffff;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+  box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.05);
+}
+
+.form-control-float::placeholder {
+  color: #aaa;
 }
 
 .icon-float {
   position: absolute;
-  top: 50%; left: 10px;
+  top: 50%;
+  left: 15px;
   transform: translateY(-50%);
-  font-size: 1rem;
+  font-size: 1.1rem;
+  color: #adb5bd;
   pointer-events: none;
-}
-.small-icon { font-size: 0.8rem; left: auto; right: 10px; }
-
-/* 5. Map Inner Container */
-.map-card-inner {
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid #e9ecef;
-  min-height: 250px; /* Ensure map has height */
+  transition: color 0.3s;
 }
 
-.map-card-inner iframe {
-  width: 100%; height: 100%; border: 0;
-  filter: grayscale(100%);
-  transition: filter 0.5s;
-}
-.floating-card:hover iframe {
-  filter: grayscale(0%);
+.form-control-float:focus + .icon-float {
+  color: var(--primary-color);
 }
 
-/* 6. Background Pattern */
-.tech-grid-bg {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background-image: 
-    linear-gradient(#e5e5e5 1px, transparent 1px),
-    linear-gradient(90deg, #e5e5e5 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.4;
+/* 6. "Or Contact Directly" Divider - COMPACT MARGINS */
+.floating-card .text-center.my-0 {
+  position: relative;
+  margin-top: 0.5rem !important; /* Reduced margin */
+  margin-bottom: 0.5rem !important;
   z-index: 1;
 }
 
-/* Button Lift */
-.btn-lift { transition: transform 0.2s; }
-.btn-lift:hover { transform: translateY(-2px); background-color: #cc0000; }
-
-/* Mobile */
-@media (max-width: 991px) {
-  .contact-dual-cards { padding: 2rem 0; height: auto; }
+.floating-card .text-center.my-0::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 1px;
+  background: #eee;
+  z-index: -1;
 }
-/* =========================================
-   MOBILE FIX: FORCE SOLID TEXT
-   ========================================= */
-@media (max-width: 768px) {
-  
-  /* Target all the outlined text classes */
-  .text-outline-red,
-  .text-outline-red-dark,
-  .text-outline-red2,
-  .process-step h2,
-  .num {
-    /* 1. Remove the stroke/outline */
-    -webkit-text-stroke: 0 !important;
-    
-    /* 2. Reset the fill color so it's not transparent */
-    -webkit-text-fill-color: initial !important; 
-    
-    /* 3. Force it to be Solid Red */
-    color: var(--primary-color) !important;
-    
-    /* 4. Ensure it's bold */
-    font-weight: 800 !important;
-    opacity: 1 !important;
+
+.floating-card .text-center.my-0 span {
+  background: #fff;
+  padding: 0 15px;
+  color: #999;
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+
+/* 7. Utilities */
+.x-small {
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 991px) {
+  .map-standalone {
+    height: 300px;
+    min-height: auto;
+  }
+  .floating-card {
+    padding: 1.5rem;
   }
 }
-
 /* Footer section  */
 /* =========================================
    MODERN FOOTER SECTION
