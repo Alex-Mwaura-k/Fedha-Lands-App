@@ -130,3 +130,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+/* =========================================
+   SCROLL TO TOP LOGIC - UPDATED
+   ========================================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const scrollTopBtn = document.getElementById('scrollToTopBtn');
+
+  window.addEventListener('scroll', () => {
+    // TRIGGER AT 80dvh (0.8 of window height)
+    if (window.scrollY > (window.innerHeight * 0.5)) {
+      scrollTopBtn.classList.add('show');
+    } else {
+      scrollTopBtn.classList.remove('show');
+    }
+  });
+
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+});
