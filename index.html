@@ -1190,7 +1190,12 @@
   </div>
 </section>
 <!-- End of Gallery Section -->
-
+<!-- =========================================
+     CONTACT SECTION: Text/Map Left + Form Right
+     ========================================= -->
+<!-- =========================================
+     CONTACT SECTION: Text/Map Left + Form Right
+     ========================================= -->
 <section id="contact" class="contact-feature position-relative">
   
   <div class="tech-grid-bg"></div>
@@ -1198,8 +1203,10 @@
   <div class="container-md h-100 position-relative z-2">
     <div class="row h-100 align-items-stretch justify-content-center g-4">
       
+      <!-- LEFT COLUMN: Info (Top) + Map (Bottom) -->
       <div class="col-lg-6 col-md-10 d-flex flex-column">
         
+        <!-- 1. TEXT AREA (Top Half) -->
         <div class="text-area-wrapper mb-4 pe-lg-4">
           <span class="text-danger fw-bold text-uppercase small ls-2">Connect With Us</span>
           <h2 class="display-5 fw-bold text-dark mt-2 mb-3">
@@ -1209,7 +1216,8 @@
             Ready to own your piece of Kenya? Visit our offices at <strong>Nyongo House, Ruiru</strong> or reach out directly.
           </p>
 
-          <div class="d-flex flex-wrap gap-4">
+          <!-- Contact Details (Horizontal Layout) -->
+          <div class="d-flex flex-wrap justify-content-between align-items-center w-100">
             <div class="d-flex align-items-center">
               <i class="bi bi-telephone-fill text-danger fs-5 me-2"></i>
               <span class="fw-bold text-dark small">+254 729 497 152</span>
@@ -1221,8 +1229,15 @@
           </div>
         </div>
 
+        <!-- 2. MAP AREA (Bottom Half - Fills remaining height) -->
         <div class="map-standalone flex-grow-1">
-         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30831.7768447306!2d36.93997873476562!3d-1.1483780999999886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f474b80c7eeff%3A0xcc6b79a45ed5fc75!2sFedha%20Land%20Ventures!5e1!3m2!1sen!2ske!4v1764227828831!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <!-- UPDATED IFRAME SOURCE PER YOUR REQUEST -->
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6815.522655329439!2d36.952734627919114!3d-1.1464046158331644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f474b80c7eeff%3A0xcc6b79a45ed5fc75!2sFedha%20Land%20Ventures!5e1!3m2!1sen!2ske!4v1764239700362!5m2!1sen!2ske" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
           <div class="map-tag">
             <i class="bi bi-geo-alt-fill text-danger me-1"></i> Ruiru HQ
           </div>
@@ -1230,6 +1245,7 @@
 
       </div>
 
+      <!-- RIGHT COLUMN: Form Card -->
       <div class="col-lg-6 col-md-10">
         <div class="floating-card h-100">
           
@@ -1281,23 +1297,27 @@
                 </div>
               </div>
 
+              <!-- Send Button -->
               <div class="col-12 mt-2">
                 <button type="submit" class="btn btn-dark w-100 rounded-pill py-2 fw-bold text-uppercase small shadow-sm btn-lift">
                   Send Message <i class="bi bi-send-fill ms-2"></i>
                 </button>
               </div>
 
+              <!-- Divider -->
               <div class="col-12 text-center my-0">
                 <span class="text-muted x-small text-uppercase ls-2">Or Contact Directly</span>
               </div>
 
+              <!-- Action Buttons -->
               <div class="col-6">
-                 <a href="tel:+254715113103" class="btn btn-outline-secondary w-100 rounded-pill py-2 small fw-bold">
+                 <a href="tel:+254729497152" class="btn btn-outline-secondary w-100 rounded-pill py-2 small fw-bold">
                    <i class="bi bi-telephone-fill me-2"></i> Call
                  </a>
               </div>
               <div class="col-6">
-                <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.155896359678!2d36.9587843!3d-1.1448896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f47003c202023%3A0x123456789abc!2sRuiru%2C%20Kenya!5e0!3m2!1sen!2ske!4v1700000000000!5m2!1sen!2ske" target="_blank" class="btn btn-outline-danger w-100 rounded-pill py-2 small fw-bold btn-lift">
+                <!-- Direct Navigation Link (Functional for User) -->
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Nyongo+House,+Ruiru" target="_blank" class="btn btn-outline-danger w-100 rounded-pill py-2 small fw-bold btn-lift">
                   <i class="bi bi-cursor-fill me-2"></i> Directions
                 </a>
               </div>
