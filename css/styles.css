@@ -992,9 +992,10 @@ button {
     padding: 1.5rem;
   }
 }
-/* Footer section  */
+
+
 /* =========================================
-   MODERN FOOTER SECTION
+   MODERN FOOTER SECTION - FIXED
    ========================================= */
 
 /* 1. Main Container */
@@ -1004,33 +1005,35 @@ button {
   padding-top: 5rem;
   font-size: 0.9rem;
   border-top: 1px solid #111;
+  /* FIX: Hides the overflow causing the horizontal scroll */
+  overflow: hidden; 
 }
 
-/* 2. Typography & Links */
+/* 2. Links (Projects & Company) */
 .footer-links li {
   margin-bottom: 12px;
 }
 
 .footer-links a {
-  color: #888;
+  color: #888; /* Default Grey */
   text-decoration: none;
   transition: all 0.3s ease;
   display: inline-block;
 }
 
-/* Hover Effect: Slide Right & Turn Red */
+/* Hover Effect: Slide Right & Turn White */
 .footer-links a:hover {
   color: #fff;
   transform: translateX(5px);
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-/* Hover White Utility */
+/* Utility for Privacy/Terms links */
 .hover-white:hover {
   color: #fff !important;
 }
 
-/* 3. Social Buttons */
+/* 3. Social Media Buttons */
 .social-btn {
   width: 40px;
   height: 40px;
@@ -1040,28 +1043,30 @@ button {
   align-items: center;
   justify-content: center;
   color: #888;
-  border-radius: 50%; /* Circular */
-  transition: all 0.3s ease;
+  border-radius: 50%; /* Circle shape */
   text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 .social-btn:hover {
-  background: var(--primary-color);
-  border-color: var(--primary-color);
+  background: #dc3545; /* Red (matches your specific button color) */
+  border-color: #dc3545;
   color: #fff;
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+  box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
 }
 
 /* 4. Newsletter Form */
 .footer-form input::placeholder {
   color: #555;
 }
+
 .footer-form input:focus {
   background-color: #000;
-  border-color: var(--primary-color);
+  border-color: #dc3545;
   color: #fff;
   box-shadow: none;
+  outline: none;
 }
 
 /* 5. Divider Line */
@@ -1071,15 +1076,17 @@ button {
   margin-top: 2rem;
 }
 
-/* Mobile Tweak */
+/* 6. Mobile Responsiveness */
 @media (max-width: 768px) {
-  .footer-section {
-    text-align: center;
+  /* FIX: We intentionally REMOVED 'text-align: center' here 
+     so that the lists remain aligned to the left. */
+
+  .footer-links li {
+    margin-bottom: 8px; /* Tighter spacing on mobile */
   }
-  .d-flex.gap-2 {
-    justify-content: center;
-  }
+  
+  /* Disable the slide animation on mobile to prevent jitter */
   .footer-links a:hover {
-    transform: none; /* Disable slide on mobile */
+    transform: none; 
   }
 }
