@@ -818,7 +818,8 @@ button {
 .map-standalone {
   position: relative;
   width: 100%;
-  height: 20px;
+  height: 100%;
+  min-height: 200px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -829,13 +830,25 @@ button {
   width: 100%;
   height: 100%;
   border: 0;
-  filter: grayscale(100%);
-  transition: filter 0.5s;
+  /* Apply the pulsing animation here */
+  animation: map-pulse 2s infinite ease-in-out;
   display: block;
 }
 
-.map-standalone:hover iframe {
-  filter: grayscale(0%);
+/* Remove the hover effect (since it's now automatic) */
+/* .map-standalone:hover iframe { filter: grayscale(0%); } */
+
+/* Define the Pulse Animation */
+@keyframes map-pulse {
+  0% {
+    filter: grayscale(100%); /* Start Black & White */
+  }
+  50% {
+    filter: grayscale(0%);   /* Fade to Full Color */
+  }
+  100% {
+    filter: grayscale(100%); /* Back to Black & White */
+  }
 }
 
 .map-tag {
