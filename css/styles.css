@@ -88,7 +88,7 @@ nav i:hover {
 .navbar-toggler i {
   color: var(--text-grey);
   font-size: 1.8rem;
-  line-height: 1;  
+  line-height: 1;
 }
 
 .navbar-toggler i:hover,
@@ -101,9 +101,9 @@ nav i:hover {
   background: transparent;
   box-shadow: none;
   padding: 0 !important;
-  
+
   /* UPDATED: Forces the button to the right edge */
-  margin-left: auto; 
+  margin-left: auto;
 }
 
 .navbar-toggler:focus,
@@ -368,8 +368,8 @@ button {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.card-title{
-  border-bottom: .5px solid rgba(128, 128, 128, 0.23) !important;
+.card-title {
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.23) !important;
   padding-bottom: 12px !important;
 }
 /* =========================================
@@ -382,14 +382,21 @@ button {
   color: #b0b0b0;
   position: relative;
   overflow: hidden;
-  padding-top: 2rem !important;    /* Reduced from 5rem */
+  padding-top: 2rem !important; /* Reduced from 5rem */
   padding-bottom: 2rem !important; /* Reduced from 5rem */
 }
 
 /* 2. Text & Typography */
-#about-us .ls-2 { letter-spacing: 2px; }
-#about-us .mw-600 { max-width: 600px; }
-#about-us .text-grey { color: #b0b0b0 !important; line-height: 1.5; } /* Tighter line height */
+#about-us .ls-2 {
+  letter-spacing: 2px;
+}
+#about-us .mw-600 {
+  max-width: 600px;
+}
+#about-us .text-grey {
+  color: #b0b0b0 !important;
+  line-height: 1.5;
+} /* Tighter line height */
 
 /* Hollow Red Text */
 #about-us .text-outline-red {
@@ -400,7 +407,7 @@ button {
   display: inline-block;
   transition: all 0.3s ease;
 }
-#about-us .text-outline-red2{
+#about-us .text-outline-red2 {
   color: transparent;
   -webkit-text-stroke: 1px var(--primary-color);
   font-weight: 900;
@@ -436,7 +443,7 @@ button {
 
 /* 4. Right Column: Core Values */
 #about-us .values-container {
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
   border-radius: 4px;
   padding: 1.5rem !important; /* Reduced from 2rem */
 }
@@ -446,7 +453,9 @@ button {
   transition: transform 0.3s ease;
 }
 
-#about-us .value-item:hover { transform: translateX(5px); }
+#about-us .value-item:hover {
+  transform: translateX(5px);
+}
 
 #about-us .num {
   font-size: 2rem; /* Slightly smaller */
@@ -505,8 +514,6 @@ button {
   --bs-gutter-y: 1.5rem !important;
 }
 
-
-
 /* Blog Section  */
 /* =========================================
    BLOG & MEDIA SECTION (White & Clean)
@@ -514,8 +521,8 @@ button {
 
 #blog.blog-section {
   background-color: #ffffff !important;
-  padding-top: 4rem;
-  padding-bottom: 4rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   border-top: 1px solid #e0e0e0;
 }
 
@@ -554,7 +561,7 @@ button {
 /* 3. Card Architecture (Equal Heights) */
 .media-card {
   background: #fff;
-  border: 1px solid #eee; 
+  border: 1px solid #eee;
   transition: all 0.3s ease;
   height: 100%; /* Fill the column height */
   position: relative;
@@ -639,7 +646,10 @@ button {
 }
 .hover-overlay {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(255, 0, 0, 0.7);
   display: flex;
   align-items: center;
@@ -735,8 +745,14 @@ button {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .gallery-card {
@@ -763,8 +779,11 @@ button {
 /* 4. Overlay Effect */
 .gallery-overlay {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -787,18 +806,17 @@ button {
 /* =========================================
    CONTACT SECTION: COMPLETE STYLES (Compact)
    ========================================= */
-   /* =========================================
+/* =========================================
    BACKGROUND PATTERN (The Tech Grid)
    ========================================= */
 .tech-grid-bg {
   position: absolute;
-  top: 0; 
-  left: 0; 
-  width: 100%; 
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
   /* Creates the grid lines */
-  background-image: 
-    linear-gradient(#e0e0e0 1px, transparent 1px),
+  background-image: linear-gradient(#e0e0e0 1px, transparent 1px),
     linear-gradient(90deg, #e0e0e0 1px, transparent 1px);
   background-size: 40px 40px; /* Size of the squares */
   opacity: 0.4; /* Makes it faint */
@@ -830,7 +848,7 @@ button {
   min-height: 200px;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   border: 4px solid #fff;
 }
 
@@ -852,7 +870,7 @@ button {
     filter: grayscale(100%); /* Start Black & White */
   }
   50% {
-    filter: grayscale(0%);   /* Fade to Full Color */
+    filter: grayscale(0%); /* Fade to Full Color */
   }
   100% {
     filter: grayscale(100%); /* Back to Black & White */
@@ -861,13 +879,14 @@ button {
 
 .map-tag {
   position: absolute;
-  top: 20px; right: 20px;
+  top: 20px;
+  right: 20px;
   background: #fff;
   padding: 8px 16px;
   border-radius: 30px;
   font-size: 0.85rem;
   font-weight: bold;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   pointer-events: none;
   display: flex;
   align-items: center;
@@ -879,10 +898,10 @@ button {
   padding: 2rem; /* Reduced from 2.5rem */
   border-radius: 16px;
   border-left: 5px solid var(--primary-color);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   height: 100%;
-  display: flex; 
-  flex-direction: column; 
+  display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
@@ -910,9 +929,15 @@ button {
 }
 
 @keyframes pulse-green {
-  0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
-  70% { box-shadow: 0 0 0 6px rgba(40, 167, 69, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(40, 167, 69, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+  }
 }
 
 /* 5. Input Fields & Icons */
@@ -968,9 +993,11 @@ button {
 }
 
 .floating-card .text-center.my-0::before {
-  content: '';
+  content: "";
   position: absolute;
-  top: 50%; left: 0; right: 0;
+  top: 50%;
+  left: 0;
+  right: 0;
   height: 1px;
   background: #eee;
   z-index: -1;
@@ -1001,7 +1028,6 @@ button {
   }
 }
 
-
 /* =========================================
    MODERN FOOTER SECTION - FIXED
    ========================================= */
@@ -1014,7 +1040,7 @@ button {
   font-size: 0.9rem;
   border-top: 1px solid #111;
   /* FIX: Hides the overflow causing the horizontal scroll */
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 /* 2. Links (Projects & Company) */
@@ -1086,16 +1112,17 @@ button {
 
 /* 6. Mobile Responsiveness */
 @media (max-width: 768px) {
-  /* FIX: We intentionally REMOVED 'text-align: center' here 
-     so that the lists remain aligned to the left. */
+  .footer-section {
+    padding-top: 2rem;
+  }
 
   .footer-links li {
     margin-bottom: 8px; /* Tighter spacing on mobile */
   }
-  
+
   /* Disable the slide animation on mobile to prevent jitter */
   .footer-links a:hover {
-    transform: none; 
+    transform: none;
   }
 }
 
@@ -1107,24 +1134,24 @@ button {
   position: fixed;
   bottom: 25px;
   right: 30px;
-  
+
   /* SMALLER SIZE */
-  width: 40px;  
-  height: 40px; 
+  width: 40px;
+  height: 40px;
   font-size: 1.2rem;
-  
+
   border-radius: 50%;
-  
+
   /* FAINT WHITE (Default) */
-  background-color: rgba(255, 255, 255, 0.8); 
+  background-color: rgba(255, 255, 255, 0.8);
   color: #333; /* Dark icon so it is visible on the white background */
   border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border for contrast */
   backdrop-filter: blur(4px); /* Glass effect */
-  
+
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  
+
   /* Hidden by default */
   opacity: 0;
   visibility: hidden;
@@ -1149,8 +1176,8 @@ button {
 }
 @media (max-width: 768px) {
   .scroll-top-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 12px;
+    position: fixed;
+    bottom: 20px;
+    right: 12px;
   }
 }
