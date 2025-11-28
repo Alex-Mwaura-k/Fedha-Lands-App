@@ -68,18 +68,26 @@ self.addEventListener('activate', e => {
   return self.clients.claim();
 });
 
-// 4. FETCH EVENT (The Missing Piece!)
-// This intercepts every network request the page makes.
+// 4. FETCH EVENT (Stale-While-Revalidate Strategy)
 self.addEventListener('fetch', e => {
   e.respondWith(
-    caches.match(e.request).then(response => {
-      // Strategy: Cache First, Fallback to Network
-      // 1. If the file is in the cache, return it (works offline).
-      if (response) {
-        return response;
-      }
-      // 2. If not in cache, go to the network (internet).
-      return fetch(e.request);
+    caches.match(e.request).then(cachedResponse => {
+      // A. Create a network request to update the cache in the background
+      const networkFetch = fetch(e.request).then(networkResponse => {
+        // Clone the response because it can only be consumed once
+        const responseClone = networkResponse.clone();
+        
+        caches.open(CACHE_NAME).then(cache => {
+          // Update the cache with the fresh file from the server
+          cache.put(e.request, responseClone);
+        });
+        
+        return networkResponse;
+      }).catch(err => console.log('Network fetch failed', err));
+
+      // B. Return the cached response immediately if we have it (Speed!)
+      //    If not, return the network response (First time load)
+      return cachedResponse || networkFetch;
     })
   );
 });
