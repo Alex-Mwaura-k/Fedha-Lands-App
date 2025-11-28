@@ -18,28 +18,40 @@
   --offcanvas-backdrop: rgba(34, 33, 37, 0.8);
 }
 
-/* Selection & Scrollbar */
+/* =========================================
+   GLOBAL & SCROLLBAR
+   ========================================= */
 ::selection {
   background: var(--primary-color);
   color: var(--text-light);
 }
+
 ::-webkit-scrollbar {
   width: 6px;
   background: var(--bg-dark-trans);
 }
+
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(transparent, var(--scroll-thumb));
   border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(transparent, var(--scroll-thumb-hover));
 }
 
-/* Navbar */
+body {
+  padding-top: 56px;
+}
+
+/* =========================================
+   NAVBAR & OFFCANVAS
+   ========================================= */
 nav {
   background: var(--bg-dark);
   box-shadow: 0 4px 12px var(--shadow-light);
 }
+
 .p-number {
   display: flex;
   align-items: center;
@@ -47,17 +59,20 @@ nav {
   width: 100%;
   font-weight: bolder;
 }
+
 nav .phone,
 nav .email {
   color: var(--text-grey);
   font-weight: 500;
   transition: color 0.3s;
 }
+
 nav .phone a,
 nav .email a {
   font-size: 14px;
   position: relative;
 }
+
 nav .phone a::after,
 nav .email a::after {
   content: "";
@@ -69,22 +84,26 @@ nav .email a::after {
   background: var(--primary-color);
   transition: width 0.3s;
 }
+
 nav a:hover {
   color: var(--text-light) !important;
 }
+
 nav .phone a:hover::after,
 nav .phone a:focus::after,
 nav .email a:hover::after,
 nav .email a:focus::after {
   width: 100%;
 }
+
 nav i {
   color: var(--primary-color);
 }
+
 nav i:hover {
   color: var(--text-light) !important;
 }
-/* Navbar Toggle Button (Burger Menu) */
+
 .navbar-toggler i {
   color: var(--text-grey);
   font-size: 1.8rem;
@@ -101,8 +120,6 @@ nav i:hover {
   background: transparent;
   box-shadow: none;
   padding: 0 !important;
-
-  /* UPDATED: Forces the button to the right edge */
   margin-left: auto;
 }
 
@@ -111,12 +128,15 @@ nav i:hover {
   outline: none !important;
   box-shadow: none !important;
 }
+
 #offcanvasNavbar {
   width: 60%;
 }
+
 .btn-close {
   transition: transform 0.3s;
 }
+
 .btn-close:hover,
 .btn-close:focus,
 .btn-close:active {
@@ -124,39 +144,47 @@ nav i:hover {
   outline: none !important;
   box-shadow: none !important;
 }
+
 .btn-close:active {
   transform: rotate(90deg);
 }
+
 .offcanvas-backdrop.show {
   background: var(--offcanvas-backdrop);
   backdrop-filter: blur(100px) saturate(200%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
   transition: backdrop-filter 0.7s, background 0.3s;
 }
+
 .dropdown-menu {
   background: var(--bg-dark) !important;
   box-shadow: 0 4px 12px var(--shadow-light);
 }
+
 .dropdown-menu .dropdown-item {
   color: var(--text-light);
   display: flex;
   align-items: center;
   transition: background 0.3s, color 0.3s;
 }
+
 .dropdown-menu .dropdown-item:hover,
 .dropdown-menu .dropdown-item:focus,
 .dropdown-menu .dropdown-item.active {
   background: var(--primary-color);
   color: var(--text-light);
 }
+
 .dropdown-submenu {
   position: relative;
 }
+
 .dropdown-submenu > .dropdown-menu {
   top: 0;
   left: 100%;
   margin: 0 0.1rem;
 }
+
 .dropdown-submenu > .dropdown-toggle::after {
   display: inline-block;
   margin-left: 0.5em;
@@ -165,6 +193,7 @@ nav i:hover {
   border-bottom: 0.3em solid transparent;
   border-left: 0.3em solid currentColor;
 }
+
 @media (max-width: 991.98px) {
   .dropdown-submenu > .dropdown-toggle::after {
     border-left: 0.3em solid transparent;
@@ -184,7 +213,9 @@ nav i:hover {
   }
 }
 
-/* Install Card */
+/* =========================================
+   INSTALL APP BANNER (PWA)
+   ========================================= */
 .install-card {
   position: fixed;
   top: 65px;
@@ -194,12 +225,14 @@ nav i:hover {
   animation: slideIn 0.8s ease-in-out;
   z-index: 999;
 }
+
 .install-buttons {
   top: 25px;
   right: 100px;
   display: flex;
   gap: 10px;
 }
+
 .install-buttons button {
   background: var(--bg-dark);
   color: var(--text-light);
@@ -208,14 +241,17 @@ nav i:hover {
   font-size: 12px;
   cursor: pointer;
 }
+
 .install-buttons #dismiss-btn {
   background: transparent;
   color: var(--text-dark);
   border: 1px solid var(--border-grey);
 }
+
 .install-buttons button:hover {
   opacity: 0.9;
 }
+
 @keyframes slideIn {
   from {
     transform: translateY(30px);
@@ -226,6 +262,7 @@ nav i:hover {
     opacity: 1;
   }
 }
+
 @media (max-width: 989px) {
   .install-card {
     display: none;
@@ -236,59 +273,60 @@ nav i:hover {
   }
 }
 
-/* Layout Offset */
-body {
-  padding-top: 56px;
-}
-
-/* Carousel */
+/* =========================================
+   CAROUSEL & MODALS
+   ========================================= */
 .css-item {
   display: flex;
   justify-content: center;
   align-items: center;
   background: var(--bg-dark) !important;
 }
+
 .css-img {
   object-fit: cover;
   filter: brightness(90%);
 }
+
 #booking-Modal .form-control:focus,
 #booking-Modal .form-select:focus {
   box-shadow: none;
   outline: none;
   border-color: var(--border-light);
 }
+
 .carousel-indicators,
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   opacity: 0.3;
   transition: opacity 0.3s;
 }
+
 .carousel-control-prev-icon:hover,
 .carousel-control-next-icon:hover {
   opacity: 0.7;
 }
+
 button {
   border-radius: 0 !important;
 }
 
 @media (max-width: 768px) {
-  @media (max-width: 768px) {
-    .carousel-caption .btn {
-      padding: 2px 10px !important;
-      font-size: 12px !important;
-    }
+  .carousel-caption .btn {
+    padding: 2px 10px !important;
+    font-size: 12px !important;
   }
 }
 
-/* Modals */
 .modal-header,
 .modal-footer {
   border: none;
   padding: 0;
 }
 
-/* Scrolling Banner */
+/* =========================================
+   SCROLLING BANNER
+   ========================================= */
 .scroll-strip {
   background: var(--bg-grey);
   overflow: hidden;
@@ -314,12 +352,15 @@ button {
     transform: translateX(-50%);
   }
 }
-/* Removing Border Radius from Bootstrap Cards */
+
+/* =========================================
+   PROPERTIES SECTION
+   ========================================= */
 .badge,
 .btn-custom-red {
   border-radius: 0 !important;
 }
-/* Property Cards */
+
 .property-card {
   position: relative;
   overflow: hidden;
@@ -328,39 +369,48 @@ button {
   border-radius: 0 !important;
   max-height: 420px !important;
 }
+
 .property-card:hover {
   box-shadow: 0 8px 24px var(--shadow-dark);
 }
+
 .property-card .property-img {
   transition: transform 0.5s;
   border-radius: 0 !important;
   width: 100%;
 }
+
 .property-card:hover .property-img {
   transform: scale(1.08);
 }
+
 .bg-deep-green {
   background: var(--deep-green);
 }
+
 .bg-deep-red {
   background: var(--primary-color);
 }
+
 .btn-custom-red {
   border: 1px solid var(--secondary-color) !important;
   color: var(--secondary-color);
   background: transparent;
   transition: background 0.3s, border-color 0.3s, color 0.3s;
 }
+
 .btn-custom-red:hover,
 .property-card:hover .btn-custom-red {
   background: var(--hover-color);
   color: var(--text-light);
   border-color: var(--hover-color);
 }
+
 .text-start {
   border-left: 6px solid var(--hover-color);
   padding-left: 6px;
 }
+
 .card-text {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -368,37 +418,37 @@ button {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .card-title {
   border-bottom: 0.5px solid rgba(128, 128, 128, 0.23) !important;
   padding-bottom: 12px !important;
 }
-/* =========================================
-   ABOUT US SECTION (Compact & Sleek)
-   ========================================= */
 
-/* 1. Main Container - Tighter vertical spacing */
+/* =========================================
+   ABOUT US SECTION
+   ========================================= */
 #about-us.about-section {
   background-color: #0f0f0f !important;
   color: #b0b0b0;
   position: relative;
   overflow: hidden;
-  padding-top: 2rem !important; /* Reduced from 5rem */
-  padding-bottom: 2rem !important; /* Reduced from 5rem */
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
 }
 
-/* 2. Text & Typography */
 #about-us .ls-2 {
   letter-spacing: 2px;
 }
+
 #about-us .mw-600 {
   max-width: 600px;
 }
+
 #about-us .text-grey {
   color: #b0b0b0 !important;
   line-height: 1.5;
-} /* Tighter line height */
+}
 
-/* Hollow Red Text */
 #about-us .text-outline-red {
   color: transparent;
   -webkit-text-stroke: 1px white;
@@ -407,6 +457,7 @@ button {
   display: inline-block;
   transition: all 0.3s ease;
 }
+
 #about-us .text-outline-red2 {
   color: transparent;
   -webkit-text-stroke: 1px var(--primary-color);
@@ -415,25 +466,23 @@ button {
   display: inline-block;
   transition: all 0.3s ease;
 }
-/* 3. Reduce Spacing Between Blocks */
+
 #about-us .section-header {
-  margin-bottom: 1.5rem !important; /* Forces tighter header space */
+  margin-bottom: 1.5rem !important;
 }
 
 #about-us .row {
-  margin-bottom: 1.5rem !important; /* Reduces gap between rows */
+  margin-bottom: 1.5rem !important;
 }
 
-/* Left Column: Mission & Vision */
 #about-us .info-block {
-  margin-bottom: 1rem !important; /* Reduced from 2rem */
+  margin-bottom: 1rem !important;
   position: relative;
 }
 
-/* Red line accent */
 #about-us .border-start-custom {
   border-left: 2px solid rgba(255, 0, 0, 0.2);
-  padding-left: 1rem; /* Reduced padding */
+  padding-left: 1rem;
   transition: border-color 0.3s ease;
 }
 
@@ -441,15 +490,14 @@ button {
   border-left: 2px solid var(--primary-color);
 }
 
-/* 4. Right Column: Core Values */
 #about-us .values-container {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
   border-radius: 4px;
-  padding: 1.5rem !important; /* Reduced from 2rem */
+  padding: 1.5rem !important;
 }
 
 #about-us .value-item {
-  margin-bottom: 1rem !important; /* Tighter list items */
+  margin-bottom: 1rem !important;
   transition: transform 0.3s ease;
 }
 
@@ -458,7 +506,7 @@ button {
 }
 
 #about-us .num {
-  font-size: 2rem; /* Slightly smaller */
+  font-size: 2rem;
   opacity: 0.8;
   width: 50px;
   font-weight: bold;
@@ -469,10 +517,9 @@ button {
   -webkit-text-stroke: 0;
 }
 
-/* 5. Process Steps */
 #about-us .border-bottom-dark {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 2rem !important; /* Reduced separator gap */
+  margin-bottom: 2rem !important;
   padding-bottom: 1rem !important;
 }
 
@@ -482,7 +529,7 @@ button {
 }
 
 #about-us .process-step h2 {
-  font-size: 2.5rem; /* Smaller numbers */
+  font-size: 2.5rem;
   margin-bottom: 0.2rem;
   opacity: 0.5;
   transition: all 0.3s ease;
@@ -495,10 +542,9 @@ button {
   -webkit-text-stroke: 0;
 }
 
-/* 6. Stats Strip */
 #about-us .stat-box {
   background: rgba(255, 255, 255, 0.02);
-  padding: 15px; /* Compact padding */
+  padding: 15px;
   border-left: 2px solid transparent;
   transition: all 0.3s ease;
 }
@@ -508,17 +554,14 @@ button {
   border-left: 2px solid var(--primary-color);
 }
 
-/* Override Bootstrap Gaps if they are still too wide */
 #about-us .g-5 {
   --bs-gutter-x: 1.5rem !important;
   --bs-gutter-y: 1.5rem !important;
 }
 
-/* Blog Section  */
 /* =========================================
-   BLOG & MEDIA SECTION (White & Clean)
+   BLOG & MEDIA SECTION
    ========================================= */
-
 #blog.blog-section {
   background-color: #ffffff !important;
   padding-top: 1rem;
@@ -526,44 +569,45 @@ button {
   border-top: 1px solid #e0e0e0;
 }
 
-/* 1. Header Typography */
 #blog .text-outline-red-dark {
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--primary-color); /* The Red Stroke */
+  -webkit-text-stroke: 1.5px var(--primary-color);
   font-weight: 900;
   font-family: sans-serif;
   display: inline-block;
   letter-spacing: 1px;
 }
+
 #blog .text-outline-red-dark:hover {
   color: var(--primary-color);
   cursor: default;
 }
 
-/* 2. Newsletter Input */
 .newsletter-form input {
   border: 1px solid #333;
   width: 250px;
   color: #000;
 }
+
 .newsletter-form input::placeholder {
   color: #666;
 }
+
 .newsletter-form button {
   background: #000;
   border: none;
   transition: background 0.3s;
 }
+
 .newsletter-form button:hover {
   background: var(--primary-color);
 }
 
-/* 3. Card Architecture (Equal Heights) */
 .media-card {
   background: #fff;
   border: 1px solid #eee;
   transition: all 0.3s ease;
-  height: 100%; /* Fill the column height */
+  height: 100%;
   position: relative;
 }
 
@@ -577,9 +621,8 @@ button {
   padding: 1.25rem;
 }
 
-/* 4. Visuals: Images & Videos (16:9 Sync) */
 .ratio-16x9 {
-  --bs-aspect-ratio: 56.25%; /* Standard YouTube ratio */
+  --bs-aspect-ratio: 56.25%;
   background: #000;
 }
 
@@ -587,20 +630,19 @@ button {
   border-bottom: 2px solid var(--primary-color);
 }
 
-/* This forces images to behave exactly like the iframes */
 .object-fit-cover {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* 5. Text & Link Styling */
 .text-truncate-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
 .text-truncate-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -620,30 +662,31 @@ button {
   align-items: center;
   gap: 5px;
 }
+
 .arrow-link:hover {
   transform: translateX(5px);
   color: #a00000;
 }
 
-/* 6. Sidebar Logic */
 .sidebar-sticky {
   position: sticky;
-  top: 80px; /* Stays visible on scroll (Desktop) */
+  top: 80px;
 }
 
 .list-group-item {
   transition: padding 0.3s;
 }
+
 .list-group-item:hover {
   padding-left: 10px !important;
   background-color: #f9f9f9 !important;
 }
 
-/* 7. Hover Overlay for Article Images */
 .img-wrapper {
   position: relative;
   overflow: hidden;
 }
+
 .hover-overlay {
   position: absolute;
   top: 0;
@@ -657,9 +700,11 @@ button {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+
 .media-card:hover .hover-overlay {
   opacity: 1;
 }
+
 .read-btn {
   color: #fff;
   border: 1px solid #fff;
@@ -669,7 +714,6 @@ button {
   letter-spacing: 1px;
 }
 
-/* Mobile Tweaks */
 @media (max-width: 991px) {
   .newsletter-form input {
     width: 100%;
@@ -680,17 +724,15 @@ button {
 }
 
 /* =========================================
-   GALLERY SECTION (Dark & Futuristic)
+   GALLERY SECTION
    ========================================= */
-
 #gallery.gallery-section {
-  background-color: #0f0f0f !important; /* Dark Matte */
+  background-color: #0f0f0f !important;
   padding-top: 4rem;
   padding-bottom: 4rem;
-  min-height: 80vh; /* Ensures it feels substantial */
+  min-height: 80vh;
 }
 
-/* 1. Header Typography */
 #gallery .text-outline-red {
   color: transparent;
   -webkit-text-stroke: 1.5px var(--primary-color);
@@ -698,7 +740,6 @@ button {
   display: inline-block;
 }
 
-/* 2. Filter Buttons */
 .gallery-filters {
   position: relative;
   z-index: 2;
@@ -726,20 +767,17 @@ button {
   background: var(--primary-color);
   border-color: var(--primary-color);
   color: #fff;
-  box-shadow: 0 0 15px rgba(255, 0, 0, 0.4); /* Glow effect */
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
 }
 
-/* 3. Gallery Card Styling */
 .gallery-item {
   transition: all 0.4s ease-in-out;
 }
 
-/* Hide items (used by JS) */
 .gallery-item.hide {
   display: none;
 }
 
-/* Animation for appearing items */
 .gallery-item.show {
   animation: fadeIn 0.5s ease-in;
 }
@@ -758,7 +796,7 @@ button {
 .gallery-card {
   position: relative;
   overflow: hidden;
-  height: 300px; /* Fixed Height for Grid Uniformity */
+  height: 300px;
   border: 1px solid #222;
 }
 
@@ -770,13 +808,11 @@ button {
   filter: grayscale(20%);
 }
 
-/* Hover Effect: Zoom & Color */
 .gallery-card:hover img {
   transform: scale(1.15);
   filter: grayscale(0%);
 }
 
-/* 4. Overlay Effect */
 .gallery-overlay {
   position: absolute;
   top: 0;
@@ -804,10 +840,7 @@ button {
 }
 
 /* =========================================
-   CONTACT SECTION: COMPLETE STYLES (Compact)
-   ========================================= */
-/* =========================================
-   BACKGROUND PATTERN (The Tech Grid)
+   CONTACT SECTION
    ========================================= */
 .tech-grid-bg {
   position: absolute;
@@ -815,32 +848,29 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  /* Creates the grid lines */
   background-image: linear-gradient(#e0e0e0 1px, transparent 1px),
     linear-gradient(90deg, #e0e0e0 1px, transparent 1px);
-  background-size: 40px 40px; /* Size of the squares */
-  opacity: 0.4; /* Makes it faint */
-  z-index: 1; /* Sits behind the content */
-  pointer-events: none; /* Ensures you can still click things */
+  background-size: 40px 40px;
+  opacity: 0.4;
+  z-index: 1;
+  pointer-events: none;
 }
 
-/* 1. Main Section Container - TIGHTER PADDING */
 .contact-feature {
-  padding: 3rem 0; /* Reduced from 5rem */
+  padding: 3rem 0;
   background-color: #f4f4f4;
   position: relative;
 }
-/* 2. Text Outline (Stroke Style) */
+
 .text-outline-red-dark {
-  color: transparent; /* See-through inside */
-  -webkit-text-stroke: 1.5px var(--primary-color); /* Red Outline */
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--primary-color);
   font-weight: 900;
   font-family: sans-serif;
   display: inline-block;
   letter-spacing: 1px;
 }
 
-/* 2. Standalone Map (Left Column) */
 .map-standalone {
   position: relative;
   width: 100%;
@@ -856,24 +886,19 @@ button {
   width: 100%;
   height: 100%;
   border: 0;
-  /* Apply the pulsing animation here */
   animation: map-pulse 2s infinite ease-in-out;
   display: block;
 }
 
-/* Remove the hover effect (since it's now automatic) */
-/* .map-standalone:hover iframe { filter: grayscale(0%); } */
-
-/* Define the Pulse Animation */
 @keyframes map-pulse {
   0% {
-    filter: grayscale(100%); /* Start Black & White */
+    filter: grayscale(100%);
   }
   50% {
-    filter: grayscale(0%); /* Fade to Full Color */
+    filter: grayscale(0%);
   }
   100% {
-    filter: grayscale(100%); /* Back to Black & White */
+    filter: grayscale(100%);
   }
 }
 
@@ -892,10 +917,9 @@ button {
   align-items: center;
 }
 
-/* 3. Form Card (Right Column) - TIGHTER PADDING */
 .floating-card {
   background: #ffffff;
-  padding: 2rem; /* Reduced from 2.5rem */
+  padding: 2rem;
   border-radius: 16px;
   border-left: 5px solid var(--primary-color);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
@@ -905,7 +929,6 @@ button {
   justify-content: center;
 }
 
-/* 4. "Online" Indicator */
 .live-indicator {
   font-size: 0.75rem;
   color: #28a745;
@@ -940,7 +963,6 @@ button {
   }
 }
 
-/* 5. Input Fields & Icons */
 .input-float {
   position: relative;
   width: 100%;
@@ -951,7 +973,7 @@ button {
   background: #f8f9fa;
   border: 1px solid #e9ecef;
   border-radius: 8px;
-  padding: 10px 15px 10px 45px; /* Slightly tighter vertical padding */
+  padding: 10px 15px 10px 45px;
   font-size: 0.95rem;
   color: #333;
   outline: none;
@@ -984,10 +1006,9 @@ button {
   color: var(--primary-color);
 }
 
-/* 6. "Or Contact Directly" Divider - COMPACT MARGINS */
 .floating-card .text-center.my-0 {
   position: relative;
-  margin-top: 0.5rem !important; /* Reduced margin */
+  margin-top: 0.5rem !important;
   margin-bottom: 0.5rem !important;
   z-index: 1;
 }
@@ -1011,13 +1032,11 @@ button {
   font-size: 0.7rem;
 }
 
-/* 7. Utilities */
 .x-small {
   font-size: 0.7rem;
   letter-spacing: 1px;
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 991px) {
   .map-standalone {
     height: 300px;
@@ -1029,45 +1048,38 @@ button {
 }
 
 /* =========================================
-   MODERN FOOTER SECTION - FIXED
+   FOOTER SECTION
    ========================================= */
-
-/* 1. Main Container */
 .footer-section {
-  background-color: #050505; /* Deepest Matte Black */
+  background-color: #050505;
   color: #fff;
   padding-top: 4rem;
   font-size: 0.9rem;
   border-top: 1px solid #111;
-  /* FIX: Hides the overflow causing the horizontal scroll */
   overflow: hidden;
 }
 
-/* 2. Links (Projects & Company) */
 .footer-links li {
   margin-bottom: 12px;
 }
 
 .footer-links a {
-  color: #888; /* Default Grey */
+  color: #888;
   text-decoration: none;
   transition: all 0.3s ease;
   display: inline-block;
 }
 
-/* Hover Effect: Slide Right & Turn White */
 .footer-links a:hover {
   color: #fff;
   transform: translateX(5px);
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-/* Utility for Privacy/Terms links */
 .hover-white:hover {
   color: #fff !important;
 }
 
-/* 3. Social Media Buttons */
 .social-btn {
   width: 40px;
   height: 40px;
@@ -1077,20 +1089,19 @@ button {
   align-items: center;
   justify-content: center;
   color: #888;
-  border-radius: 50%; /* Circle shape */
+  border-radius: 50%;
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
 .social-btn:hover {
-  background: #dc3545; /* Red (matches your specific button color) */
+  background: #dc3545;
   border-color: #dc3545;
   color: #fff;
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
 }
 
-/* 4. Newsletter Form */
 .footer-form input::placeholder {
   color: #555;
 }
@@ -1109,70 +1120,58 @@ button {
   margin-top: 0;
 }
 
-/* 6. Mobile Responsiveness */
 @media (max-width: 768px) {
   .footer-section {
     padding-top: 2rem;
   }
 
   .footer-links li {
-    margin-bottom: 8px; /* Tighter spacing on mobile */
+    margin-bottom: 8px;
   }
 
-  /* Disable the slide animation on mobile to prevent jitter */
   .footer-links a:hover {
     transform: none;
   }
 }
 
-/* Scroll to Top Button */
 /* =========================================
-   SCROLL TO TOP BUTTON - UPDATED
+   SCROLL TO TOP BUTTON
    ========================================= */
 .scroll-top-btn {
   position: fixed;
   bottom: 25px;
   right: 30px;
-
-  /* SMALLER SIZE */
   width: 40px;
   height: 40px;
   font-size: 1.2rem;
-
   border-radius: 50%;
-
-  /* FAINT WHITE (Default) */
   background-color: rgba(255, 255, 255, 0.8);
-  color: #333; /* Dark icon so it is visible on the white background */
-  border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border for contrast */
-  backdrop-filter: blur(4px); /* Glass effect */
-
+  color: #333;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-
-  /* Hidden by default */
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px);
   transition: all 0.3s ease;
 }
 
-/* Class added via JS to show button */
 .scroll-top-btn.show {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
-/* FAINT RED (Hover) */
 .scroll-top-btn:hover {
-  background-color: rgba(220, 53, 69, 0.85); /* Faint Red */
-  color: #fff; /* White icon */
+  background-color: rgba(220, 53, 69, 0.85);
+  color: #fff;
   border-color: transparent;
   transform: translateY(-3px);
   box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
 }
+
 @media (max-width: 768px) {
   .scroll-top-btn {
     position: fixed;

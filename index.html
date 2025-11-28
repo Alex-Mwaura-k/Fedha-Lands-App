@@ -10,12 +10,10 @@
     />
     <title>Fedha Land Ventures</title>
 
-    <!-- STYLES -->
     <link rel="stylesheet" href="/css/styles.css" />
 
-    <!-- BOOTSTRAP CSS -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       crossorigin="anonymous"
     />
@@ -24,12 +22,10 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
     />
 
-    <!-- PWA -->
     <link rel="apple-touch-icon" href="icons/icon.png" />
     <meta name="theme-color" content="#ff0000" />
     <link rel="manifest" href="manifest.json" />
 
-    <!-- Preload  -->
     <link rel="preload" as="image" href="/img/carousels/slide_1.png" />
   </head>
 
@@ -48,7 +44,6 @@
           />
         </a>
 
-        <!-- Offcanvas Toggle -->
         <button
           class="navbar-toggler ms-auto"
           type="button"
@@ -59,7 +54,6 @@
           <i class="bi bi-list"></i>
         </button>
 
-        <!-- Offcanvas Menu -->
         <div
           class="offcanvas offcanvas-end"
           tabindex="-1"
@@ -174,7 +168,6 @@
       </div>
     </nav>
 
-    <!-- Install Banner -->
     <div class="container-md d-flex justify-content-end">
       <div class="install-card" id="install-banner">
         <div class="install-buttons">
@@ -185,7 +178,6 @@
     </div>
 
     <main>
-      <!-- Modal -->
       <div class="modal fade" tabindex="-1" id="booking-Modal">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -200,7 +192,7 @@
             </div>
 
             <div class="modal-body">
-              <form action="/" id="bookingForm">
+              <form id="bookingForm" onsubmit="event.preventDefault()">
                 <div class="row mb-3">
                   <div class="col">
                     <input
@@ -291,7 +283,6 @@
         </div>
       </div>
 
-      <!-- Carousel -->
       <div
         id="carouselCaptions"
         class="carousel slide"
@@ -399,7 +390,6 @@
         </button>
       </div>
     </main>
-    <!-- Scrolling banner -->
     <section>
       <div class="scroll-strip p-0">
         <div class="scroll-text">
@@ -418,13 +408,9 @@
         </div>
       </div>
     </section>
-    <!-- Scrolling banner End-->
-
-    <!-- Properties -->
     <section id="properties" class="container-md mt-2 mb-3">
       <h1 class="text-start mb-3 h4">Featured Properties</h1>
       <div class="row g-4 mb-3">
-        <!-- Available Card 1 -->
         <div class="col-lg-4 col-md-6 col-sm-12">
           <a href="#" class="text-decoration-none text-dark">
             <div class="card property-card h-100 border-0 fixed-height">
@@ -467,7 +453,6 @@
           </a>
         </div>
 
-        <!-- Available Card 2 -->
         <div class="col-lg-4 col-md-6 col-sm-12">
           <a href="#" class="text-decoration-none text-dark">
             <div class="card property-card h-100 border-0 fixed-height">
@@ -509,7 +494,6 @@
           </a>
         </div>
 
-        <!-- Available Card 3 -->
         <div class="col-lg-4 col-md-6 col-sm-12">
           <a href="#" class="text-decoration-none text-dark">
             <div class="card property-card h-100 border-0 fixed-height">
@@ -551,7 +535,6 @@
           </a>
         </div>
 
-        <!-- Available Card 4 -->
         <div class="col-lg-4 col-md-6 col-sm-12">
           <a href="#" class="text-decoration-none text-dark">
             <div class="card property-card h-100 border-0 fixed-height">
@@ -593,7 +576,6 @@
           </a>
         </div>
 
-        <!-- Sold Out Card 1 -->
         <div class="col-lg-4 col-md-6 col-sm-12">
           <a href="#" class="text-decoration-none text-dark">
             <div class="card property-card h-100 border-0 fixed-height">
@@ -635,7 +617,6 @@
           </a>
         </div>
 
-        <!-- Sold Out Card 2 -->
         <div class="col-lg-4 col-md-6 col-sm-12">
           <a href="#" class="text-decoration-none text-dark">
             <div class="card property-card h-100 border-0 fixed-height">
@@ -680,16 +661,12 @@
         </div>
       </div>
 
-      <!-- View All Button -->
       <div class="text-center mt-2 mb-2">
         <a href="#" class="btn btn-custom-red px-2 py-1">
           View All Properties
         </a>
       </div>
     </section>
-    <!-- End of View All Button  -->
-    <!-- END OF PROPERTIES CARD  -->
-
     <section id="about-us" class="about-section py-5">
       <div class="container-md">
         <div class="row mb-5">
@@ -912,7 +889,6 @@
       </div>
     </section>
 
-    <!-- BLOGS SECTION -->
     <section id="blog" class="blog-section bg-white">
       <div class="container-md">
         <div class="row mb-2 align-items-end">
@@ -929,7 +905,10 @@
             <div
               class="d-flex flex-column flex-md-row justify-content-lg-end align-items-md-center gap-3 mb-3"
             >
-              <form class="newsletter-form d-flex">
+              <form
+                class="newsletter-form d-flex"
+                onsubmit="event.preventDefault()"
+              >
                 <input
                   type="email"
                   class="form-control rounded-0"
@@ -1032,11 +1011,15 @@
                 <div class="media-card video-card h-100 d-flex flex-column">
                   <div class="ratio ratio-16x9">
                     <iframe
+                      width="560"
+                      height="315"
                       src="https://www.youtube.com/embed/7nbOFYnpG3o?rel=0"
                       title="YouTube video player"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerpolicy="strict-origin-when-cross-origin"
                       allowfullscreen
-                    >
-                    </iframe>
+                    ></iframe>
                   </div>
                   <div class="media-body flex-grow-1 d-flex flex-column">
                     <div class="badge bg-dark mb-2 align-self-start rounded-0">
@@ -1259,9 +1242,6 @@
         </div>
       </div>
     </section>
-    <!-- Blogs section End  -->
-
-    <!-- Gallery Section -->
     <section id="gallery" class="gallery-section">
       <div class="container-md">
         <div class="row mb-5 align-items-center">
@@ -1464,22 +1444,12 @@
         </div>
       </div>
     </section>
-    <!-- End of Gallery Section -->
-    <!-- =========================================
-     CONTACT SECTION: Text/Map Left + Form Right
-     ========================================= -->
-    <!-- =========================================
-     CONTACT SECTION: Text/Map Left + Form Right
-     ========================================= -->
     <section id="contact" class="contact-feature position-relative">
-      <!-- Background Squares -->
       <div class="tech-grid-bg"></div>
 
       <div class="container-md h-100 position-relative z-2">
         <div class="row h-100 align-items-stretch justify-content-center g-4">
-          <!-- LEFT COLUMN: Info (Top) + Map (Bottom) -->
           <div class="col-lg-6 col-md-10 d-flex flex-column">
-            <!-- 1. TEXT AREA (Top Half) -->
             <div class="text-area-wrapper mb-4 pe-lg-4">
               <span class="text-danger fw-bold text-uppercase small ls-2"
                 >Connect With Us</span
@@ -1492,7 +1462,6 @@
                 <strong>Nyongo House, Ruiru</strong> or reach out directly.
               </p>
 
-              <!-- Contact Details (Horizontal Layout) -->
               <div
                 class="d-flex flex-wrap justify-content-between align-items-center w-100"
               >
@@ -1509,23 +1478,22 @@
               </div>
             </div>
 
-            <!-- 2. MAP AREA (Bottom Half - Fills remaining height) -->
             <div class="map-standalone flex-grow-1">
-              <!-- Specific Iframe you requested -->
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6815.522655329439!2d36.952734627919114!3d-1.1464046158331644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f474b80c7eeff%3A0xcc6b79a45ed5fc75!2sFedha%20Land%20Ventures!5e1!3m2!1sen!2ske!4v1764239700362!5m2!1sen!2ske"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127649.24669159995!2d36.81621878964839!3d-1.1324982396298195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f474b80c7eeff%3A0xcc6b79a45ed5fc75!2sFedha%20Land%20Ventures!5e0!3m2!1sen!2ske!4v1764347923584!5m2!1sen!2ske"
+                width="600"
+                height="450"
+                style="border: 0"
                 allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
-              >
-              </iframe>
+              ></iframe>
               <div class="map-tag">
                 <i class="bi bi-geo-alt-fill text-danger me-1"></i> Ruiru HQ
               </div>
             </div>
           </div>
 
-          <!-- RIGHT COLUMN: Form Card -->
           <div class="col-lg-6 col-md-10">
             <div class="floating-card h-100">
               <div
@@ -1537,7 +1505,7 @@
                 </div>
               </div>
 
-              <form id="contactForm">
+              <form id="contactForm" onsubmit="event.preventDefault()">
                 <div class="row g-3">
                   <div class="col-12">
                     <div class="input-float">
@@ -1607,7 +1575,6 @@
                     </div>
                   </div>
 
-                  <!-- Send Button -->
                   <div class="col-12 mt-2">
                     <button
                       type="submit"
@@ -1617,14 +1584,12 @@
                     </button>
                   </div>
 
-                  <!-- Divider -->
                   <div class="col-12 text-center my-0">
                     <span class="text-muted x-small text-uppercase ls-2"
                       >Or Contact Directly</span
                     >
                   </div>
 
-                  <!-- Action Buttons -->
                   <div class="col-6">
                     <a
                       href="tel:+254715113103"
@@ -1634,7 +1599,6 @@
                     </a>
                   </div>
                   <div class="col-6">
-                    <!-- Directions Link -->
                     <a
                       href="https://www.google.com/maps/dir/?api=1&destination=Nyongo+House,+Ruiru"
                       target="_blank"
@@ -1650,15 +1614,9 @@
         </div>
       </div>
     </section>
-    <!-- End of Contact Section  -->
-    <!-- =========================================
-     MODERN FOOTER SECTION
-     ========================================= -->
     <footer class="footer-section">
       <div class="container-md">
-        <!-- TOP ROW: Brand, Links, & Newsletter -->
         <div class="row g-5 mb-2">
-          <!-- COLUMN 1: Brand & Socials -->
           <div class="col-lg-4 col-md-6">
             <a href="#" class="footer-brand mb-4 d-block">
               <img src="icons/logo.png" alt="Fedha Land Ventures" width="180" />
@@ -1711,7 +1669,6 @@
             </div>
           </div>
 
-          <!-- COLUMN 2: Featured Properties -->
           <div class="col-lg-2 col-md-6 col-6">
             <h5 class="text-white fw-bold mb-4">Projects</h5>
             <ul class="list-unstyled footer-links">
@@ -1723,7 +1680,6 @@
             </ul>
           </div>
 
-          <!-- COLUMN 3: Company -->
           <div class="col-lg-2 col-md-6 col-6">
             <h5 class="text-white fw-bold mb-4">Company</h5>
             <ul class="list-unstyled footer-links">
@@ -1735,7 +1691,6 @@
             </ul>
           </div>
 
-          <!-- COLUMN 4: Newsletter -->
           <div
             class="col-lg-4 col-md-6 text-center text-md-start mx-auto mx-md-0 mt-1 mt-md-5"
           >
@@ -1746,7 +1701,7 @@
               spam, just value.
             </p>
 
-            <form class="footer-form mb-3">
+            <form class="footer-form mb-3" onsubmit="event.preventDefault()">
               <div class="input-group">
                 <input
                   type="email"
@@ -1771,14 +1726,12 @@
           </div>
         </div>
 
-        <!-- DIVIDER LINE -->
         <div class="footer-divider mt-0 mt-md-5"></div>
 
-        <!-- BOTTOM ROW: Copyright & Legal -->
         <div class="row align-items-center py-4">
           <div class="col-md-6 text-center text-md-start">
             <p class="text-secondary small mb-0">
-              &copy; <span id="year"></span>
+              © <span id="year"></span>
               <strong>Fedha Land Ventures Ltd</strong>. All Rights Reserved.
             </p>
           </div>
@@ -1812,12 +1765,10 @@
     >
       <i class="bi bi-arrow-up"></i>
     </button>
-    <!-- AUTO-UPDATE YEAR SCRIPT -->
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>
 
-    <!-- SCRIPTS -->
     <script src="/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/functional.js"></script>
