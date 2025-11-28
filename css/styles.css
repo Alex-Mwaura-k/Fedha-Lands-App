@@ -1036,7 +1036,7 @@ button {
 .footer-section {
   background-color: #050505; /* Deepest Matte Black */
   color: #fff;
-  padding-top: 5rem;
+  padding-top: 4rem;
   font-size: 0.9rem;
   border-top: 1px solid #111;
   /* FIX: Hides the overflow causing the horizontal scroll */
