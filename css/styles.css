@@ -1103,11 +1103,10 @@ button {
   outline: none;
 }
 
-/* 5. Divider Line */
 .footer-divider {
   height: 1px;
   background: linear-gradient(to right, transparent, #222, transparent);
-  margin-top: 2rem;
+  margin-top: 0;
 }
 
 /* 6. Mobile Responsiveness */
