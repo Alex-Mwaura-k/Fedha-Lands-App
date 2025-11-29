@@ -6,17 +6,17 @@ const Hero = () => {
   const slides = [
     {
       id: 0,
-      image: "/img/carousels/slide_1.png",
+      image: "/img/carousels/slide_1.webp",
       alt: "Royal Garden",
     },
     {
       id: 1,
-      image: "/img/carousels/slide_2.png",
+      image: "/img/carousels/slide_2.webp",
       alt: "Kijani Garden",
     },
     {
       id: 2,
-      image: "/img/carousels/slide_3.png",
+      image: "/img/carousels/slide_3.webp",
       alt: "Unity Garden",
     },
   ];
