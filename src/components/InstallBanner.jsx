@@ -68,19 +68,14 @@ const InstallBanner = () => {
   if (!isVisible) return null;
 
   return (
-    <div
-      className="container-md d-flex justify-content-end fixed-bottom mb-3"
-      style={{ zIndex: 9999 }}
-    >
-      <div className="install-card" id="install-banner">
-        <div className="install-buttons">
-          <button id="install-btn" onClick={handleInstallClick}>
-            Install App
-          </button>
-          <button id="dismiss-btn" onClick={handleDismiss}>
-            Maybe Later
-          </button>
-        </div>
+    <div className="install-card" id="install-banner">
+      <div className="install-buttons">
+        <button id="install-btn" onClick={handleInstallClick}>
+          Install App
+        </button>
+        <button id="dismiss-btn" onClick={handleDismiss}>
+          Maybe Later
+        </button>
       </div>
     </div>
   );
