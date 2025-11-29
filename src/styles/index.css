@@ -729,7 +729,7 @@ button {
 #gallery.gallery-section {
   background-color: #0f0f0f !important;
   padding-top: 4rem;
-  padding-bottom: 4rem;
+  padding-bottom: 1.5rem;
   min-height: 80vh;
 }
 
@@ -1178,4 +1178,28 @@ button {
     bottom: 20px;
     right: 12px;
   }
+}
+
+/* ... existing code ... */
+
+/* React Carousel Animation Fix */
+.carousel-item {
+  transition: opacity 1s ease-in-out;
+  opacity: 0;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+.carousel-item.active {
+  opacity: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.carousel-inner {
+  position: relative;
 }
