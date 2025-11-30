@@ -325,8 +325,11 @@ nav i:hover {
 .carousel-indicators,
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  opacity: 0.3;
+  opacity: 0.5;
   transition: opacity 0.3s;
+  bottom: 0 !important;
+  margin: 0 0 8px 0 !important;
+  gap: 8px;
 }
 
 .carousel-control-prev-icon:hover,
@@ -344,11 +347,40 @@ button {
     font-size: 12px !important;
   }
 }
+/* MODALS (Fixed Padding & Styling) */
+.modal-content {
+  border-radius: 12px; /* Soft rounded corners */
+  border: none; /* Remove default ugly border */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); /* Float effect */
+  overflow: hidden;
+}
 
-.modal-header,
+.modal-header {
+  border-bottom: none;
+  padding: 2rem 2rem 0.5rem; /* Big padding for the title */
+}
+
+.modal-title {
+  font-weight: 600; /* Bold title */
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.modal-body {
+  padding: 1.5rem 1rem; /* Breathing room for the form */
+}
+
 .modal-footer {
-  border: none;
-  padding: 0;
+  border-top: none;
+  padding: 0 1rem 1.5rem; /* Spacing for the buttons */
+}
+
+/* Fix Input Field Focus color in Modal */
+#booking-Modal .form-control:focus,
+#booking-Modal .form-select:focus {
+  box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.1);
+  outline: none;
+  border-color: var(--primary-color);
 }
 
 /* =========================================

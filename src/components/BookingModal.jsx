@@ -74,7 +74,7 @@ const BookingModal = () => {
                     defaultValue=""
                   >
                     <option value="" disabled>
-                      Select Site
+                      Sites
                     </option>
                     <option value="1">Royal Garden Phase 5</option>
                     <option value="1">Kijani Garden Malindi</option>

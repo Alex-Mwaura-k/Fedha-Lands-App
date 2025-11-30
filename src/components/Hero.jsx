@@ -81,7 +81,7 @@ const Hero = () => {
               alt={slide.alt}
               loading="lazy"
             />
-            <div className="carousel-caption d-md-block p-0 mb-3">
+            <div className="carousel-caption d-md-block p-0">
               <button
                 type="button"
                 className="btn btn-outline-light px-3 py-1"
