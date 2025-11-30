@@ -19,7 +19,7 @@ const InstallBanner = () => {
     const dismissedTime = localStorage.getItem("pwaDismissTimestamp");
     if (dismissedTime) {
       const timePassed = Date.now() - parseInt(dismissedTime, 10);
-      const fiveMinutes = 5 * 60 * 1000; // 5 minutes in milliseconds
+      const fiveMinutes = 2 * 60 * 1000; // 5 minutes in milliseconds
 
       if (timePassed < fiveMinutes) {
         return; // Stop here if it hasn't been 5 minutes
