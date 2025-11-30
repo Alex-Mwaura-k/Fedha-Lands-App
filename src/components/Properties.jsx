@@ -7,7 +7,7 @@ const Properties = () => {
       location: "Kithyoko",
       size: "50x100",
       desc: "Prime 50x100 plots located just 9 mins off Thika-Garissa highway, offering serene environment and excellent investment opportunities.",
-      price: "Ksh 160,000/-",
+      price: "Ksh 130,000/-",
       status: "Available",
       img: "/img/properties/Royal Gardens 5.png",
     },
