@@ -1,5 +1,5 @@
 import Navbar from "./components/Navbar";
-import InstallBanner from "./components/InstallBanner";
+import InstallBanner from "./components/InstallBanner"; // Imported here
 import Hero from "./components/Hero";
 import BookingModal from "./components/BookingModal";
 import ScrollingBanner from "./components/ScrollingBanner";
@@ -15,7 +15,7 @@ function App() {
   return (
     <>
       <Navbar />
-
+      <InstallBanner /> {/* <--- ADDED THIS LINE. Now it will render! */}
       <main>
         <Hero />
         <BookingModal />
@@ -24,9 +24,8 @@ function App() {
         <About />
         <Blog />
         <Gallery />
-        <Contact /> {/* <-- Added this */}
+        <Contact />
       </main>
-
       <ScrollToTop />
       <Footer />
     </>
