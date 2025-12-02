@@ -1,13 +1,12 @@
 import { useState } from "react";
+import { Link } from "react-router-dom"; // <--- Import Link
 
 const Navbar = () => {
-  // State to manage mobile nested dropdowns (Royal Garden & Kitengela)
   const [activeSubmenu, setActiveSubmenu] = useState(null);
 
   const toggleSubmenu = (e, name) => {
     e.preventDefault();
     e.stopPropagation();
-    // Toggle: if clicking the same one, close it. If new one, open it.
     setActiveSubmenu(activeSubmenu === name ? null : name);
   };
 
@@ -17,16 +16,17 @@ const Navbar = () => {
       data-bs-theme="dark"
     >
       <div className="container-md">
-        <a className="navbar-brand" href="#">
+        {/* LOGO: Now clicks back to Home */}
+        <Link className="navbar-brand" to="/">
           <img
             src="/icons/logo.png"
             alt="Fedha Land Ventures"
             width="150"
             className="d-inline-block align-text-top"
           />
-        </a>
+        </Link>
 
-        {/* Offcanvas Toggle Button (Mobile) */}
+        {/* Mobile Toggle */}
         <button
           className="navbar-toggler ms-auto"
           type="button"
@@ -37,7 +37,7 @@ const Navbar = () => {
           <i className="bi bi-list"></i>
         </button>
 
-        {/* Offcanvas Menu Content */}
+        {/* Menu Items */}
         <div
           className="offcanvas offcanvas-end"
           tabIndex="-1"
@@ -58,10 +58,11 @@ const Navbar = () => {
 
           <div className="offcanvas-body">
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+              {/* HOME LINK: Fixed to go to "/" */}
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <Link className="nav-link active" to="/">
                   Home
-                </a>
+                </Link>
               </li>
 
               {/* Properties Dropdown */}
@@ -76,7 +77,7 @@ const Navbar = () => {
                   Properties
                 </a>
                 <ul className="dropdown-menu mt-2">
-                  {/* Nested Dropdown 1: Royal Garden */}
+                  {/* Nested Dropdown: Royal Garden */}
                   <li className="dropdown-submenu">
                     <a
                       className="dropdown-item dropdown-toggle"
@@ -91,30 +92,30 @@ const Navbar = () => {
                       }`}
                     >
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <Link className="dropdown-item" to="/property/1">
                           Phase V
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <Link className="dropdown-item" to="/property/4">
                           Phase IV
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </li>
 
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <Link className="dropdown-item" to="/property/2">
                       Kijani Garden Malindi
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <Link className="dropdown-item" to="/property/3">
                       Unity Garden
-                    </a>
+                    </Link>
                   </li>
 
-                  {/* Nested Dropdown 2: Kitengela */}
+                  {/* Nested Dropdown: Kitengela */}
                   <li className="dropdown-submenu">
                     <a
                       className="dropdown-item dropdown-toggle"
@@ -143,29 +144,30 @@ const Navbar = () => {
                 </ul>
               </li>
 
+              {/* Note: Hashtag links only work if you are ON the home page. 
+                  We will fix this later for multi-page navigation. */}
               <li className="nav-item">
-                <a className="nav-link" href="#about-us">
+                <a className="nav-link" href="/#about-us">
                   About
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/blogs">
                   Blog
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <a className="nav-link" href="/#gallery">
                   Gallery
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <a className="nav-link" href="/#contact">
                   Contact
                 </a>
               </li>
             </ul>
 
-            {/* Contact Info Right Side */}
             <div className="phone d-flex flex-column align-items-end mt-lg-0">
               <div className="p-number d-flex align-items-center gap-2">
                 <a
