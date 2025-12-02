@@ -7,7 +7,13 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
+      includeAssets: [
+        "favicon.ico",
+        "apple-touch-icon.png",
+        "mask-icon.svg",
+        "fonts/*.woff",
+        "fonts/*.woff2",
+      ], // <--- ADDED FONTS HERE
 
       manifest: {
         name: "Fedha Land Ventures",
@@ -32,19 +38,18 @@ export default defineConfig({
       },
 
       workbox: {
-        // 1. This tells the Service Worker to open index.html for ANY route (like /gallery)
+        // Force all navigation to go to index.html (Fixes the "You're offline" screen)
         navigateFallback: "/index.html",
 
-        // 2. Ensure all file types are cached
+        // Ensure fonts and large images are cached
         globPatterns: [
           "**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,woff,woff2}",
         ],
-
-        // 3. Allow large images
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
 
         runtimeCaching: [
           {
+            // Cache Google Fonts (if any)
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
             handler: "CacheFirst",
             options: {
