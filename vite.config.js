@@ -7,10 +7,9 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: "autoUpdate", // Automatically update the app when you deploy changes
+      registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
 
-      // THIS IS YOUR MANIFEST (App Details)
       manifest: {
         name: "Fedha Land Ventures",
         short_name: "Fedha Land",
@@ -21,7 +20,7 @@ export default defineConfig({
         orientation: "portrait",
         icons: [
           {
-            src: "icons/icon.png", // Ensure you have this file in public/icons/
+            src: "icons/icon.png",
             sizes: "192x192",
             type: "image/png",
           },
@@ -33,20 +32,22 @@ export default defineConfig({
         ],
       },
 
-      // CACHING STRATEGY (Offline Capability)
       workbox: {
-        // Cache images, fonts, and scripts so they work offline
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,jpg,jpeg}"],
+        // 1. ADD 'webp' TO THIS LIST
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp}"],
+
+        // 2. INCREASE SIZE LIMIT TO 5MB (To force caching large images)
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+
         runtimeCaching: [
           {
-            // Cache Google Fonts
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
             handler: "CacheFirst",
             options: {
               cacheName: "google-fonts-cache",
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+                maxAgeSeconds: 60 * 60 * 24 * 365,
               },
               cacheableResponse: {
                 statuses: [0, 200],
