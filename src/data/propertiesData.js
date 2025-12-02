@@ -6,7 +6,7 @@ export const properties = [
     title: "Royal Garden Kithyoko - Phase 5",
     location: "Kithyoko, Machakos",
     size: "50x100",
-    price: "160,000",
+    price: "130,000",
     status: "Available",
     img: "/img/properties/Royal Gardens 5.png",
     description:
