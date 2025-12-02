@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
@@ -33,12 +32,15 @@ export default defineConfig({
       },
 
       workbox: {
-        // 1. ADD 'webp' TO THIS LIST
+        // 1. This tells the Service Worker to open index.html for ANY route (like /gallery)
+        navigateFallback: "/index.html",
+
+        // 2. Ensure all file types are cached
         globPatterns: [
           "**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,woff,woff2}",
         ],
 
-        // 2. INCREASE SIZE LIMIT TO 5MB (To force caching large images)
+        // 3. Allow large images
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
 
         runtimeCaching: [
