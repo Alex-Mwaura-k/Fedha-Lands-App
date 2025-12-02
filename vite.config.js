@@ -34,7 +34,9 @@ export default defineConfig({
 
       workbox: {
         // 1. ADD 'webp' TO THIS LIST
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp}"],
+        globPatterns: [
+          "**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,woff,woff2}",
+        ],
 
         // 2. INCREASE SIZE LIMIT TO 5MB (To force caching large images)
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
