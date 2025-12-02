@@ -1405,7 +1405,6 @@ button {
 /* The "Active" page name (currently invisible) */
 .breadcrumb-item.active {
   color: #ffffff !important; /* Dark Grey */
-  font-weight: 600;
 }
 
 /* The "/" Divider */
