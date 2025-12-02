@@ -4,7 +4,7 @@ const AllGallery = () => {
   return (
     <div
       style={{
-        paddingTop: "80px",
+        paddingTop: "10px",
         paddingBottom: "50px",
         backgroundColor: "#0f0f0f",
       }}

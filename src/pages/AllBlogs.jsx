@@ -2,7 +2,7 @@ import Blog from "../components/Blog";
 
 const AllBlogs = () => {
   return (
-    <div style={{ paddingTop: "80px", paddingBottom: "50px" }}>
+    <div style={{ paddingTop: "20px", paddingBottom: "50px" }}>
       <div className="container-md mb-4">
         <h1 className="fw-bold text-dark">Blogs Center</h1>
         <p className="text-muted">

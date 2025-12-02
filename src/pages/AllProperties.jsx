@@ -2,7 +2,7 @@ import Properties from "../components/Properties";
 
 const AllProperties = () => {
   return (
-    <div style={{ paddingTop: "80px", paddingBottom: "50px" }}>
+    <div style={{ paddingTop: "20px", paddingBottom: "50px" }}>
       <div className="container-md mb-4">
         <h1 className="fw-bold text-dark">Our Prime Properties</h1>
         <p className="text-muted">

@@ -22,7 +22,7 @@ const PropertyDetails = () => {
   return (
     <div
       className="property-details-page bg-light pb-5"
-      style={{ paddingTop: "80px" }}
+      style={{ paddingTop: "20px" }}
     >
       {/* 1. Header / Breadcrumb */}
       <div className="container-md mb-4">

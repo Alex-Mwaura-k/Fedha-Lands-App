@@ -22,7 +22,7 @@ const ArticleDetails = () => {
   return (
     <div
       className="article-details-page bg-light pb-5"
-      style={{ paddingTop: "80px" }}
+      style={{ paddingTop: "20px" }}
     >
       <div className="container-md">
         {/* Breadcrumb */}
