@@ -14,7 +14,7 @@ export const properties = [
       "/img/properties/Kijani Gardens.png",
       "/img/properties/Royal Gardenx1.png",
       "/img/properties/Royal Gardenx2.png", // Placeholders to simulate more shots
-      "https://picsum.photos/id/11/800/600",
+      "/img/properties/Royal Gardenx3.png",
     ],
     description:
       "Located just 9 minutes from the Thika-Garissa highway, Royal Garden Phase 5 offers a serene environment perfect for immediate settlement. The soil is red, suitable for farming, and the area is rapidly developing. With ready title deeds, water on site, and electricity nearby, it's an ideal choice for both residential and investment purposes. The plots are beaconed, and the roads are graded for easy access. Don't miss out on this opportunity to own a piece of prime land in Kithyoko.",
