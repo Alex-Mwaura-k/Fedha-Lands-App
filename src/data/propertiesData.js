@@ -60,7 +60,7 @@ export const properties = [
     images: ["/img/properties/Unity Gardens.png"], // Fallback if only 1 image
     description:
       "Prime commercial and residential plots in the heart of Makutano. Extremely high value appreciation rate. Ideal for building rental flats or commercial centers. The area is a bustling hub with a vibrant market, schools, and easy access to major roads. With ready title deeds, water, electricity, and a secure perimeter fence, Unity Garden offers everything you need for a successful investment.",
-    features: ["Commercial Zone", "Water & Electricity", "Perimeter Fence"],
+    features: ["Commercial Zone", "Water & Electricity", "Perimeter Fence", "Controll access gate"],
     mapSrc:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955!2d37.3!3d-0.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMMKwNDInMDAuMCJTIDM3wrAxOCwwMC4wIkU!5e0!3m2!1sen!2ske!4v1620000000000!5m2!1sen!2ske",
   },
