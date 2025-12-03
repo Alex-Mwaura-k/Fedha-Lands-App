@@ -50,10 +50,14 @@ const Properties = ({ limit }) => {
                       {prop.size}
                     </div>
                   </div>
-                  {/* Truncate description for the card view */}
+
+                  {/* Truncate description for the card view using JS substring */}
                   <p className="card-text small">
-                    {prop.description.substring(0, 80)}...
+                    {prop.description.length > 100
+                      ? `${prop.description.substring(0, 125)}...`
+                      : prop.description}
                   </p>
+
                   <div className="d-flex justify-content-between align-items-center mt-auto">
                     <span className="fw-bold text-danger">
                       Ksh {prop.price}/-

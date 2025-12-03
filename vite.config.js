@@ -13,7 +13,7 @@ export default defineConfig({
         "mask-icon.svg",
         "fonts/*.woff",
         "fonts/*.woff2",
-      ], // <--- ADDED FONTS HERE
+      ],
 
       manifest: {
         name: "Fedha Land Ventures",

@@ -166,8 +166,6 @@ const About = () => {
             </div>
           </div>
         </div>
-
-        {/* Dynamic Stats Component */}
         <Stats />
       </div>
     </section>

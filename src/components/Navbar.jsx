@@ -147,9 +147,9 @@ const Navbar = () => {
               {/* Note: Hashtag links only work if you are ON the home page. 
                   We will fix this later for multi-page navigation. */}
               <li className="nav-item">
-                <a className="nav-link" href="/#about-us">
+                <Link className="nav-link" to="/about">
                   About
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/blogs">
@@ -157,14 +157,14 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/#gallery">
+                <Link className="nav-link" to="/gallery">
                   Gallery
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/#contact">
+                <Link className="nav-link" to="/contact">
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
 

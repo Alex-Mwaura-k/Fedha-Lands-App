@@ -490,10 +490,12 @@ button {
 
 .card-text {
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3 !important; /* Force 3 lines */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-height: 4.5em; /* Keeps cards consistent height even if text is short */
+  line-height: 1.5em;
 }
 
 .card-title {
@@ -715,7 +717,7 @@ button {
 
 .text-truncate-2 {
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -805,9 +807,8 @@ button {
    ========================================= */
 #gallery.gallery-section {
   background-color: #0f0f0f !important;
-  padding-top: 4rem;
-  padding-bottom: 1.5rem;
-  min-height: 80vh;
+  padding-top: 1rem !important;
+  padding-bottom: 1.5rem !important;
 }
 
 #gallery .text-outline-red {
@@ -934,7 +935,8 @@ button {
 }
 
 .contact-feature {
-  padding: 3rem 0;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
   background-color: #f4f4f4;
   position: relative;
 }
@@ -1460,4 +1462,9 @@ nav[aria-label="breadcrumb"] {
 .thumbnail-img:hover {
   opacity: 1 !important;
   transform: scale(1.05);
+}
+
+.about-page-container #about-us.about-section {
+  /* We use !important to override the existing styles */
+  padding-top: 1rem !important;
 }

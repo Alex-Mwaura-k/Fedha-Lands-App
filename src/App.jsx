@@ -8,6 +8,7 @@ import ScrollingBanner from "./components/ScrollingBanner";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import InstallBanner from "./components/InstallBanner";
+import Loading from "./components/Loading";
 
 // Lazy Load Components (Sections)
 const Properties = lazy(() => import("./components/Properties"));
@@ -19,10 +20,12 @@ const Contact = lazy(() => import("./components/Contact"));
 // Lazy Load Pages (Full Pages)
 const PropertyDetails = lazy(() => import("./pages/PropertyDetails"));
 const AllProperties = lazy(() => import("./pages/AllProperties"));
-// --- NEW IMPORTS ---
 const ArticleDetails = lazy(() => import("./pages/ArticleDetails"));
 const AllBlogs = lazy(() => import("./pages/AllBlogs"));
 const AllGallery = lazy(() => import("./pages/AllGallery"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const ContactPage = lazy(() => import("./pages/ContactPage")); // <--- NEW IMPORT
 
 // HOME PAGE LAYOUT
 const Home = () => (
@@ -45,26 +48,34 @@ function App() {
       <InstallBanner />
       <BookingModal />
 
-      {/* Suspense handles the loading state while lazy components fetch */}
-      <Suspense
-        fallback={<div className="text-center py-5 mt-5">Loading...</div>}
-      >
-        <Routes>
-          {/* Home Route */}
-          <Route path="/" element={<Home />} />
+      <main>
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            {/* Home Route */}
+            <Route path="/" element={<Home />} />
 
-          {/* Property Routes */}
-          <Route path="/properties" element={<AllProperties />} />
-          <Route path="/property/:id" element={<PropertyDetails />} />
+            {/* Property Routes */}
+            <Route path="/properties" element={<AllProperties />} />
+            <Route path="/property/:id" element={<PropertyDetails />} />
 
-          {/* Blog / Media Center Routes */}
-          <Route path="/blogs" element={<AllBlogs />} />
-          <Route path="/article/:id" element={<ArticleDetails />} />
+            {/* Blog Routes */}
+            <Route path="/blogs" element={<AllBlogs />} />
+            <Route path="/article/:id" element={<ArticleDetails />} />
 
-          {/* Gallery Route */}
-          <Route path="/gallery" element={<AllGallery />} />
-        </Routes>
-      </Suspense>
+            {/* Gallery Route */}
+            <Route path="/gallery" element={<AllGallery />} />
+
+            {/* About Route */}
+            <Route path="/about" element={<AboutPage />} />
+
+            {/* Contact Route (NEW) */}
+            <Route path="/contact" element={<ContactPage />} />
+
+            {/* 404 Route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </main>
 
       <ScrollToTop />
       <Footer />
