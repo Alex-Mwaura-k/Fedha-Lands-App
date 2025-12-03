@@ -78,7 +78,7 @@ export const properties = [
       "Our most affordable project yet. Located 10 minutes from Kavaini shopping center. Perfect for first-time investors looking to secure land cheaply. The area is developing rapidly with new infrastructure projects underway. With ready title deeds, electricity, and community water, it's an excellent opportunity to own land in Kithyoko.",
     features: ["Ready Titles", "Electricity", "Community Water"],
     mapSrc:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955!2d37.5!3d-1.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMcKwMTInMDAuMCJTIDM3wrAzMCwwMC4wIkU!5e0!3m2!1sen!2ske!4v1620000000000!5m2!1sen!2ske",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d271600.1812526625!2d37.50506878016992!3d-0.9826549983425922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1825d50050529db3%3A0x85f1e6c046bd2c91!2sRoyal%20Gardens%20Phase%204(Fedha%20Land%20Ventures)!5e1!3m2!1sen!2ske!4v1764789333226!5m2!1sen!2ske"
   },
   {
     id: 5,
