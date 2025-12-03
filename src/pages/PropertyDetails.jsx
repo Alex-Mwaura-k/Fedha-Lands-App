@@ -1,15 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { properties } from "../data/propertiesData";
 
 const PropertyDetails = () => {
-  const { id } = useParams(); // Get the ID from the URL
+  const { id } = useParams();
   const property = properties.find((p) => p.id === parseInt(id));
 
-  // Auto-scroll to top when opening a new property
+  // State for Main Image Display
+  const [mainImage, setMainImage] = useState("");
+  // State for Lightbox
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  // Initialize main image when property loads
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [id]);
+    if (property) {
+      setMainImage(property.img); // Default to the cover image
+    }
+  }, [id, property]);
 
   if (!property) {
     return (
@@ -19,12 +27,38 @@ const PropertyDetails = () => {
     );
   }
 
+  // Ensure we have an array of images (Backend compatibility safety check)
+  const propertyImages = property.images || [property.img];
+
+  // --- LIGHTBOX HANDLERS ---
+  const openLightbox = (index) => setLightboxIndex(index);
+  const closeLightbox = () => setLightboxIndex(null);
+
+  const nextImage = (e) => {
+    e.stopPropagation();
+    setLightboxIndex((prev) =>
+      prev === propertyImages.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevImage = (e) => {
+    e.stopPropagation();
+    setLightboxIndex((prev) =>
+      prev === 0 ? propertyImages.length - 1 : prev - 1
+    );
+  };
+
+  // Find related properties
+  const relatedProperties = properties
+    .filter((p) => p.id !== property.id)
+    .slice(0, 3);
+
   return (
     <div
       className="property-details-page bg-light pb-5"
       style={{ paddingTop: "20px" }}
     >
-      {/* 1. Header / Breadcrumb */}
+      {/* HEADER */}
       <div className="container-md mb-4">
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
@@ -67,17 +101,72 @@ const PropertyDetails = () => {
 
       <div className="container-md">
         <div className="row g-4">
-          {/* Left Column: Image, Description, Map */}
+          {/* LEFT COLUMN */}
           <div className="col-lg-8">
-            <div className="rounded-3 overflow-hidden shadow-sm bg-white p-1">
-              <img
-                src={property.img}
-                alt={property.title}
-                className="w-100 object-fit-cover"
-                style={{ maxHeight: "500px" }}
-              />
+            {/* 1. MAIN IMAGE VIEWER */}
+            <div className="property-gallery-wrapper bg-white p-1 rounded shadow-sm">
+              {/* Main Image */}
+              <div
+                className="main-image-container"
+                style={{
+                  cursor: "pointer",
+                  position: "relative",
+                  overflow: "hidden",
+                  borderRadius: "8px",
+                }}
+                onClick={() =>
+                  openLightbox(
+                    propertyImages.indexOf(mainImage) !== -1
+                      ? propertyImages.indexOf(mainImage)
+                      : 0
+                  )
+                }
+              >
+                <img
+                  src={mainImage}
+                  alt={property.title}
+                  className="w-100 object-fit-cover"
+                  style={{
+                    maxHeight: "500px",
+                    minHeight: "300px",
+                    transition: "0.3s",
+                  }}
+                />
+                <div className="position-absolute bottom-0 end-0 m-3">
+                  <span className="badge bg-dark">
+                    <i className="bi bi-arrows-fullscreen"></i> View Fullscreen
+                  </span>
+                </div>
+              </div>
+
+              {/* Thumbnails Strip */}
+              <div className="thumbnails-container d-flex gap-2 mt-2 overflow-auto py-2">
+                {propertyImages.map((img, index) => (
+                  <img
+                    key={index}
+                    src={img}
+                    alt={`View ${index + 1}`}
+                    className={`thumbnail-img rounded ${
+                      mainImage === img ? "active-thumb" : ""
+                    }`}
+                    onClick={() => setMainImage(img)}
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "cover",
+                      cursor: "pointer",
+                      border:
+                        mainImage === img
+                          ? "2px solid red"
+                          : "2px solid transparent",
+                      opacity: mainImage === img ? 1 : 0.6,
+                    }}
+                  />
+                ))}
+              </div>
             </div>
 
+            {/* DESCRIPTION */}
             <div className="bg-white p-4 mt-4 rounded shadow-sm">
               <h4 className="fw-bold mb-3 border-bottom pb-2">Description</h4>
               <p className="text-secondary" style={{ lineHeight: "1.8" }}>
@@ -97,7 +186,7 @@ const PropertyDetails = () => {
               </div>
             </div>
 
-            {/* Map Section */}
+            {/* MAP */}
             {property.mapSrc && (
               <div className="bg-white p-4 mt-4 rounded shadow-sm">
                 <h4 className="fw-bold mb-3 border-bottom pb-2">
@@ -115,7 +204,7 @@ const PropertyDetails = () => {
             )}
           </div>
 
-          {/* Right Column: Sticky Price Card */}
+          {/* RIGHT COLUMN (Price Card) */}
           <div className="col-lg-4">
             <div
               className="bg-white p-4 rounded shadow-lg sticky-top"
@@ -127,9 +216,7 @@ const PropertyDetails = () => {
               <p className="text-muted small">
                 Cash Price (Installment options available)
               </p>
-
               <hr />
-
               <div className="d-grid gap-3">
                 <button
                   className="btn btn-dark py-3 fw-bold"
@@ -157,6 +244,72 @@ const PropertyDetails = () => {
           </div>
         </div>
       </div>
+
+      {/* RELATED PROPERTIES */}
+      <div className="container-md mt-5">
+        <h3 className="fw-bold mb-4">More Properties Like This</h3>
+        <div className="row g-4">
+          {relatedProperties.map((rel) => (
+            <div key={rel.id} className="col-md-4">
+              <div className="card property-card h-100 border-0 shadow-sm">
+                <div className="position-relative">
+                  <img
+                    src={rel.img}
+                    className="card-img-top"
+                    alt={rel.title}
+                    style={{ height: "200px", objectFit: "cover" }}
+                  />
+                  <span className="badge bg-danger position-absolute top-0 start-0 m-2">
+                    Ksh {rel.price}
+                  </span>
+                </div>
+                <div className="card-body">
+                  <h6 className="card-title fw-bold">{rel.title}</h6>
+                  <Link
+                    to={`/property/${rel.id}`}
+                    className="btn btn-sm btn-outline-danger mt-2 stretched-link"
+                  >
+                    View Details
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* --- LIGHTBOX OVERLAY --- */}
+      {lightboxIndex !== null && (
+        <div className="lightbox-overlay" onClick={closeLightbox}>
+          <button className="lightbox-close" onClick={closeLightbox}>
+            &times;
+          </button>
+
+          <button className="lightbox-prev" onClick={prevImage}>
+            <i className="bi bi-chevron-left"></i>
+          </button>
+
+          <div
+            className="lightbox-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={propertyImages[lightboxIndex]}
+              alt={`View ${lightboxIndex}`}
+              className="lightbox-img"
+            />
+            <div className="lightbox-caption">
+              <p className="mb-0">
+                {lightboxIndex + 1} / {propertyImages.length}
+              </p>
+            </div>
+          </div>
+
+          <button className="lightbox-next" onClick={nextImage}>
+            <i className="bi bi-chevron-right"></i>
+          </button>
+        </div>
+      )}
     </div>
   );
 };

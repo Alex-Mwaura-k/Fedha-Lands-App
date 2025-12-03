@@ -25,7 +25,17 @@
   --shadow-dark: rgba(0, 0, 0, 0.2);
   --offcanvas-backdrop: rgba(34, 33, 37, 0.8);
 }
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 /* =========================================
    GLOBAL & SCROLLBAR
    ========================================= */
@@ -1290,20 +1300,24 @@ button {
 
 .lightbox-content {
   position: relative;
-  max-width: 90%;
-  max-height: 90vh;
+  max-width: 98vw;
+  max-height: 98vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .lightbox-img {
   max-width: 100%;
-  max-height: 80vh;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
   object-fit: contain;
-  border: 2px solid white;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+  border: 1px solid white;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+  border-radius: 4px;
 }
 
 .lightbox-caption {
@@ -1349,9 +1363,9 @@ button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 2.5rem !important;
-  width: 60px;
-  height: 60px;
+  font-size: 2rem !important;
+  width: 50px;
+  height: 50px;
   display: flex !important;
   justify-content: center;
   align-items: center;
@@ -1393,32 +1407,57 @@ button {
   }
 }
 /* =========================================
-   BREADCRUMB FIXES (Visible on Light BG)
+   BREADCRUMB RESTORATION (Force Red/Dark Theme)
    ========================================= */
+nav[aria-label="breadcrumb"] {
+  padding: 0 !important;
+  margin-bottom: 1rem;
+  padding-left: 5px !important;
+}
+
 .breadcrumb {
-  background-color: transparent;
-  padding: 0;
-  /* margin-bottom: 1rem; */
-  padding-left: 5px;
+  background-color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
-/* The "Active" page name (currently invisible) */
+/* The active page (current location) -> Dark Grey */
 .breadcrumb-item.active {
-  color: #ffffff !important; /* Dark Grey */
+  color: #ffffff !important;
 }
 
-/* The "/" Divider */
+/* The Divider (/) -> Red */
 .breadcrumb-item + .breadcrumb-item::before {
-  color: #dc3545 !important; /* Make the divider Red to match your brand */
+  color: var(--primary-color) !important;
+  font-weight: bold;
+  content: "/";
 }
 
-/* Links in breadcrumbs */
+/* The Links (Home, Properties) -> Red & Bold */
 .breadcrumb-item a {
-  color: #dc3545 !important; /* Red */
-  text-decoration: none;
+  color: var(--primary-color) !important;
+  text-decoration: none !important;
+  letter-spacing: 0.5px;
 }
 
 .breadcrumb-item a:hover {
-  text-decoration: underline;
-  color: #ff0019 !important; /* Darker Red on hover */
+  color: #ff0000 !important; /* Darker red on hover */
+}
+/* PROPERTY DETAILS THUMBNAILS */
+.thumbnails-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.thumbnails-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.thumbnail-img {
+  transition: all 0.2s ease;
+}
+
+.thumbnail-img:hover {
+  opacity: 1 !important;
+  transform: scale(1.05);
 }
