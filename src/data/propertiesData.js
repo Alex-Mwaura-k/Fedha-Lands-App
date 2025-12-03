@@ -43,7 +43,7 @@ export const properties = [
       "https://picsum.photos/id/16/800/600",
     ],
     description:
-      "A massive 1-acre block ideal for holiday homes, speculation, or large scale farming. Located near the Weru Technical Institute, this project promises high returns on investment. The area boasts a cool climate, ocean breeze, and is in close proximity to the beach. With freehold title deeds, tarmacked roads nearby, and a secure fenced environment, Kijani Garden is perfect for those looking to invest in Malindi's thriving property market.",
+      "A massive 1-acre block ideal for holiday homes, speculation, or large scale farming. Located near Msumarini shopping center just 45 minutes from Malindi CBD, this project promises high returns on investment. The area boasts a cool climate, ocean breeze, and is in close proximity to the beach. With freehold title deeds, tarmacked roads nearby, and a secure environment, Kijani Garden is perfect for those looking to invest in Malindi's thriving property market.",
     features: ["Freehold Title", "Near Tarmac", "Ocean Breeze", "Fenced"],
     mapSrc:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955!2d40.1!3d-3.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMTInMDAuMCJTIDQwwrAwNiwwMC4wIkU!5e0!3m2!1sen!2ske!4v1620000000000!5m2!1sen!2ske",
