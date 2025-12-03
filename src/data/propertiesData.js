@@ -10,7 +10,7 @@ export const properties = [
     // NEW: Array of images for the gallery
     images: [
       "/img/properties/Royal Gardens 5.png",
-      "/img/properties/Royal Gardens 4.png",
+      "/img/properties/Amani Gardens.png",
       "/img/properties/Kijani Gardens.png",
       "/img/properties/Unity Gardens.png",
       "https://picsum.photos/id/10/800/600", // Placeholders to simulate more shots
