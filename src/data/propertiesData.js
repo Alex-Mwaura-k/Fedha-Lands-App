@@ -12,7 +12,7 @@ export const properties = [
       "/img/properties/Royal Gardens 5.png",
       "/img/properties/Amani Gardens.png",
       "/img/properties/Kijani Gardens.png",
-      "/img/properties/Unity Gardens.png",
+      "/img/properties/Royal Gardenx1.png",
       "https://picsum.photos/id/10/800/600", // Placeholders to simulate more shots
       "https://picsum.photos/id/11/800/600",
     ],
