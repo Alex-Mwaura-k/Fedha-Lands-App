@@ -9,7 +9,7 @@ export const properties = [
     img: "/img/properties/Royal Gardens 5.png",
     // NEW: Array of images for the gallery
     images: [
-      "/img/properties/Royal Gardens 5.png",
+      "/img/properties/Royal Gardenx4.png",
       "/img/properties/Amani Gardens.png",
       "/img/properties/Kijani Gardens.png",
       "/img/properties/Royal Gardenx1.png",
