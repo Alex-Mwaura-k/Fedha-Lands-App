@@ -38,7 +38,7 @@ export const properties = [
     img: "/img/properties/Kijani Gardens.png",
     // Add images array here too...
     images: [
-      "/img/properties/Kijani Gardens.png",
+      "/img/properties/MAL-1.png",
       "https://picsum.photos/id/15/800/600",
       "https://picsum.photos/id/16/800/600",
     ],
