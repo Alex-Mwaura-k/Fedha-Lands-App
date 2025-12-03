@@ -19,11 +19,11 @@ export const properties = [
     description:
       "Located just 9 minutes from the Thika-Garissa highway, Royal Garden Phase 5 offers a serene environment perfect for immediate settlement. The soil is red, suitable for farming, and the area is rapidly developing. With ready title deeds, water on site, and electricity nearby, it's an ideal choice for both residential and investment purposes. The plots are beaconed, and the roads are graded for easy access. Don't miss out on this opportunity to own a piece of prime land in Kithyoko.",
     features: [
-      "Ready Title Deeds",
-      "Water on Site",
-      "Electricity Nearby",
-      "Graded Roads",
-      "Beaconed",
+      "Freehold Title Deeds.",
+      "Water borehole on Site.",
+      "Electricity Nearby.",
+      "Graded access Roads.",
+      "Fully Beaconed.",
     ],
     mapSrc:
       "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d4243.630808147012!2d37.89191877496538!3d-1.0744204989152528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMcKwMDQnMjcuOSJTIDM3wrA1Myc0MC4yIkU!5e1!3m2!1sen!2ske!4v1764786497521!5m2!1sen!2ske",
@@ -44,7 +44,7 @@ export const properties = [
     ],
     description:
       "A massive 1-acre block ideal for holiday homes, speculation, or large scale farming. Located near Msumarini shopping center just 45 minutes from Malindi CBD, this project promises high returns on investment. The area boasts a cool climate, ocean breeze, and is in close proximity to the beach. With freehold title deeds, tarmacked roads nearby, and a secure environment, Kijani Garden is perfect for those looking to invest in Malindi's thriving property market.",
-    features: ["Freehold Title", "Near Tarmac", "Ocean Breeze", "Fenced"],
+    features: ["Freehold Title Deed.", "Near Tarmac.", "Ocean Breeze.", "Fully beaconed."],
     mapSrc:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955!2d40.1!3d-3.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMTInMDAuMCJTIDQwwrAwNiwwMC4wIkU!5e0!3m2!1sen!2ske!4v1620000000000!5m2!1sen!2ske",
   },
@@ -59,8 +59,8 @@ export const properties = [
     img: "/img/properties/Unity Gardens.png",
     images: ["/img/properties/Unity Gardens.png"], // Fallback if only 1 image
     description:
-      "Prime commercial and residential plots in the heart of Makutano. Extremely high value appreciation rate. Ideal for building rental flats or commercial centers. The area is a bustling hub with a vibrant market, schools, and easy access to major roads. With ready title deeds, water, electricity, and a secure perimeter fence, Unity Garden offers everything you need for a successful investment.",
-    features: ["Commercial Zone", "Water & Electricity", "Perimeter Fence"],
+      "Prime commercial and residential plots in the heart of Makutano(ya Mwea). Extremely high value appreciation rate. Ideal for building rental flats or commercial centers. The area is a bustling hub with a vibrant New Makutano market, schools, and easy access to the Kenol-Marua dual carriage highway. With ready title deeds, water, electricity, and a secure perimeter fence, Unity Garden offers everything you need for a successful investment.",
+    features: ["Ready for Immediate settlement.", "Water & Electricity.", "Perimeter Fence.", "Control access gate."],
     mapSrc:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955!2d37.3!3d-0.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMMKwNDInMDAuMCJTIDM3wrAxOCwwMC4wIkU!5e0!3m2!1sen!2ske!4v1620000000000!5m2!1sen!2ske",
   },
