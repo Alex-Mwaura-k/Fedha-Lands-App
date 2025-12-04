@@ -6,7 +6,7 @@ const AllGallery = () => {
   return (
     <div>
       <Helmet>
-        <title>Gallery</title>
+        <title>Gallery - Life at Fedha</title>
         <meta
           name="description"
           content="Explore the Fedha Land Ventures gallery. View photos of our prime plots in Kithyoko, Malindi, and Kitengela, plus team events and happy clients receiving title deeds."

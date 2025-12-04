@@ -14,7 +14,7 @@ const AboutPage = () => {
       }}
     >
       <Helmet>
-        <title>About Us | Fedha Land Ventures</title>
+        <title>About Us</title>
         <meta
           name="description"
           content="Learn about Fedha Land Ventures, our mission, vision, and our commitment to providing affordable land with ready title deeds in Kenya."

@@ -12,7 +12,7 @@ const ContactPage = () => {
     // Wrapper with padding for the fixed navbar and matching background color
     <div>
       <Helmet>
-        <title>Contact Us | Fedha Land Ventures</title>
+        <title>Contact Us</title>
         <meta
           name="description"
           content="Get in touch with Fedha Land Ventures. Visit our offices at Nyongo House, Ruiru, call us, or send a message to book a free site visit for prime land in Kenya."

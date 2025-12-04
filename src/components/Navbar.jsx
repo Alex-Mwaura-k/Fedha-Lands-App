@@ -1,13 +1,24 @@
-import { useState } from "react";
-import { Link } from "react-router-dom"; // <--- Import Link
+import { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [activeSubmenu, setActiveSubmenu] = useState(null);
+
+  // Ref to programmatically click the close button
+  const closeButtonRef = useRef(null);
 
   const toggleSubmenu = (e, name) => {
     e.preventDefault();
     e.stopPropagation();
     setActiveSubmenu(activeSubmenu === name ? null : name);
+  };
+
+  // FUNCTION: Closes mobile menu when a link is clicked
+  const handleLinkClick = () => {
+    if (closeButtonRef.current) {
+      // This simulates clicking the 'X' button
+      closeButtonRef.current.click();
+    }
   };
 
   return (
@@ -16,8 +27,8 @@ const Navbar = () => {
       data-bs-theme="dark"
     >
       <div className="container-md">
-        {/* LOGO: Now clicks back to Home */}
-        <Link className="navbar-brand" to="/">
+        {/* LOGO - Close menu on click */}
+        <Link className="navbar-brand" to="/" onClick={handleLinkClick}>
           <img
             src="/icons/logo.png"
             alt="Fedha Land Ventures"
@@ -26,7 +37,6 @@ const Navbar = () => {
           />
         </Link>
 
-        {/* Mobile Toggle */}
         <button
           className="navbar-toggler ms-auto"
           type="button"
@@ -37,7 +47,6 @@ const Navbar = () => {
           <i className="bi bi-list"></i>
         </button>
 
-        {/* Menu Items */}
         <div
           className="offcanvas offcanvas-end"
           tabIndex="-1"
@@ -53,19 +62,22 @@ const Navbar = () => {
               className="btn-close"
               data-bs-dismiss="offcanvas"
               aria-label="Close"
+              ref={closeButtonRef} // ATTACH REF HERE
             ></button>
           </div>
 
           <div className="offcanvas-body">
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
-              {/* HOME LINK: Fixed to go to "/" */}
               <li className="nav-item">
-                <Link className="nav-link active" to="/">
+                <Link
+                  className="nav-link active"
+                  to="/"
+                  onClick={handleLinkClick}
+                >
                   Home
                 </Link>
               </li>
 
-              {/* Properties Dropdown */}
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
@@ -77,7 +89,6 @@ const Navbar = () => {
                   Properties
                 </a>
                 <ul className="dropdown-menu mt-2">
-                  {/* Nested Dropdown: Royal Garden */}
                   <li className="dropdown-submenu">
                     <a
                       className="dropdown-item dropdown-toggle"
@@ -92,12 +103,20 @@ const Navbar = () => {
                       }`}
                     >
                       <li>
-                        <Link className="dropdown-item" to="/property/1">
+                        <Link
+                          className="dropdown-item"
+                          to="/property/1"
+                          onClick={handleLinkClick}
+                        >
                           Phase V
                         </Link>
                       </li>
                       <li>
-                        <Link className="dropdown-item" to="/property/4">
+                        <Link
+                          className="dropdown-item"
+                          to="/property/4"
+                          onClick={handleLinkClick}
+                        >
                           Phase IV
                         </Link>
                       </li>
@@ -105,17 +124,24 @@ const Navbar = () => {
                   </li>
 
                   <li>
-                    <Link className="dropdown-item" to="/property/2">
+                    <Link
+                      className="dropdown-item"
+                      to="/property/2"
+                      onClick={handleLinkClick}
+                    >
                       Kijani Garden Malindi
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/property/3">
+                    <Link
+                      className="dropdown-item"
+                      to="/property/3"
+                      onClick={handleLinkClick}
+                    >
                       Unity Garden
                     </Link>
                   </li>
 
-                  {/* Nested Dropdown: Kitengela */}
                   <li className="dropdown-submenu">
                     <a
                       className="dropdown-item dropdown-toggle"
@@ -130,39 +156,61 @@ const Navbar = () => {
                       }`}
                     >
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <Link
+                          className="dropdown-item"
+                          to="/property/1"
+                          onClick={handleLinkClick}
+                        >
                           Phase I
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <Link
+                          className="dropdown-item"
+                          to="/property/1"
+                          onClick={handleLinkClick}
+                        >
                           Phase II
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </li>
                 </ul>
               </li>
 
-              {/* Note: Hashtag links only work if you are ON the home page. 
-                  We will fix this later for multi-page navigation. */}
               <li className="nav-item">
-                <Link className="nav-link" to="/about">
+                <Link
+                  className="nav-link"
+                  to="/about"
+                  onClick={handleLinkClick}
+                >
                   About
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/blogs">
+                <Link
+                  className="nav-link"
+                  to="/blogs"
+                  onClick={handleLinkClick}
+                >
                   Blog
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/gallery">
+                <Link
+                  className="nav-link"
+                  to="/gallery"
+                  onClick={handleLinkClick}
+                >
                   Gallery
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/contact">
+                <Link
+                  className="nav-link"
+                  to="/contact"
+                  onClick={handleLinkClick}
+                >
                   Contact
                 </Link>
               </li>
@@ -176,9 +224,12 @@ const Navbar = () => {
                 >
                   +254715113103
                 </a>
+
+                {/* Updated Social Links */}
                 <a
                   href="https://www.instagram.com/fedhalandventures/"
                   target="_blank"
+                  rel="noreferrer"
                   className="text-decoration-none social-icon"
                 >
                   <i className="bi bi-instagram"></i>
@@ -186,6 +237,7 @@ const Navbar = () => {
                 <a
                   href="https://web.facebook.com/fedhalandventures"
                   target="_blank"
+                  rel="noreferrer"
                   className="text-decoration-none social-icon"
                 >
                   <i className="bi bi-facebook"></i>
@@ -193,6 +245,7 @@ const Navbar = () => {
                 <a
                   href="https://www.tiktok.com/@fedhalandventures"
                   target="_blank"
+                  rel="noreferrer"
                   className="text-decoration-none social-icon"
                 >
                   <i className="bi bi-tiktok"></i>
