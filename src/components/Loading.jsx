@@ -13,7 +13,7 @@ const Loading = () => {
           <span className="visually-hidden">Loading...</span>
         </div>
         <p className="mt-3 text-muted small fw-bold text-uppercase ls-2">
-          Loading Fedha Land...
+          Loading...
         </p>
       </div>
     </div>

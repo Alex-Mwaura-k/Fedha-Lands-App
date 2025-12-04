@@ -177,21 +177,21 @@ const Navbar = () => {
                   +254715113103
                 </a>
                 <a
-                  href="https://www.instagram.com"
+                  href="https://www.instagram.com/fedhalandventures/"
                   target="_blank"
                   className="text-decoration-none social-icon"
                 >
                   <i className="bi bi-instagram"></i>
                 </a>
                 <a
-                  href="https://www.facebook.com"
+                  href="https://web.facebook.com/fedhalandventures"
                   target="_blank"
                   className="text-decoration-none social-icon"
                 >
                   <i className="bi bi-facebook"></i>
                 </a>
                 <a
-                  href="https://www.tiktok.com"
+                  href="https://www.tiktok.com/@fedhalandventures"
                   target="_blank"
                   className="text-decoration-none social-icon"
                 >
