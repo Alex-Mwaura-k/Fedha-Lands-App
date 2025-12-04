@@ -61,7 +61,7 @@ const Navbar = () => {
               {/* HOME LINK: Fixed to go to "/" */}
               <li className="nav-item">
                 <Link className="nav-link active" to="/">
-                  Hello
+                  Home
                 </Link>
               </li>
 
