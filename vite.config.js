@@ -32,16 +32,20 @@ export default defineConfig({
           {
             src: "icons/icon.png",
             sizes: "512x512",
-            type: "image/png",
+            type: "image/png", // Note: 'purpose: any maskable' is good practice if you have a maskable icon
           },
         ],
       },
 
       workbox: {
-        // Force all navigation to go to index.html (Fixes the "You're offline" screen)
+        // 1. Force the Service Worker to update immediately
+        skipWaiting: true,
+        clientsClaim: true,
+
+        // 2. Force all navigation to go to index.html (Fixes the "You're offline" screen)
         navigateFallback: "/index.html",
 
-        // Ensure fonts and large images are cached
+        // 3. Ensure fonts and large images are cached
         globPatterns: [
           "**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,woff,woff2}",
         ],
