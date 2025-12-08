@@ -1,11 +1,28 @@
-// src/components/Footer.jsx
+import { Link } from "react-router-dom"; // <--- Import Link for internal navigation
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  // Handler for Email Newsletter
   const handleSubscribe = (e) => {
     e.preventDefault();
     alert("Subscription feature coming soon!");
+  };
+
+  // Handler for Push Notifications (Phase 1)
+  const subscribeToNotifications = () => {
+    if (!("Notification" in window)) {
+      alert("This browser does not support desktop notification");
+    } else if (Notification.permission === "granted") {
+      alert("You are already subscribed to notifications!");
+    } else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          // In the future, we will send this token to Django
+          alert("Thanks! You will be notified of new properties.");
+        }
+      });
+    }
   };
 
   return (
@@ -15,13 +32,13 @@ const Footer = () => {
         <div className="row g-5 mb-2">
           {/* COLUMN 1: Brand & Socials */}
           <div className="col-lg-4 col-md-6">
-            <a href="#" className="footer-brand mb-4 d-block">
+            <Link to="/" className="footer-brand mb-4 d-block">
               <img
                 src="/icons/logo.png"
                 alt="Fedha Land Ventures"
                 width="180"
               />
-            </a>
+            </Link>
             <p className="text-secondary small mb-4 pe-lg-4">
               Your trusted partner in real estate. We bridge the gap between
               dream and reality with transparent, title-deed-ready land
@@ -34,22 +51,25 @@ const Footer = () => {
 
             <div className="d-flex gap-2 justify-content-center justify-content-md-start">
               <a
-                href="https://www.facebook.com"
+                href="https://web.facebook.com/fedhalandventures"
                 target="_blank"
+                rel="noreferrer"
                 className="social-btn"
               >
                 <i className="bi bi-facebook"></i>
               </a>
               <a
-                href="https://www.instagram.com"
+                href="https://www.instagram.com/fedhalandventures/"
                 target="_blank"
+                rel="noreferrer"
                 className="social-btn"
               >
                 <i className="bi bi-instagram"></i>
               </a>
               <a
-                href="https://www.tiktok.com"
+                href="https://www.tiktok.com/@fedhalandventures"
                 target="_blank"
+                rel="noreferrer"
                 className="social-btn"
               >
                 <i className="bi bi-tiktok"></i>
@@ -57,13 +77,15 @@ const Footer = () => {
               <a
                 href="https://www.youtube.com/@fedhalandventures"
                 target="_blank"
+                rel="noreferrer"
                 className="social-btn"
               >
                 <i className="bi bi-youtube"></i>
               </a>
               <a
-                href="https://wa.me/+254715113103"
+                href="https://wa.me/254715113103"
                 target="_blank"
+                rel="noreferrer"
                 className="social-btn"
               >
                 <i className="bi bi-whatsapp"></i>
@@ -71,56 +93,52 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* COLUMN 2: Featured Properties */}
+          {/* COLUMN 2: Featured Properties (Using Internal Links) */}
           <div className="col-lg-2 col-md-6 col-6">
             <h5 className="text-white fw-bold mb-4">Projects</h5>
             <ul className="list-unstyled footer-links">
               <li>
-                <a href="#">Royal Gardens Phase 5</a>
+                <Link to="/property/1">Royal Gardens Ph 5</Link>
               </li>
               <li>
-                <a href="#">Kijani Gardens Malindi</a>
+                <Link to="/property/4">Royal Gardens Ph 4</Link>
               </li>
               <li>
-                <a href="#">Unity Gardens Makutano</a>
+                <Link to="/property/2">Kijani Gardens</Link>
               </li>
               <li>
-                <a href="#">Amani Gardens Malindi</a>
+                <Link to="/property/3">Unity Gardens</Link>
               </li>
               <li>
-                <a href="#">View All Plots</a>
+                <Link to="/properties">View All Plots</Link>
               </li>
             </ul>
           </div>
 
-          {/* COLUMN 3: Company */}
+          {/* COLUMN 3: Company (Using Internal Links) */}
           <div className="col-lg-2 col-md-6 col-6">
             <h5 className="text-white fw-bold mb-4">Company</h5>
             <ul className="list-unstyled footer-links">
               <li>
-                <a href="#about-us">About Us</a>
+                <Link to="/about">About Us</Link>
               </li>
               <li>
-                <a href="#blog">Media Center</a>
+                <Link to="/blogs">Media Center</Link>
               </li>
               <li>
-                <a href="#gallery">Gallery</a>
+                <Link to="/gallery">Gallery</Link>
               </li>
               <li>
-                <a href="#contact">Contact Us</a>
-              </li>
-              <li>
-                <a href="#">Careers</a>
+                <Link to="/contact">Contact Us</Link>
               </li>
             </ul>
           </div>
 
-          {/* COLUMN 4: Newsletter */}
+          {/* COLUMN 4: Newsletter & Notifications */}
           <div className="col-lg-4 col-md-6 text-center text-md-start mx-auto mx-md-0 mt-1 mt-md-5">
-            <h5 className="text-white fw-bold mb-4">Newsletter</h5>
+            <h5 className="text-white fw-bold mb-4">Stay Updated</h5>
             <p className="text-secondary small mb-3">
-              Subscribe to get the latest land deals and market insights. No
-              spam, just value.
+              Subscribe to get the latest land deals and market insights.
             </p>
 
             <form className="footer-form mb-3" onSubmit={handleSubscribe}>
@@ -140,7 +158,15 @@ const Footer = () => {
               </div>
             </form>
 
-            <div className="d-flex align-items-center gap-2 text-secondary small justify-content-center justify-content-md-start">
+            {/* Notification Button */}
+            <button
+              className="btn btn-outline-secondary btn-sm w-100 rounded-0"
+              onClick={subscribeToNotifications}
+            >
+              <i className="bi bi-bell-fill me-2"></i> Enable Push Alerts
+            </button>
+
+            <div className="d-flex align-items-center gap-2 text-secondary small justify-content-center justify-content-md-start mt-3">
               <i className="bi bi-lock-fill"></i> Secure subscription.
             </div>
           </div>
@@ -149,7 +175,7 @@ const Footer = () => {
         {/* DIVIDER LINE */}
         <div className="footer-divider mt-0 mt-md-5"></div>
 
-        {/* BOTTOM ROW: Copyright & Legal */}
+        {/* BOTTOM ROW: Copyright */}
         <div className="row align-items-center py-4">
           <div className="col-md-6 text-center text-md-start">
             <p className="text-secondary small mb-0">
@@ -160,21 +186,21 @@ const Footer = () => {
           <div className="col-md-6 text-center text-md-end mt-3 mt-md-0">
             <ul className="list-inline mb-0 small">
               <li className="list-inline-item">
-                <a
-                  href="#"
+                <Link
+                  to="#"
                   className="text-secondary text-decoration-none hover-white"
                 >
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li className="list-inline-item text-secondary mx-2">•</li>
               <li className="list-inline-item">
-                <a
-                  href="#"
+                <Link
+                  to="#"
                   className="text-secondary text-decoration-none hover-white"
                 >
                   Terms of Service
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

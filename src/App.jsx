@@ -1,6 +1,9 @@
 import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 
+// Import the Notification Manager
+import NotificationManager from "./components/NotificationManager";
+
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import BookingModal from "./components/BookingModal";
@@ -25,7 +28,7 @@ const AllBlogs = lazy(() => import("./pages/AllBlogs"));
 const AllGallery = lazy(() => import("./pages/AllGallery"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
-const ContactPage = lazy(() => import("./pages/ContactPage")); // <--- NEW IMPORT
+const ContactPage = lazy(() => import("./pages/ContactPage"));
 
 // HOME PAGE LAYOUT
 const Home = () => (
@@ -44,6 +47,9 @@ const Home = () => (
 function App() {
   return (
     <>
+      {/* Run Notification Logic invisibly on app load */}
+      <NotificationManager />
+
       <Navbar />
       <InstallBanner />
       <BookingModal />
@@ -68,7 +74,7 @@ function App() {
             {/* About Route */}
             <Route path="/about" element={<AboutPage />} />
 
-            {/* Contact Route (NEW) */}
+            {/* Contact Route */}
             <Route path="/contact" element={<ContactPage />} />
 
             {/* 404 Route */}
