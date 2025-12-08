@@ -15,11 +15,24 @@ const Footer = () => {
       alert("This browser does not support desktop notification");
     } else if (Notification.permission === "granted") {
       alert("You are already subscribed to notifications!");
-    } else if (Notification.permission !== "denied") {
+    } else if (Notification.permission === "denied") {
+      // BROWSER RULE: We cannot ask again programmatically if 'denied'.
+      // We must tell the user to reset it manually.
+      alert(
+        "You previously blocked notifications. Please go to your Browser Settings (or Site Settings) to 'Allow' notifications for this app manually."
+      );
+    } else {
+      // Permission is 'default' (or dismissed previously without blocking)
       Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
           // In the future, we will send this token to Django
           alert("Thanks! You will be notified of new properties.");
+
+          // Optional: Send test notification
+          new Notification("Welcome!", {
+            body: "You are now subscribed to Fedha Land alerts.",
+            icon: "/icons/icon.png",
+          });
         }
       });
     }
@@ -136,7 +149,7 @@ const Footer = () => {
 
           {/* COLUMN 4: Newsletter & Notifications */}
           <div className="col-lg-4 col-md-6 text-center text-md-start mx-auto mx-md-0 mt-1 mt-md-5">
-            <h5 className="text-white fw-bold mb-4">Stay Updated</h5>
+            <h5 className="text-white fw-bold mb-4">News Letter</h5>
             <p className="text-secondary small mb-3">
               Subscribe to get the latest land deals and market insights.
             </p>
