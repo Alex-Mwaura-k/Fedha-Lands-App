@@ -29,13 +29,14 @@ const AllGallery = lazy(() => import("./pages/AllGallery"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 
 // HOME PAGE LAYOUT
 const Home = () => (
   <>
     <Hero />
     <ScrollingBanner />
-    {/* Limits ensure Home Page loads fast and isn't too long */}
     <Properties limit={6} />
     <About />
     <Blog limit={6} />
@@ -76,6 +77,12 @@ function App() {
 
             {/* Contact Route */}
             <Route path="/contact" element={<ContactPage />} />
+
+            {/* Privacy Policy Route */}
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+
+            {/* --- FIX: ADDED MISSING ROUTE HERE --- */}
+            <Route path="/terms" element={<TermsOfService />} />
 
             {/* 404 Route */}
             <Route path="*" element={<NotFound />} />

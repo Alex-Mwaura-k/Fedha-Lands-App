@@ -200,7 +200,7 @@ const Footer = () => {
             <ul className="list-inline mb-0 small">
               <li className="list-inline-item">
                 <Link
-                  to="#"
+                  to="/privacy-policy"
                   className="text-secondary text-decoration-none hover-white"
                 >
                   Privacy Policy
@@ -209,7 +209,7 @@ const Footer = () => {
               <li className="list-inline-item text-secondary mx-2">•</li>
               <li className="list-inline-item">
                 <Link
-                  to="#"
+                  to="/terms"
                   className="text-secondary text-decoration-none hover-white"
                 >
                   Terms of Service
