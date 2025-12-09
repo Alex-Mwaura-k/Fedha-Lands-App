@@ -1470,6 +1470,54 @@ nav[aria-label="breadcrumb"] {
 }
 
 /* =========================================
+   TESTIMONIALS SECTION SPECIFIC STYLES
+   ========================================= */
+
+/* Scoped Fade In Animation */
+.testimonials-section .fade-in-animation {
+  animation: fadeInUpTestimonial 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUpTestimonial {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scoped Transition */
+.testimonials-section .transition-all {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Strict Image Sizing for Testimonials ONLY */
+/* This targets images in the card AND the preview in the modal */
+.testimonials-section .testimonial-img,
+.testimonials-modal .testimonial-img {
+  width: 10px !important;
+  height: 50px !important;
+  min-width: 50px !important; /* Prevents shrinking */
+  object-fit: cover !important;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0; /* Prevents flexbox squishing */
+}
+
+/* Scoped Scrollbar for Testimonial Modal Textareas ONLY */
+.testimonials-modal textarea::-webkit-scrollbar {
+  width: 8px;
+}
+.testimonials-modal textarea::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.testimonials-modal textarea::-webkit-scrollbar-thumb {
+  background: #dc3545;
+  border-radius: 4px;
+} /* =========================================
    FAQ SECTION STYLES
    ========================================= */
 
