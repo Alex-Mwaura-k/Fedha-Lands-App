@@ -204,7 +204,7 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="testimonials-section pt-3 pb-5 bg-white position-relative">
+    <section className="testimonials-section pt-3 pb-3 bg-white position-relative">
       <div className="container-md">
         {/* HEADER */}
         <div className="row align-items-end mb-3">
@@ -312,14 +312,14 @@ const Testimonials = () => {
           {isCarouselMode && (
             <div className="d-flex justify-content-center gap-3 mt-4">
               <button
-                className="btn btn-outline-danger rounded-circle"
+                className="btn btn-outline-danger"
                 onClick={prevSlide}
                 title="Previous"
               >
                 <i className="bi bi-chevron-left"></i>
               </button>
               <button
-                className={`btn rounded-circle ${
+                className={`btn ${
                   isPaused ? "btn-danger" : "btn-outline-danger"
                 }`}
                 onClick={togglePause}
@@ -332,7 +332,7 @@ const Testimonials = () => {
                 )}
               </button>
               <button
-                className="btn btn-outline-danger rounded-circle"
+                className="btn btn-outline-danger"
                 onClick={nextSlide}
                 title="Next"
               >
