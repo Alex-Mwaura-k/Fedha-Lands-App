@@ -1468,3 +1468,19 @@ nav[aria-label="breadcrumb"] {
   /* We use !important to override the existing styles */
   padding-top: 1rem !important;
 }
+
+/* =========================================
+   FAQ SECTION STYLES
+   ========================================= */
+
+/* Turn the default blue Bootstrap Accordion Icon to WHITE */
+#faq .accordion-button::after {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Hollow Text Effect */
+.text-stroke-white {
+  -webkit-text-stroke: 1px white;
+  color: transparent;
+  font-weight: 900; /* Ensure it's thick enough to see */
+}
