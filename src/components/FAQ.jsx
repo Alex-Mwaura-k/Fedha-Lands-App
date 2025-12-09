@@ -30,7 +30,7 @@ const FAQ = () => {
                 src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                 alt="Happy Clients"
                 className="img-fluid rounded shadow-lg w-100 h-100"
-                style={{ objectFit: "cover" }}
+                style={{ objectFit: "fit" }}
               />
               <div className="bg-danger position-absolute bottom-0 start-0 p-2 text-white m-4 rounded shadow">
                 <h3 className="fw-bold mb-0">100%</h3>
