@@ -9,7 +9,7 @@ const AllGallery = () => {
         <title>Gallery - Life at Fedha</title>
         <meta
           name="description"
-          content="Explore the Fedha Land Ventures gallery. View photos of our prime plots in Kithyoko, Malindi, and Kitengela, plus team events and happy clients receiving title deeds."
+          content="Explore the Fedha Land Ventures gallery. View photos of our prime plots in Kithyoko, Makutano, Malindi, and Kitengela, plus team events and happy clients receiving title deeds."
         />
         <meta
           name="keywords"
