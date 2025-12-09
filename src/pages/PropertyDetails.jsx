@@ -6,16 +6,13 @@ const PropertyDetails = () => {
   const { id } = useParams();
   const property = properties.find((p) => p.id === parseInt(id));
 
-  // State for Main Image Display
   const [mainImage, setMainImage] = useState("");
-  // State for Lightbox
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
-  // Initialize main image when property loads
   useEffect(() => {
     window.scrollTo(0, 0);
     if (property) {
-      setMainImage(property.img); // Default to the cover image
+      setMainImage(property.img);
     }
   }, [id, property]);
 
@@ -27,10 +24,8 @@ const PropertyDetails = () => {
     );
   }
 
-  // Ensure we have an array of images (Backend compatibility safety check)
   const propertyImages = property.images || [property.img];
 
-  // --- LIGHTBOX HANDLERS ---
   const openLightbox = (index) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);
 
@@ -48,10 +43,10 @@ const PropertyDetails = () => {
     );
   };
 
-  // Find related properties
+  // Limit to 4 related properties as requested
   const relatedProperties = properties
     .filter((p) => p.id !== property.id)
-    .slice(0, 3);
+    .slice(0, 4);
 
   return (
     <div
@@ -100,12 +95,13 @@ const PropertyDetails = () => {
       </div>
 
       <div className="container-md">
-        <div className="row g-4">
+        {/* 'align-items-stretch' ensures both columns are equal height */}
+        <div className="row g-4 align-items-stretch">
           {/* LEFT COLUMN */}
-          <div className="col-lg-8">
-            {/* 1. MAIN IMAGE VIEWER */}
+          {/* 'd-flex flex-column' allows us to push the Map to the bottom */}
+          <div className="col-lg-8 d-flex flex-column">
+            {/* 1. GALLERY */}
             <div className="property-gallery-wrapper bg-white p-1 rounded shadow-sm">
-              {/* Main Image */}
               <div
                 className="main-image-container"
                 style={{
@@ -139,7 +135,6 @@ const PropertyDetails = () => {
                 </div>
               </div>
 
-              {/* Thumbnails Strip */}
               <div className="thumbnails-container d-flex gap-2 mt-2 overflow-auto py-2">
                 {propertyImages.map((img, index) => (
                   <img
@@ -166,7 +161,7 @@ const PropertyDetails = () => {
               </div>
             </div>
 
-            {/* DESCRIPTION */}
+            {/* 2. DESCRIPTION */}
             <div className="bg-white p-4 mt-4 rounded shadow-sm">
               <h4 className="fw-bold mb-3 border-bottom pb-2">Description</h4>
               <p className="text-secondary" style={{ lineHeight: "1.8" }}>
@@ -186,9 +181,9 @@ const PropertyDetails = () => {
               </div>
             </div>
 
-            {/* MAP */}
+            {/* 3. MAP (mt-auto pushes this to the bottom of the left column) */}
             {property.mapSrc && (
-              <div className="bg-white p-4 mt-4 rounded shadow-sm">
+              <div className="bg-white p-4 mt-4 rounded shadow-sm mt-auto">
                 <h4 className="fw-bold mb-3 border-bottom pb-2">
                   Location Map
                 </h4>
@@ -204,12 +199,11 @@ const PropertyDetails = () => {
             )}
           </div>
 
-          {/* RIGHT COLUMN (Price Card) */}
-          <div className="col-lg-4">
-            <div
-              className="bg-white p-4 rounded shadow-lg sticky-top"
-              style={{ top: "100px", zIndex: 900 }}
-            >
+          {/* RIGHT COLUMN */}
+          {/* 'd-flex flex-column' allows us to push Related Properties to the bottom */}
+          <div className="col-lg-4 d-flex flex-column">
+            {/* 1. PRICE CARD (Static, not sticky) */}
+            <div className="bg-white p-4 rounded shadow-lg">
               <h3 className="text-danger fw-bold mb-1">
                 Ksh {property.price}/=
               </h3>
@@ -241,40 +235,41 @@ const PropertyDetails = () => {
                 </a>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* RELATED PROPERTIES */}
-      <div className="container-md mt-5">
-        <h3 className="fw-bold mb-4">More Properties Like This</h3>
-        <div className="row g-4">
-          {relatedProperties.map((rel) => (
-            <div key={rel.id} className="col-md-4">
-              <div className="card property-card h-100 border-0 shadow-sm">
-                <div className="position-relative">
-                  <img
-                    src={rel.img}
-                    className="card-img-top"
-                    alt={rel.title}
-                    style={{ height: "200px", objectFit: "cover" }}
-                  />
-                  <span className="badge bg-danger position-absolute top-0 start-0 m-2">
-                    Ksh {rel.price}
-                  </span>
-                </div>
-                <div className="card-body">
-                  <h6 className="card-title fw-bold">{rel.title}</h6>
-                  <Link
-                    to={`/property/${rel.id}`}
-                    className="btn btn-sm btn-outline-danger mt-2 stretched-link"
+            {/* 2. RELATED PROPERTIES (mt-auto pushes this to the bottom of the right column) */}
+            <div className="mt-4 mt-auto">
+              <h5 className="fw-bold mb-3 text-dark">More Properties</h5>
+              <div className="d-flex flex-column gap-3">
+                {relatedProperties.map((rel) => (
+                  <div
+                    key={rel.id}
+                    className="card property-card h-100 border-0 shadow-sm"
                   >
-                    View Details
-                  </Link>
-                </div>
+                    <div className="position-relative">
+                      <img
+                        src={rel.img}
+                        className="card-img-top"
+                        alt={rel.title}
+                        style={{ height: "180px", objectFit: "cover" }}
+                      />
+                      <span className="badge bg-danger position-absolute top-0 start-0 m-2">
+                        Ksh {rel.price}
+                      </span>
+                    </div>
+                    <div className="card-body">
+                      <h6 className="card-title fw-bold">{rel.title}</h6>
+                      <Link
+                        to={`/property/${rel.id}`}
+                        className="btn btn-sm btn-outline-danger mt-2 stretched-link w-100"
+                      >
+                        View Details
+                      </Link>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
 
@@ -284,11 +279,9 @@ const PropertyDetails = () => {
           <button className="lightbox-close" onClick={closeLightbox}>
             &times;
           </button>
-
           <button className="lightbox-prev" onClick={prevImage}>
             <i className="bi bi-chevron-left"></i>
           </button>
-
           <div
             className="lightbox-content"
             onClick={(e) => e.stopPropagation()}
@@ -304,7 +297,6 @@ const PropertyDetails = () => {
               </p>
             </div>
           </div>
-
           <button className="lightbox-next" onClick={nextImage}>
             <i className="bi bi-chevron-right"></i>
           </button>

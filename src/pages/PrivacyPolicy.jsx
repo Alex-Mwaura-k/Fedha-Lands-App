@@ -16,16 +16,16 @@ const PrivacyPolicy = () => {
       }}
     >
       <Helmet>
-        <title>Privacy Policy | Fedha Land Ventures</title>
+        <title>Privacy Policy</title>
 
         {/* This tag tells Google & Bing to IGNORE this page completely */}
         <meta name="robots" content="noindex" />
       </Helmet>
 
       <div className="container-md">
-        <div className="row justify-content-center">
-          <div className="col-lg-10">
-            <div className="bg-white p-5 rounded shadow-sm">
+        <div className="row md-justify-content-center">
+          <div className="col-lg-12">
+            <div className="bg-white py-4 px-5 rounded shadow-sm">
               <h1 className="fw-bold text-dark mb-4">Privacy Policy</h1>
               <p className="text-muted mb-4">
                 Last Updated: {new Date().toLocaleDateString()}

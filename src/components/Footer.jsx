@@ -176,7 +176,8 @@ const Footer = () => {
               className="btn btn-outline-secondary btn-sm w-100 rounded-0"
               onClick={subscribeToNotifications}
             >
-              <i className="bi bi-bell-fill me-2"></i> Enable Push Alerts
+              {" "}
+              Enable Push Alerts
             </button>
 
             <div className="d-flex align-items-center gap-2 text-secondary small justify-content-center justify-content-md-start mt-3">

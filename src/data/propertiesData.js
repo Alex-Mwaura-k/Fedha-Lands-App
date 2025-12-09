@@ -17,7 +17,7 @@ export const properties = [
       "/img/properties/Royal Gardenx3.png",
     ],
     description:
-      "Located just 9 minutes from the Thika-Garissa highway, Royal Garden Phase 5 offers a serene environment perfect for immediate settlement. The soil is red, suitable for farming, and the area is rapidly developing. Water on site, and electricity nearby, it's an ideal choice for both residential and investment purposes. The plots are beaconed, and the roads are graded for easy access. Don't miss out on this opportunity to own a piece of prime land in Kithyoko.",
+      "Located just 9 minutes from the Thika-Garissa highway, Royal Garden Phase 5 offers a serene environment perfect for immediate settlement. The soil is red, suitable for farming, and the area is rapidly developing. Water on site, and electricity nearby, it's an ideal choice for both residential and investment purposes. The plots are beaconed, and the roads are graded for easy access. Don't miss out on this opportunity to own a piece of prime land in Kithyoko. ",
     features: [
       "Freehold Title Deeds.",
       "Water borehole on Site.",
@@ -44,7 +44,12 @@ export const properties = [
     ],
     description:
       "A massive 1-acre block ideal for holiday homes, speculation, or large scale farming. Located near Msumarini shopping center just 45 minutes from Malindi CBD, this project promises high returns on investment. The area boasts a cool climate, ocean breeze, and is in close proximity to the beach. With freehold title deeds, tarmacked roads nearby, and a secure environment, Kijani Garden is perfect for those looking to invest in Malindi's thriving property market.",
-    features: ["Freehold Title Deed.", "Near Tarmac.", "Ocean Breeze.", "Fully beaconed."],
+    features: [
+      "Freehold Title Deed.",
+      "Near Tarmac.",
+      "Ocean Breeze.",
+      "Fully beaconed.",
+    ],
     mapSrc:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955!2d40.1!3d-3.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMTInMDAuMCJTIDQwwrAwNiwwMC4wIkU!5e0!3m2!1sen!2ske!4v1620000000000!5m2!1sen!2ske",
   },
@@ -60,7 +65,13 @@ export const properties = [
     images: ["/img/properties/Unity Gardens.png"], // Fallback if only 1 image
     description:
       "Prime commercial and residential plots in the heart of Makutano(ya Mwea). Extremely high value appreciation rate. Ideal for building rental flats or commercial centers. The area is a bustling hub with a vibrant New Makutano market, schools, and easy access to the Kenol-Marua dual carriage highway. With ready title deeds, water, electricity, and a secure perimeter fence, Unity Garden offers everything you need for a successful investment.",
-    features: ["Ready for Immediate settlement.", "Water & Electricity.", "Perimeter Fence.", "Control access gate." ,"Ready Title Deed."],
+    features: [
+      "Ready for Immediate settlement.",
+      "Water & Electricity.",
+      "Perimeter Fence.",
+      "Control access gate.",
+      "Ready Title Deed.",
+    ],
     mapSrc:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4243.971739633278!2d37.29781994516046!3d-0.7918142332090111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1828a10f5e953979%3A0x6fa09031ab8a583c!2sFadhili%20Gardens%2C%20Phase%202%20(FedhaLand%20Ventures)!5e1!3m2!1sen!2ske!4v1764789996852!5m2!1sen!2ske",
   },
@@ -78,7 +89,7 @@ export const properties = [
       "Our most affordable project yet. Located 10 minutes from Kavaini shopping center. Perfect for first-time investors looking to secure land cheaply. The area is developing rapidly with new infrastructure projects underway. With ready title deeds, electricity, and community water, it's an excellent opportunity to own land in Kithyoko.",
     features: ["Ready Titles", "Electricity", "Community Water"],
     mapSrc:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d271600.1812526625!2d37.50506878016992!3d-0.9826549983425922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1825d50050529db3%3A0x85f1e6c046bd2c91!2sRoyal%20Gardens%20Phase%204(Fedha%20Land%20Ventures)!5e1!3m2!1sen!2ske!4v1764789333226!5m2!1sen!2ske"
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d271600.1812526625!2d37.50506878016992!3d-0.9826549983425922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1825d50050529db3%3A0x85f1e6c046bd2c91!2sRoyal%20Gardens%20Phase%204(Fedha%20Land%20Ventures)!5e1!3m2!1sen!2ske!4v1764789333226!5m2!1sen!2ske",
   },
   {
     id: 5,

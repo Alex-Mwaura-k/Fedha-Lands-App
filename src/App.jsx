@@ -1,38 +1,48 @@
-import { Suspense, lazy } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useState, useEffect, useRef, Suspense, lazy } from "react";
+import { Routes, Route, Link, useLocation, useParams } from "react-router-dom";
+import * as bootstrap from "bootstrap";
 
-// Import the Notification Manager
-import NotificationManager from "./components/NotificationManager";
-
+// --- STATIC IMPORTS (Core) ---
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import BookingModal from "./components/BookingModal";
-import ScrollingBanner from "./components/ScrollingBanner";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import InstallBanner from "./components/InstallBanner";
+import BookingModal from "./components/BookingModal";
 import Loading from "./components/Loading";
 
-// Lazy Load Components (Sections)
+// --- NEW IMPORTS (Mocking them for single file or standard structure) ---
+// Note: In your real project, these are imported from the files we created above.
+// import Testimonials from "./components/Testimonials";
+// import FAQ from "./components/FAQ";
+
+// --- LAZY IMPORTS ---
+const Hero = lazy(() => import("./components/Hero"));
+const ScrollingBanner = lazy(() => import("./components/ScrollingBanner"));
 const Properties = lazy(() => import("./components/Properties"));
 const About = lazy(() => import("./components/About"));
 const Blog = lazy(() => import("./components/Blog"));
 const Gallery = lazy(() => import("./components/Gallery"));
 const Contact = lazy(() => import("./components/Contact"));
+// NEW LAZY IMPORTS
+const Testimonials = lazy(() => import("./components/Testimonials"));
+const FAQ = lazy(() => import("./components/FAQ"));
 
-// Lazy Load Pages (Full Pages)
+// Pages... (Keep existing page imports)
 const PropertyDetails = lazy(() => import("./pages/PropertyDetails"));
 const AllProperties = lazy(() => import("./pages/AllProperties"));
 const ArticleDetails = lazy(() => import("./pages/ArticleDetails"));
 const AllBlogs = lazy(() => import("./pages/AllBlogs"));
 const AllGallery = lazy(() => import("./pages/AllGallery"));
-const NotFound = lazy(() => import("./pages/NotFound"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
-// HOME PAGE LAYOUT
+// --- NOTIFICATION MANAGER ---
+import NotificationManager from "./components/NotificationManager";
+
+// --- UPDATED HOME PAGE LAYOUT ---
 const Home = () => (
   <>
     <Hero />
@@ -41,6 +51,11 @@ const Home = () => (
     <About />
     <Blog limit={6} />
     <Gallery limit={6} />
+
+    {/* NEW SECTIONS ADDED HERE */}
+    <Testimonials />
+    <FAQ />
+
     <Contact />
   </>
 );
@@ -48,9 +63,7 @@ const Home = () => (
 function App() {
   return (
     <>
-      {/* Run Notification Logic invisibly on app load */}
       <NotificationManager />
-
       <Navbar />
       <InstallBanner />
       <BookingModal />
@@ -58,33 +71,18 @@ function App() {
       <main>
         <Suspense fallback={<Loading />}>
           <Routes>
-            {/* Home Route */}
             <Route path="/" element={<Home />} />
 
-            {/* Property Routes */}
+            {/* ... Keep all existing routes ... */}
             <Route path="/properties" element={<AllProperties />} />
             <Route path="/property/:id" element={<PropertyDetails />} />
-
-            {/* Blog Routes */}
             <Route path="/blogs" element={<AllBlogs />} />
             <Route path="/article/:id" element={<ArticleDetails />} />
-
-            {/* Gallery Route */}
             <Route path="/gallery" element={<AllGallery />} />
-
-            {/* About Route */}
             <Route path="/about" element={<AboutPage />} />
-
-            {/* Contact Route */}
             <Route path="/contact" element={<ContactPage />} />
-
-            {/* Privacy Policy Route */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-
-            {/* --- FIX: ADDED MISSING ROUTE HERE --- */}
             <Route path="/terms" element={<TermsOfService />} />
-
-            {/* 404 Route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
