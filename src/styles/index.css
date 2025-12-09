@@ -1532,3 +1532,32 @@ nav[aria-label="breadcrumb"] {
   color: transparent;
   font-weight: 900; /* Ensure it's thick enough to see */
 }
+
+/* ... other styles ... */
+
+/* =========================================
+   FAQ SECTION STYLES
+   ========================================= */
+
+#faq .accordion-button::after {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* IMPROVED STROKE TEXT */
+.text-stroke-white {
+  /* 1. Instead of transparent, use the background color (Black). 
+     This renders much sharper on mobile phones. */
+  color: #000000;
+
+  /* 2. The White Outline */
+  -webkit-text-stroke: 1px white;
+
+  /* 3. Prevent "Collision": Add spacing between letters */
+  letter-spacing: 2px;
+
+  /* 4. Fix for some browsers to ensure the stroke sits outside */
+  paint-order: stroke fill;
+
+  /* 5. Ensure boldness so the stroke doesn't swallow the letter */
+  font-weight: 900;
+}
