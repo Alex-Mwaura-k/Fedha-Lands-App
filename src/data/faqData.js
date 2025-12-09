@@ -32,7 +32,7 @@ export const faqData = [
 
   {
     id: 6,
-    question: "How can i reach you?",
+    question: "How can i reach you from Diaspora?",
     answer:
       "We are available 24/7 across all online platforms, Facebook, Instagram, Tiktok, WhatsApp and on calls via 0715 113 103.",
   },
