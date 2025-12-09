@@ -51,7 +51,7 @@ export const initialReviews = [
   },
   {
     id: 5,
-    name: "Peter Kamau",
+    name: "Francis Kariuki",
     role: "Partner",
     location: "Ruiru",
     text: "Collaborating with Fedha has been a breeze. Their transparency in land dealings makes them stand out in the crowded real estate market.",
