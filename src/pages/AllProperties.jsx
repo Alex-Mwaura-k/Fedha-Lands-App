@@ -14,7 +14,7 @@ const AllProperties = () => {
         />
         <meta
           name="keywords"
-          content="Land for sale Kenya, All plots listings, Kithyoko plots, Malindi land, Kitengela plots, Affordable land Kenya, Ready title deeds"
+          content="Land for sale Kenya, All plots listings, Kithyoko plots, Makutano plots, Malindi Plots, Kitengela plots, Affordable land Kenya, Ready title deeds"
         />
         <link rel="canonical" href="https://fedha.netlify.app/properties" />
 
