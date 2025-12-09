@@ -18,7 +18,7 @@ export const blogData = [
     type: "article",
     title: "Why 50x100 Plots are the Best Starter Investment",
     category: "Investment",
-    img: "https://picsum.photos/id/48/800/600",
+    img: "/img/properties/why50x100.png",
     desc: "Understanding the ROI on standard plot sizes in developing satellite towns like Kitengela.",
     date: "Nov 01, 2025",
     content: `...`, // (Keep your content here)
