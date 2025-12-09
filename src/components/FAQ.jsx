@@ -30,7 +30,8 @@ const FAQ = () => {
   ];
 
   return (
-    <section id="faq" className="pt-3 pb-5 bg-black">
+    // ADDED: 'overflow-hidden' here prevents the g-5 row from causing scrollbars
+    <section id="faq" className="pt-3 pb-5 bg-black overflow-hidden">
       {/* Internal Style to turn the blue Accordion Icon WHITE */}
       <style>
         {`
