@@ -14,7 +14,7 @@ const FAQ = () => {
             Common Questions
           </span>
           <h2 className="display-6 fw-bold text-white mt-2">
-            Frequently Asked <span className="text-stroke-white">FAQs</span>
+            <span className="text-stroke-white">FAQs</span>
           </h2>
           <p className="text-secondary" style={{ maxWidth: "600px" }}>
             Everything you need to know about buying land with Fedha Land

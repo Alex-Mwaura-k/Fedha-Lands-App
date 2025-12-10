@@ -12,7 +12,7 @@ const About = () => {
                 About us
               </span>
               <h2 className="display-5 fw-bold text-white mt-1">
-                Building Your <span className="text-outline-red">Future</span>
+                Building Your <span className="text-stroke-white">Future</span>
               </h2>
               <p className="text-secondary mw-600">
                 Located at Nyongo Plaza, Ruiru. We bridge the gap between dream

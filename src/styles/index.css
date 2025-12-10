@@ -1545,19 +1545,16 @@ nav[aria-label="breadcrumb"] {
 
 /* IMPROVED STROKE TEXT */
 .text-stroke-white {
-  /* 1. Instead of transparent, use the background color (Black). 
-     This renders much sharper on mobile phones. */
   color: #000000;
-
-  /* 2. The White Outline */
-  -webkit-text-stroke: 1px white;
-
-  /* 3. Prevent "Collision": Add spacing between letters */
+  -webkit-text-stroke: 1.5px white;
   letter-spacing: 2px;
-
-  /* 4. Fix for some browsers to ensure the stroke sits outside */
   paint-order: stroke fill;
-
-  /* 5. Ensure boldness so the stroke doesn't swallow the letter */
+  font-weight: 900;
+}
+.text-stroke-red {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--primary-color);
+  letter-spacing: 2px;
+  paint-order: stroke fill;
   font-weight: 900;
 }

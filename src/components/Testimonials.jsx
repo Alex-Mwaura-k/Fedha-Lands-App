@@ -129,8 +129,7 @@ const Testimonials = () => {
               Testimonials
             </span>
             <h2 className="display-6 fw-bold text-dark mt-2">
-              What Our Clients{" "}
-              <span className="text-outline-red-dark">Say</span>
+              What Our Clients <span className="text-stroke-red">Say</span>
             </h2>
           </div>
           <div className="col-lg-4 text-lg-end mt-3 mt-lg-0">

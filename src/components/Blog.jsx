@@ -16,7 +16,7 @@ const Blog = ({ limit }) => {
                 Media Center
               </span>
               <h2 className="display-5 fw-bold text-dark mt-1">
-                Blogs & <span className="text-outline-red-dark">Updates</span>
+                Blogs & <span className="text-stroke-red">Updates</span>
               </h2>
             </div>
 

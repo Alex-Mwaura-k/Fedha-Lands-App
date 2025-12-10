@@ -49,7 +49,7 @@ const Gallery = ({ limit }) => {
                 Our Gallery
               </span>
               <h2 className="display-5 fw-bold text-white mt-1">
-                Life at <span className="text-outline-red">Fedha</span>
+                Life at <span className="text-stroke-white">Fedha</span>
               </h2>
             </div>
 

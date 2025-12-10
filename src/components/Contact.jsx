@@ -19,7 +19,7 @@ const Contact = () => {
                 Connect With Us
               </span>
               <h2 className="display-5 fw-bold text-dark mt-2 mb-3">
-                Get in <span className="text-outline-red-dark">Touch</span>
+                Get in <span className="text-stroke-red">Touch</span>
               </h2>
               <p className="text-muted mb-4">
                 Ready to own your piece of Kenya? Visit our offices at
