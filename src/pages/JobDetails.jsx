@@ -24,26 +24,25 @@ const JobDetails = () => {
   // --- EXPIRATION LOGIC ---
   const today = new Date();
   const deadlineDate = new Date(job.deadline);
-  // Reset time for fair comparison
   today.setHours(0, 0, 0, 0);
   deadlineDate.setHours(0, 0, 0, 0);
 
   const isExpired = today > deadlineDate;
 
   // Pre-filled Email Link
-  // We use encodeURIComponent to ensure special characters (spaces, etc) don't break the link
   const mailtoLink = isExpired
     ? "#"
-    : `mailto:jobs@fedhalandventures.co.ke?subject=${encodeURIComponent(
+    : `mailto:fedhalandventures@gmail.com?subject=${encodeURIComponent(
         `Application for ${job.title}`
       )}&body=${encodeURIComponent(
         `Dear Hiring Manager,\n\nI am writing to apply for the position of ${job.title} as advertised on your website.\n\nPlease find my CV and Portfolio attached.\n\nSincerely,\n[Your Name]`
       )}`;
 
   return (
+    // FIX 1: Removed 'overflowX: hidden' so Sticky works again
     <div className="job-details-page bg-light pb-5">
       {/* HEADER */}
-      <div className="bg-white border-bottom py-5 mb-4">
+      <div className="bg-white border-bottom py-4 mb-4">
         <div className="container-md">
           <Link
             to="/careers"
@@ -52,7 +51,7 @@ const JobDetails = () => {
             <i className="bi bi-arrow-left me-1"></i> Back to Jobs
           </Link>
           <div className="row align-items-center">
-            <div className="col-lg-8">
+            <div className="col-lg-8 text-lg-start mb-4 mb-lg-0">
               <h1 className="fw-bold text-dark mb-2">
                 {job.title}
                 {isExpired && (
@@ -61,7 +60,7 @@ const JobDetails = () => {
                   </span>
                 )}
               </h1>
-              <div className="d-flex flex-wrap gap-3 text-muted small">
+              <div className="d-flex flex-wrap gap-3 text-muted small justify-content-center justify-content-lg-start">
                 <span>
                   <i className="bi bi-briefcase-fill text-danger me-1"></i>{" "}
                   {job.department}
@@ -77,22 +76,35 @@ const JobDetails = () => {
               </div>
             </div>
 
-            <div className="col-lg-4 text-lg-end mt-4 mt-lg-0">
+            <div className="col-lg-4">
               {isExpired ? (
-                <button
-                  className="btn btn-secondary btn-lg px-5 fw-bold shadow-sm"
-                  disabled
-                >
-                  Applications Closed <i className="bi bi-lock-fill ms-2"></i>
-                </button>
+                <div className="d-flex justify-content-center justify-content-lg-end">
+                  <button
+                    className="btn btn-secondary btn-lg px-5 fw-bold shadow-sm"
+                    disabled
+                  >
+                    Applications Closed <i className="bi bi-lock-fill ms-2"></i>
+                  </button>
+                </div>
               ) : (
-                <a
-                  href={mailtoLink}
-                  className="btn btn-danger btn-lg px-5 fw-bold shadow-sm"
-                  /* FIX: Removed target="_blank" so it opens the mail app directly */
-                >
-                  Apply Now <i className="bi bi-send-fill ms-2"></i>
-                </a>
+                <div className="d-flex flex-column align-items-center align-items-lg-end">
+                  <a
+                    href={mailtoLink}
+                    className="btn btn-primary-red btn-lg px-5 fw-bold shadow-sm"
+                  >
+                    Apply Now <i className="bi bi-send-fill ms-2"></i>
+                  </a>
+
+                  <small
+                    className="text-muted mt-2 text-center text-lg-end"
+                    style={{ fontSize: "0.75rem" }}
+                  >
+                    or email:{" "}
+                    <strong className="text-dark user-select-all text-break">
+                      fedhalandventures@gmail.com
+                    </strong>
+                  </small>
+                </div>
               )}
             </div>
           </div>
@@ -113,10 +125,13 @@ const JobDetails = () => {
           </div>
         )}
 
-        <div className="row g-5">
+        {/* FIX 2: Changed 'g-5' to 'g-3 g-lg-5'. 
+            'g-3' is smaller and fits on mobile without overflow. 
+            'g-lg-5' keeps it spacious on laptops. */}
+        <div className="row g-3 g-lg-5">
           {/* LEFT: Details */}
           <div className="col-lg-8">
-            <div className="bg-white p-4 p-md-5 rounded shadow-sm">
+            <div className="bg-white p-3 p-md-5 rounded shadow-sm">
               <h5 className="fw-bold mb-3">About the Role</h5>
               <p className="text-secondary mb-5" style={{ lineHeight: "1.8" }}>
                 {job.description}
@@ -155,7 +170,8 @@ const JobDetails = () => {
           <div className="col-lg-4">
             <div
               className="bg-dark text-white p-4 rounded shadow sticky-top"
-              style={{ top: "100px" }}
+              // Adjusted 'top' to allow for navbar height
+              style={{ top: "100px", zIndex: 10 }}
             >
               <h5 className="fw-bold mb-4 text-white">Job Overview</h5>
 
@@ -215,19 +231,21 @@ const JobDetails = () => {
                   Closed
                 </button>
               ) : (
-                <a
-                  href={mailtoLink}
-                  className="btn btn-light w-100 fw-bold"
-                  /* FIX: Removed target="_blank" here too */
-                >
-                  Apply via Email
-                </a>
-              )}
-
-              {!isExpired && (
-                <p className="text-center text-secondary small mt-3 mb-0">
-                  Please attach your CV and Portfolio (if applicable).
-                </p>
+                <div className="text-center">
+                  <a href={mailtoLink} className="btn btn-light w-100 fw-bold">
+                    Apply via Email
+                  </a>
+                  <p
+                    className="text-secondary small mt-3 mb-0"
+                    style={{ fontSize: "0.8rem" }}
+                  >
+                    Or send CV to:
+                    <br />
+                    <strong className="text-white user-select-all text-break">
+                      fedhalandventures@gmail.com
+                    </strong>
+                  </p>
+                </div>
               )}
             </div>
           </div>

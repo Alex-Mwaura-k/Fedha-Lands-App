@@ -55,11 +55,13 @@ const Careers = () => {
           <span className="text-danger fw-bold text-uppercase small ls-2">
             Join Our Team
           </span>
-          <h1 className="display-4 fw-bold mt-2">Build Your Career With Us</h1>
+          <h1 className="display-4 fw-bold mt-2">
+            Build Your <span className="text-stroke-white">Career</span> With Us
+          </h1>
           <p className="text-secondary mx-auto" style={{ maxWidth: "600px" }}>
-            At Fedha Land Ventures, we don't just sell land; we build futures.
-            If you are passionate, driven, and ready to make an impact, we want
-            to hear from you.
+            At Fedha Land Ventures, we don't just sell land we build futures. If
+            you are passionate, driven, and ready to make an impact, we want to
+            hear from you.
           </p>
         </div>
       </div>

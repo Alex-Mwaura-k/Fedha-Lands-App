@@ -1527,3 +1527,17 @@ nav[aria-label="breadcrumb"] {
   /* font-weight: 900; */
   font-family: sans-serif;
 }
+
+/* JOb details */
+.btn-primary-red {
+  background-color: var(--primary-color) !important; /* Uses your #ff0000 */
+  color: white !important;
+  border: 1px solid var(--primary-color) !important;
+  transition: all 0.3s ease;
+}
+
+.btn-primary-red:hover {
+  background-color: #cc0000 !important; /* Slightly darker on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+}
