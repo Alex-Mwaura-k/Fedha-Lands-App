@@ -75,7 +75,7 @@ const Properties = ({ limit }) => {
 
       {/* Show "View All" button ONLY if we are limiting the list (Home Page) */}
       {limit && (
-        <div className="text-center mt-4 mb-3">
+        <div className="text-center mt-4">
           <Link to="/properties" className="btn btn-custom-red px-3 py-1">
             View All Properties
           </Link>

@@ -23,9 +23,10 @@ const About = lazy(() => import("./components/About"));
 const Blog = lazy(() => import("./components/Blog"));
 const Gallery = lazy(() => import("./components/Gallery"));
 const Contact = lazy(() => import("./components/Contact"));
-// NEW LAZY IMPORTS
 const Testimonials = lazy(() => import("./components/Testimonials"));
 const FAQ = lazy(() => import("./components/FAQ"));
+const Careers = lazy(() => import("./pages/Careers"));
+const JobDetails = lazy(() => import("./pages/JobDetails"));
 
 // Pages... (Keep existing page imports)
 const PropertyDetails = lazy(() => import("./pages/PropertyDetails"));
@@ -81,6 +82,8 @@ function App() {
             <Route path="/gallery" element={<AllGallery />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/careers/:id" element={<JobDetails />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="*" element={<NotFound />} />

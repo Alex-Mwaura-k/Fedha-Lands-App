@@ -144,6 +144,10 @@ const Footer = () => {
               <li>
                 <Link to="/contact">Contact Us</Link>
               </li>
+              {/* NEW CAREERS LINK ADDED HERE */}
+              <li>
+                <Link to="/careers">Careers</Link>
+              </li>
             </ul>
           </div>
 

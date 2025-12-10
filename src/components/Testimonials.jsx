@@ -146,8 +146,11 @@ const Testimonials = () => {
           <div className="row g-4 justify-content-center transition-all">
             {displayReviews.length > 0 ? (
               displayReviews.map((review) => (
-                <div key={review.id} className="col-md-4 fade-in-animation">
-                  <div className="card h-100 border-0 shadow-sm p-4 bg-light position-relative">
+                <div
+                  key={review.id}
+                  className="d-flex col-md-4 fade-in-animation"
+                >
+                  <div className="card border-0 shadow-sm p-4 bg-light position-relative h-100">
                     <div className="position-absolute top-0 end-0 p-3 opacity-25 text-danger">
                       <i className="bi bi-quote fs-1"></i>
                     </div>
@@ -211,41 +214,37 @@ const Testimonials = () => {
               </div>
             )}
           </div>
-
-          {isCarouselMode && (
-            <div className="d-flex justify-content-center gap-3 mt-4">
-              <button
-                className="btn btn-outline-danger"
-                onClick={prevSlide}
-                title="Previous"
-              >
-                <i className="bi bi-chevron-left"></i>
-              </button>
-              <button
-                className={`btn ${
-                  isPaused ? "btn-danger" : "btn-outline-danger"
-                }`}
-                onClick={togglePause}
-                title={isPaused ? "Resume" : "Pause"}
-              >
-                {isPaused ? (
-                  <i className="bi bi-play-fill"></i>
-                ) : (
-                  <i className="bi bi-pause-fill"></i>
-                )}
-              </button>
-              <button
-                className="btn btn-outline-danger"
-                onClick={nextSlide}
-                title="Next"
-              >
-                <i className="bi bi-chevron-right"></i>
-              </button>
-            </div>
-          )}
         </div>
       </div>
-
+      {isCarouselMode && (
+        <div className="d-flex justify-content-center gap-3 mt-4">
+          <button
+            className="btn btn-outline-danger"
+            onClick={prevSlide}
+            title="Previous"
+          >
+            <i className="bi bi-chevron-left"></i>
+          </button>
+          <button
+            className={`btn ${isPaused ? "btn-danger" : "btn-outline-danger"}`}
+            onClick={togglePause}
+            title={isPaused ? "Resume" : "Pause"}
+          >
+            {isPaused ? (
+              <i className="bi bi-play-fill"></i>
+            ) : (
+              <i className="bi bi-pause-fill"></i>
+            )}
+          </button>
+          <button
+            className="btn btn-outline-danger"
+            onClick={nextSlide}
+            title="Next"
+          >
+            <i className="bi bi-chevron-right"></i>
+          </button>
+        </div>
+      )}
       {showModal && (
         // Added 'testimonials-modal' class for scoping CSS
         <div
