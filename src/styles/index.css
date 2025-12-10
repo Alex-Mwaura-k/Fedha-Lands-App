@@ -1552,7 +1552,7 @@ nav[aria-label="breadcrumb"] {
   font-weight: 900;
 }
 .text-stroke-red {
-  color: transparent;
+  color: #ffffff;
   -webkit-text-stroke: 1.5px var(--primary-color);
   letter-spacing: 2px;
   paint-order: stroke fill;
