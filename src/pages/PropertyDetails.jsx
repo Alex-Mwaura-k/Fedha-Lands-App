@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { properties } from "../data/propertiesData";
 
@@ -6,9 +6,14 @@ const PropertyDetails = () => {
   const { id } = useParams();
   const property = properties.find((p) => p.id === parseInt(id));
 
+  // Determine images (Fallback to cover image if no array)
+  const propertyImages = property ? property.images || [property.img] : [];
+
   const [mainImage, setMainImage] = useState("");
   const [lightboxIndex, setLightboxIndex] = useState(null);
+  const [isPaused, setIsPaused] = useState(false);
 
+  // Initialize
   useEffect(() => {
     window.scrollTo(0, 0);
     if (property) {
@@ -16,45 +21,78 @@ const PropertyDetails = () => {
     }
   }, [id, property]);
 
+  // --- AUTO-CAROUSEL LOGIC ---
+  useEffect(() => {
+    if (propertyImages.length <= 1 || lightboxIndex !== null || isPaused)
+      return;
+
+    const interval = setInterval(() => {
+      setMainImage((prev) => {
+        const currentIndex = propertyImages.indexOf(prev);
+        const nextIndex = (currentIndex + 1) % propertyImages.length;
+        return propertyImages[nextIndex];
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [propertyImages, lightboxIndex, isPaused]);
+
+  // --- MANUAL NAVIGATION HANDLERS ---
+  const handlePrevMain = (e) => {
+    e.stopPropagation();
+    setIsPaused(true);
+    const currentIndex = propertyImages.indexOf(mainImage);
+    const prevIndex =
+      currentIndex <= 0 ? propertyImages.length - 1 : currentIndex - 1;
+    setMainImage(propertyImages[prevIndex]);
+  };
+
+  const handleNextMain = (e) => {
+    e.stopPropagation();
+    setIsPaused(true);
+    const currentIndex = propertyImages.indexOf(mainImage);
+    const nextIndex = (currentIndex + 1) % propertyImages.length;
+    setMainImage(propertyImages[nextIndex]);
+  };
+
   if (!property) {
     return (
       <div className="text-center py-5 mt-5">
         <h2>Property Not Found</h2>
+        <Link to="/properties" className="btn btn-dark mt-3">
+          Back to Listings
+        </Link>
       </div>
     );
   }
 
-  const propertyImages = property.images || [property.img];
-
+  // Lightbox Handlers
   const openLightbox = (index) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);
 
-  const nextImage = (e) => {
+  const nextLightboxImage = (e) => {
     e.stopPropagation();
     setLightboxIndex((prev) =>
       prev === propertyImages.length - 1 ? 0 : prev + 1
     );
   };
 
-  const prevImage = (e) => {
+  const prevLightboxImage = (e) => {
     e.stopPropagation();
     setLightboxIndex((prev) =>
       prev === 0 ? propertyImages.length - 1 : prev - 1
     );
   };
 
-  // Limit to 4 related properties as requested
   const relatedProperties = properties
     .filter((p) => p.id !== property.id)
     .slice(0, 4);
 
   return (
-    <div
-      className="property-details-page bg-light pb-5"
-      style={{ paddingTop: "20px" }}
-    >
+    // FIX: Removed 'style={{ paddingTop: "80px" }}' to remove the large gap
+    <div className="property-details-page bg-light pb-5">
       {/* HEADER */}
-      <div className="container-md mb-4">
+      <div className="container-md mb-4 pt-3">
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -95,21 +133,19 @@ const PropertyDetails = () => {
       </div>
 
       <div className="container-md">
-        {/* 'align-items-stretch' ensures both columns are equal height */}
         <div className="row g-4 align-items-stretch">
           {/* LEFT COLUMN */}
-          {/* 'd-flex flex-column' allows us to push the Map to the bottom */}
           <div className="col-lg-8 d-flex flex-column">
-            {/* 1. GALLERY */}
-            <div className="property-gallery-wrapper bg-white p-1 rounded shadow-sm">
+            {/* GALLERY SECTION */}
+            <div
+              className="property-gallery-wrapper bg-white p-1 rounded shadow-sm"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+            >
+              {/* Main Image Container */}
               <div
-                className="main-image-container"
-                style={{
-                  cursor: "pointer",
-                  position: "relative",
-                  overflow: "hidden",
-                  borderRadius: "8px",
-                }}
+                className="main-image-container position-relative overflow-hidden rounded"
+                style={{ cursor: "pointer" }}
                 onClick={() =>
                   openLightbox(
                     propertyImages.indexOf(mainImage) !== -1
@@ -125,9 +161,28 @@ const PropertyDetails = () => {
                   style={{
                     maxHeight: "500px",
                     minHeight: "300px",
-                    transition: "0.3s",
+                    transition: "opacity 0.5s ease-in-out",
                   }}
                 />
+
+                {/* FAINT NAVIGATION BUTTONS */}
+                {propertyImages.length > 1 && (
+                  <>
+                    <button
+                      className="img-nav-btn prev"
+                      onClick={handlePrevMain}
+                    >
+                      <i className="bi bi-chevron-left"></i>
+                    </button>
+                    <button
+                      className="img-nav-btn next"
+                      onClick={handleNextMain}
+                    >
+                      <i className="bi bi-chevron-right"></i>
+                    </button>
+                  </>
+                )}
+
                 <div className="position-absolute bottom-0 end-0 m-3">
                   <span className="badge bg-dark">
                     <i className="bi bi-arrows-fullscreen"></i> View Fullscreen
@@ -135,6 +190,7 @@ const PropertyDetails = () => {
                 </div>
               </div>
 
+              {/* Thumbnails */}
               <div className="thumbnails-container d-flex gap-2 mt-2 overflow-auto py-2">
                 {propertyImages.map((img, index) => (
                   <img
@@ -144,7 +200,10 @@ const PropertyDetails = () => {
                     className={`thumbnail-img rounded ${
                       mainImage === img ? "active-thumb" : ""
                     }`}
-                    onClick={() => setMainImage(img)}
+                    onClick={() => {
+                      setMainImage(img);
+                      setIsPaused(true);
+                    }}
                     style={{
                       width: "80px",
                       height: "80px",
@@ -155,19 +214,19 @@ const PropertyDetails = () => {
                           ? "2px solid red"
                           : "2px solid transparent",
                       opacity: mainImage === img ? 1 : 0.6,
+                      transition: "all 0.3s ease",
                     }}
                   />
                 ))}
               </div>
             </div>
 
-            {/* 2. DESCRIPTION */}
+            {/* DESCRIPTION */}
             <div className="bg-white p-4 mt-4 rounded shadow-sm">
               <h4 className="fw-bold mb-3 border-bottom pb-2">Description</h4>
               <p className="text-secondary" style={{ lineHeight: "1.8" }}>
                 {property.description}
               </p>
-
               <h5 className="fw-bold mt-4 mb-3">Property Features</h5>
               <div className="row g-2">
                 {property.features.map((feature, index) => (
@@ -181,7 +240,7 @@ const PropertyDetails = () => {
               </div>
             </div>
 
-            {/* 3. MAP (mt-auto pushes this to the bottom of the left column) */}
+            {/* MAP */}
             {property.mapSrc && (
               <div className="bg-white p-4 mt-4 rounded shadow-sm mt-auto">
                 <h4 className="fw-bold mb-3 border-bottom pb-2">
@@ -200,9 +259,8 @@ const PropertyDetails = () => {
           </div>
 
           {/* RIGHT COLUMN */}
-          {/* 'd-flex flex-column' allows us to push Related Properties to the bottom */}
           <div className="col-lg-4 d-flex flex-column">
-            {/* 1. PRICE CARD (Static, not sticky) */}
+            {/* PRICE CARD */}
             <div className="bg-white p-4 rounded shadow-lg">
               <h3 className="text-danger fw-bold mb-1">
                 Ksh {property.price}/=
@@ -236,7 +294,7 @@ const PropertyDetails = () => {
               </div>
             </div>
 
-            {/* 2. RELATED PROPERTIES (mt-auto pushes this to the bottom of the right column) */}
+            {/* RELATED PROPERTIES */}
             <div className="mt-4 mt-auto">
               <h5 className="fw-bold mb-3 text-dark">More Properties</h5>
               <div className="d-flex flex-column gap-3">
@@ -273,13 +331,13 @@ const PropertyDetails = () => {
         </div>
       </div>
 
-      {/* --- LIGHTBOX OVERLAY --- */}
+      {/* LIGHTBOX OVERLAY */}
       {lightboxIndex !== null && (
         <div className="lightbox-overlay" onClick={closeLightbox}>
           <button className="lightbox-close" onClick={closeLightbox}>
             &times;
           </button>
-          <button className="lightbox-prev" onClick={prevImage}>
+          <button className="lightbox-prev" onClick={prevLightboxImage}>
             <i className="bi bi-chevron-left"></i>
           </button>
           <div
@@ -288,7 +346,7 @@ const PropertyDetails = () => {
           >
             <img
               src={propertyImages[lightboxIndex]}
-              alt={`View ${lightboxIndex}`}
+              alt="Fullscreen"
               className="lightbox-img"
             />
             <div className="lightbox-caption">
@@ -297,7 +355,7 @@ const PropertyDetails = () => {
               </p>
             </div>
           </div>
-          <button className="lightbox-next" onClick={nextImage}>
+          <button className="lightbox-next" onClick={nextLightboxImage}>
             <i className="bi bi-chevron-right"></i>
           </button>
         </div>

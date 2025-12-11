@@ -1541,3 +1541,82 @@ nav[aria-label="breadcrumb"] {
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
 }
+
+/* =========================================
+   PROPERTY IMAGE NAVIGATION BUTTONS
+   ========================================= */
+
+.img-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.3); /* Black with 30% opacity (Faint) */
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+
+  /* Optional: Hide on mobile to keep it clean, show on hover/desktop */
+  /* opacity: 0; */
+}
+
+/* Hover over the image container makes buttons clearer */
+.main-image-container:hover .img-nav-btn {
+  background-color: rgba(0, 0, 0, 0.6); /* Darker on hover */
+  /* opacity: 1; */
+}
+
+/* Hover over the specific button makes it Red */
+.img-nav-btn:hover {
+  background-color: #dc3545 !important; /* Bootstrap Danger Red */
+  transform: translateY(-50%) scale(1.1); /* Slight zoom effect */
+}
+
+.img-nav-btn.prev {
+  left: 15px;
+}
+
+.img-nav-btn.next {
+  right: 15px;
+}
+
+/* NAVBAR FIXES */
+
+/* Parent for submenu positioning */
+.dropdown-submenu {
+  position: relative;
+}
+
+/* Desktop: Submenu opens to the right */
+@media (min-width: 992px) {
+  .dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+  }
+}
+
+/* Mobile: Submenu stacks vertically with indentation */
+@media (max-width: 991px) {
+  .dropdown-submenu .dropdown-menu {
+    position: static;
+    float: none;
+    width: auto;
+    margin-top: 0;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    padding-left: 1.5rem; /* Indent */
+  }
+
+  .dropdown-submenu .dropdown-menu .dropdown-item {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}

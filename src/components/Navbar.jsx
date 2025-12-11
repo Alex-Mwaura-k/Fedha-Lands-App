@@ -1,11 +1,53 @@
-import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  // STATE MANAGEMENT
+  const [isPropertiesOpen, setIsPropertiesOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
 
-  // Ref to programmatically click the close button
-  const closeButtonRef = useRef(null);
+  // REFS
+  const closeButtonRef = useRef(null); // To close mobile menu
+  const dropdownRef = useRef(null); // To detect clicks outside properties dropdown
+
+  const location = useLocation();
+
+  // 1. CLOSE MENUS ON ROUTE CHANGE
+  useEffect(() => {
+    setIsPropertiesOpen(false);
+    setActiveSubmenu(null);
+    if (closeButtonRef.current) closeButtonRef.current.click();
+  }, [location]);
+
+  // 2. CLOSE DROPDOWN WHEN CLICKING OUTSIDE
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // If dropdown is open AND click is NOT inside the dropdownRef element
+      if (
+        isPropertiesOpen &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setIsPropertiesOpen(false);
+        setActiveSubmenu(null);
+      }
+    };
+
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Unbind on cleanup
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isPropertiesOpen]);
+
+  // HANDLERS
+  const toggleProperties = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsPropertiesOpen(!isPropertiesOpen);
+  };
 
   const toggleSubmenu = (e, name) => {
     e.preventDefault();
@@ -13,12 +55,8 @@ const Navbar = () => {
     setActiveSubmenu(activeSubmenu === name ? null : name);
   };
 
-  // FUNCTION: Closes mobile menu when a link is clicked
-  const handleLinkClick = () => {
-    if (closeButtonRef.current) {
-      // This simulates clicking the 'X' button
-      closeButtonRef.current.click();
-    }
+  const closeMenu = () => {
+    if (closeButtonRef.current) closeButtonRef.current.click();
   };
 
   return (
@@ -27,8 +65,8 @@ const Navbar = () => {
       data-bs-theme="dark"
     >
       <div className="container-md">
-        {/* LOGO - Close menu on click */}
-        <Link className="navbar-brand" to="/" onClick={handleLinkClick}>
+        {/* LOGO */}
+        <Link className="navbar-brand" to="/">
           <img
             src="/icons/logo.png"
             alt="Fedha Land Ventures"
@@ -37,65 +75,83 @@ const Navbar = () => {
           />
         </Link>
 
+        {/* TOGGLE BUTTON */}
         <button
           className="navbar-toggler ms-auto"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasNavbar"
-          aria-controls="offcanvasNavbar"
         >
           <i className="bi bi-list"></i>
         </button>
 
+        {/* SIDEBAR (OFFCANVAS) */}
         <div
           className="offcanvas offcanvas-end"
           tabIndex="-1"
           id="offcanvasNavbar"
-          aria-labelledby="offcanvasNavbarLabel"
         >
           <div className="offcanvas-header">
-            <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
-              Menu
-            </h5>
+            <h5 className="offcanvas-title">Menu</h5>
             <button
               type="button"
               className="btn-close"
               data-bs-dismiss="offcanvas"
-              aria-label="Close"
-              ref={closeButtonRef} // ATTACH REF HERE
+              ref={closeButtonRef}
             ></button>
           </div>
 
           <div className="offcanvas-body">
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  to="/"
-                  onClick={handleLinkClick}
-                >
+                <Link className="nav-link" to="/">
                   Home
                 </Link>
               </li>
 
-              <li className="nav-item dropdown">
+              {/* === PROPERTIES DROPDOWN === */}
+              {/* Added ref={dropdownRef} to the parent LI so we know where the boundary is */}
+              <li className="nav-item dropdown" ref={dropdownRef}>
                 <a
-                  className="nav-link dropdown-toggle"
+                  className={`nav-link dropdown-toggle ${
+                    isPropertiesOpen ? "show" : ""
+                  }`}
                   href="#"
                   role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+                  onClick={toggleProperties}
                 >
                   Properties
                 </a>
-                <ul className="dropdown-menu mt-2">
+
+                <ul
+                  className={`dropdown-menu mt-2 ${
+                    isPropertiesOpen ? "show" : ""
+                  }`}
+                >
+                  {/* LINK 1: VIEW ALL */}
+                  <li>
+                    <Link
+                      className="dropdown-item fw-bold small"
+                      to="/properties"
+                      style={{ color: "#a1a1a1" }}
+                    >
+                      View All Properties
+                    </Link>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider my-1" />
+                  </li>
+
+                  {/* SUBMENU: ROYAL GARDEN */}
                   <li className="dropdown-submenu">
                     <a
-                      className="dropdown-item dropdown-toggle"
+                      className={`dropdown-item dropdown-toggle ${
+                        activeSubmenu === "royal" ? "show" : ""
+                      }`}
                       href="#"
                       onClick={(e) => toggleSubmenu(e, "royal")}
                     >
-                      Royal Garden Kithyoko
+                      Royal Gardens
                     </a>
                     <ul
                       className={`dropdown-menu ${
@@ -103,48 +159,36 @@ const Navbar = () => {
                       }`}
                     >
                       <li>
-                        <Link
-                          className="dropdown-item"
-                          to="/property/1"
-                          onClick={handleLinkClick}
-                        >
+                        <Link className="dropdown-item" to="/property/1">
                           Phase V
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          className="dropdown-item"
-                          to="/property/4"
-                          onClick={handleLinkClick}
-                        >
+                        <Link className="dropdown-item" to="/property/4">
                           Phase IV
                         </Link>
                       </li>
                     </ul>
                   </li>
 
+                  {/* DIRECT LINKS */}
                   <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/property/2"
-                      onClick={handleLinkClick}
-                    >
-                      Kijani Garden Malindi
+                    <Link className="dropdown-item" to="/property/2">
+                      Kijani Gardens
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/property/3"
-                      onClick={handleLinkClick}
-                    >
+                    <Link className="dropdown-item" to="/property/3">
                       Unity Garden
                     </Link>
                   </li>
 
+                  {/* SUBMENU: KITENGELA */}
                   <li className="dropdown-submenu">
                     <a
-                      className="dropdown-item dropdown-toggle"
+                      className={`dropdown-item dropdown-toggle ${
+                        activeSubmenu === "kitengela" ? "show" : ""
+                      }`}
                       href="#"
                       onClick={(e) => toggleSubmenu(e, "kitengela")}
                     >
@@ -156,20 +200,12 @@ const Navbar = () => {
                       }`}
                     >
                       <li>
-                        <Link
-                          className="dropdown-item"
-                          to="/property/1"
-                          onClick={handleLinkClick}
-                        >
+                        <Link className="dropdown-item" to="/property/1">
                           Phase I
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          className="dropdown-item"
-                          to="/property/1"
-                          onClick={handleLinkClick}
-                        >
+                        <Link className="dropdown-item" to="/property/1">
                           Phase II
                         </Link>
                       </li>
@@ -177,45 +213,36 @@ const Navbar = () => {
                   </li>
                 </ul>
               </li>
+              {/* === END PROPERTIES === */}
 
               <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/about"
-                  onClick={handleLinkClick}
-                >
+                <a className="nav-link" href="/#about-us" onClick={closeMenu}>
                   About
-                </Link>
+                </a>
               </li>
               <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/blogs"
-                  onClick={handleLinkClick}
-                >
+                <Link className="nav-link" to="/blogs">
                   Blog
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/gallery"
-                  onClick={handleLinkClick}
-                >
+                <Link className="nav-link" to="/gallery">
                   Gallery
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/contact"
-                  onClick={handleLinkClick}
-                >
+                <Link className="nav-link" to="/careers">
+                  Careers
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/contact">
                   Contact
                 </Link>
               </li>
             </ul>
 
+            {/* CONTACT INFO */}
             <div className="phone d-flex flex-column align-items-end mt-lg-0">
               <div className="p-number d-flex align-items-center gap-2">
                 <a
@@ -224,30 +251,13 @@ const Navbar = () => {
                 >
                   +254715113103
                 </a>
-
-                {/* Updated Social Links */}
-                <a
-                  href="https://www.instagram.com/fedhalandventures/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-decoration-none social-icon"
-                >
+                <a href="#" className="text-decoration-none social-icon">
                   <i className="bi bi-instagram"></i>
                 </a>
-                <a
-                  href="https://web.facebook.com/fedhalandventures"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-decoration-none social-icon"
-                >
+                <a href="#" className="text-decoration-none social-icon">
                   <i className="bi bi-facebook"></i>
                 </a>
-                <a
-                  href="https://www.tiktok.com/@fedhalandventures"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-decoration-none social-icon"
-                >
+                <a href="#" className="text-decoration-none social-icon">
                   <i className="bi bi-tiktok"></i>
                 </a>
               </div>
