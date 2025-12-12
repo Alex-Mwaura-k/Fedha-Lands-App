@@ -2,7 +2,7 @@ export const galleryData = [
   {
     id: 1,
     type: "property",
-    img: "/img/properties/Fadhili Gardens.png",
+    img: "/img/properties/fadhili-garden-makutano/main.png",
     title: "Fadhili Gardens",
     desc: "Phase II - Makutano. Gated community with graded roads.",
   },
@@ -16,7 +16,7 @@ export const galleryData = [
   {
     id: 3,
     type: "property",
-    img: "/img/properties/Amani Gardens.png",
+    img: "/img/properties/amani-garden-malindi/main.png",
     title: "Amani Gardens",
     desc: "Malindi. Beautiful scenery near the ocean.",
   },
@@ -30,8 +30,8 @@ export const galleryData = [
   {
     id: 5,
     type: "property",
-    img: "/img/properties/Kijani Gardens.png",
-    title: "Kithyoko Phase I",
+    img: "/img/properties/royal-garden-kithyoko/main.png",
+    title: "Royal Garden Phase I",
     desc: "Masinga. Lush greenery and ready title deeds.",
   },
   {
@@ -44,7 +44,7 @@ export const galleryData = [
   {
     id: 7,
     type: "property",
-    img: "/img/properties/Unity Gardens.png",
+    img: "/img/properties/unity-gardens/main.png",
     title: "Unity Garden",
     desc: "Malindi. Perfect for holiday homes.",
   },
