@@ -1,14 +1,14 @@
 export const careersData = [
   {
     id: 1,
-    title: "Real Estate Sales Executive",
-    department: "Sales",
+    title: "Head Office Administrator",
+    department: "Operations",
     location: "Ruiru, Kenya",
     type: "Full-Time",
     postedDate: "2025-11-01",
     deadline: "2026-01-30", // <--- FUTURE DATE: This job will be AVAILABLE
     description:
-      "We are looking for aggressive and passionate Sales Executives to join our team. You will be responsible for sourcing potential clients, showcasing our properties (Kithyoko, Malindi, Makutano), and closing deals.",
+      "We are looking for aggressive and passionate Office Administrator to join our team. You will be responsible for handling walkings, handling Office/ Clients documents or showcasing our properties (Kithyoko, Malindi, Makutano), and closing deals.",
     responsibilities: [
       "Prospect and generate leads through networking, cold calling, and social media.",
       "Conduct site visits with potential clients to various project locations.",
