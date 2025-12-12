@@ -23,8 +23,8 @@ export const galleryData = [
   {
     id: 4,
     type: "poster",
-    img: "https://picsum.photos/id/1060/800/800",
-    title: "Kitengela Open Day",
+    img: "/img/gallery/company events/1.png",
+    title: "Makutano Title Deeds issuance",
     desc: "August 2025. Join us for a fun day of investment education.",
   },
   {
