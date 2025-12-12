@@ -21,7 +21,30 @@ export const blogData = [
     img: "/img/properties/why50x100.png",
     desc: "Understanding the ROI on standard plot sizes in developing satellite towns like Kitengela.",
     date: "Nov 01, 2025",
-    content: `...`, // (Keep your content here)
+    content: `
+  <p class="lead">The 50x100 plot stands as the cornerstone of land investment in Kenya. It represents the perfect equilibrium between affordability and long-term value, offering a strategic entry point for investors without requiring an overwhelming financial commitment.</p>
+
+  <h4 class="fw-bold mt-4">1. An Accessible Entry Point into Real Estate</h4>
+  <p>While property prices continue to escalate in urban centers, the 50x100 plot remains the most attainable asset class for the majority of Kenyans. It serves as a practical foundation for building an investment portfolio. With the availability of flexible payment plans, this size allows young professionals and families to secure land now and develop it at their own pace.</p>
+
+  <h4 class="fw-bold mt-4">2. High Market Demand and Stability</h4>
+  <p>This specific plot size is the industry standard for residential development across the country. Its popularity stems from its ability to accommodate a spacious family home while remaining manageable in terms of maintenance. Because this size appeals to the widest demographic of buyers, its value remains resilient against market fluctuations.</p>
+
+  <h4 class="fw-bold mt-4">3. Versatility in Development Potential</h4>
+  <p>A 50x100 plot offers exceptional flexibility regarding land use. It provides ample space for diverse projects, ranging from a private residential bungalow to rental apartments or small-scale commercial units. This versatility allows investors to pivot their strategy based on market needs without being constrained by space.</p>
+
+  <h4 class="fw-bold mt-4">4. Minimal Maintenance and Holding Costs</h4>
+  <p>For investors not looking to build immediately, this plot size is economically efficient to hold. Annual land rates are generally low, and the cost of maintaining the grounds is minimal compared to larger acreage. This allows you to secure a prime location today and wait for the optimal time to develop.</p>
+
+  <h4 class="fw-bold mt-4">5. Rapid Capital Appreciation in Emerging Zones</h4>
+  <p>As Kenya’s infrastructure expands, land value in satellite towns is skyrocketing. Smaller, serviced plots tend to appreciate faster than larger tracks of land because they are accessible to a larger pool of future buyers. Investing in these growth corridors now guarantees significant capital gains in the future.</p>
+
+  <h4 class="fw-bold mt-4">6. High Liquidity and Ease of Resale</h4>
+  <p>Liquidity is a crucial factor in any investment. Because the 50x100 plot fits the budget and needs of the average Kenyan buyer, it is significantly easier to resell compared to larger parcels. The high demand ensures you can exit the investment and realize your profits quickly when needed.</p>
+
+  <h4 class="fw-bold mt-4">7. Scalability for Portfolio Growth</h4>
+  <p>Many successful real estate portfolios are built brick by brick. Starting with a single 50x100 plot allows investors to enter the market with manageable risk. Over time, this asset can be leveraged to acquire additional properties, allowing for a systematic expansion of your real estate wealth.</p>
+`, // (Keep your content here)
   },
   // --- VIDEO 2 ---
   {

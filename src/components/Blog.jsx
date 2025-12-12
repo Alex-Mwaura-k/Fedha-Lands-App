@@ -1,25 +1,34 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import { blogData } from "../data/blogData";
 
-const Blog = ({ limit }) => {
-  // Logic: Show limited items if 'limit' prop exists, otherwise show all
-  const displayItems = limit ? blogData.slice(0, limit) : blogData;
+const Blog = ({ limit, customData }) => {
+  // Logic: Use filtered data if provided, otherwise default to blogData
+  let displayItems = customData || blogData;
+
+  // If on Home Page (limit exists) and no filter is active, slice the data
+  if (limit && !customData) {
+    displayItems = blogData.slice(0, limit);
+  }
 
   return (
     <section id="blog" className="blog-section bg-white">
       <div className="container-md">
-        {/* Header - Only show on Home Page (when limit exists) */}
-        {limit && (
-          <div className="row mb-2 align-items-end">
+        {/* --- HOME PAGE HEADER (Title + Subscribe) --- */}
+        {limit && !customData && (
+          <div className="row mb-4 align-items-end">
+            {/* Left: Title */}
             <div className="col-lg-5 mb-4 mb-lg-0">
               <span className="text-danger fw-bold text-uppercase small ls-2">
                 Media Center
               </span>
               <h2 className="display-5 fw-bold text-dark mt-1">
+                {/* RESTORED: 'text-stroke-red' class */}
                 Blogs & <span className="text-stroke-red">Updates</span>
               </h2>
             </div>
 
+            {/* Right: Subscribe Form (Restored) */}
             <div className="col-lg-7">
               <div className="d-flex flex-column flex-md-row justify-content-lg-end align-items-md-center gap-3 mb-3">
                 <form
@@ -50,13 +59,18 @@ const Blog = ({ limit }) => {
         )}
 
         <div className="row g-4">
+          {/* --- MAIN BLOG GRID --- */}
           <div className="col-lg-9">
             <div className="row g-4">
+              {displayItems.length === 0 && (
+                <div className="col-12 text-center py-5">
+                  <h4 className="text-muted">No results found.</h4>
+                </div>
+              )}
+
               {displayItems.map((item) => (
                 <div key={item.id} className="col-md-6 col-lg-4">
-                  {/* --- LOGIC: CHECK IF VIDEO OR ARTICLE --- */}
                   {item.type === "video" ? (
-                    // VIDEO CARD
                     <div className="media-card video-card h-100 d-flex flex-column">
                       <div className="ratio ratio-16x9">
                         <iframe
@@ -74,8 +88,6 @@ const Blog = ({ limit }) => {
                         <p className="text-muted small mb-3 flex-grow-1 text-truncate-3">
                           {item.desc}
                         </p>
-
-                        {/* FIX: Use item.link to open in new tab */}
                         <a
                           href={item.link}
                           target="_blank"
@@ -87,12 +99,8 @@ const Blog = ({ limit }) => {
                       </div>
                     </div>
                   ) : (
-                    // ARTICLE CARD
                     <article className="media-card article-card h-100 d-flex flex-column">
-                      <Link
-                        to={`/article/${item.id}`}
-                        className="text-decoration-none"
-                      >
+                      <Link to={`/article/${item.id}`}>
                         <div className="ratio ratio-16x9 img-wrapper border-bottom-red">
                           <img
                             src={item.img}
@@ -134,13 +142,14 @@ const Blog = ({ limit }) => {
             </div>
           </div>
 
-          {/* Sidebar */}
+          {/* --- SIDEBAR --- */}
           <div className="col-lg-3">
             <div className="sidebar-sticky" style={{ top: "100px" }}>
+              {/* RECOMMENDED LIST */}
               <h5 className="fw-bold text-dark mb-3 border-start border-4 border-danger ps-2">
                 Recommended
               </h5>
-              <div className="list-group list-group-flush">
+              <div className="list-group list-group-flush mb-4">
                 {blogData
                   .filter((i) => i.type === "article")
                   .slice(0, 4)
@@ -148,7 +157,7 @@ const Blog = ({ limit }) => {
                     <Link
                       to={`/article/${item.id}`}
                       key={item.id}
-                      className="list-group-item list-group-item-action bg-transparent border-0 px-0 py-3 border-bottom"
+                      className="list-group-item bg-transparent border-0 px-0 py-3 border-bottom"
                     >
                       <div className="d-flex align-items-center">
                         <span className="text-danger fw-bold fs-4 me-3">
@@ -164,6 +173,8 @@ const Blog = ({ limit }) => {
                     </Link>
                   ))}
               </div>
+
+              {/* BOOK SITE VISIT BANNER */}
               <div className="mt-4 p-3 bg-dark text-white text-center">
                 <p className="small mb-2">Ready to visit?</p>
                 <button
@@ -178,11 +189,9 @@ const Blog = ({ limit }) => {
           </div>
         </div>
 
-        {/* View All Button - Only on Home Page */}
-        {limit && (
+        {/* --- VIEW ALL BUTTON (Only on Home Page) --- */}
+        {limit && !customData && (
           <div className="row mt-5">
-            {" "}
-            {/* Increased margin to mt-5 */}
             <div className="col-12 text-center">
               <Link to="/blogs" className="btn btn-custom-red px-3 py-1">
                 View All Articles
