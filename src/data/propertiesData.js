@@ -39,8 +39,9 @@ export const properties = [
     // Add images array here too...
     images: [
       "/img/properties/MAL-1.png",
-      "https://picsum.photos/id/15/800/600",
-      "https://picsum.photos/id/16/800/600",
+      "/img/properties/MAL-2.png",
+      "/img/properties/MAL-3.png",
+      "/img/properties/MAL-4.png"
     ],
     description:
       "A massive 1-acre block ideal for holiday homes, speculation, or large scale farming. Located near Msumarini shopping center just 45 minutes from Malindi CBD, this project promises high returns on investment. The area boasts a cool climate, ocean breeze, and is in close proximity to the beach. With freehold title deeds, tarmacked roads nearby, and a secure environment, Kijani Garden is perfect for those looking to invest in Malindi's thriving property market.",
