@@ -23,7 +23,7 @@ export const galleryData = [
   {
     id: 4,
     type: "poster",
-    img: "/img/gallery/company events/1.png",
+    img: "/img/gallery/Company events/1.png",
     title: "Makutano Title Deeds issuance",
     desc: "August 2025. Congratulations to the newest investors.",
   },
