@@ -135,7 +135,7 @@ const TermsOfService = () => {
                 </p>
                 <ul>
                   <li>
-                    Booking fees are refundable within 7 days if you choose not
+                    Booking fees are refundable within 14 days if you choose not
                     to proceed, subject to an administrative fee.
                   </li>
                   <li>
@@ -171,9 +171,9 @@ const TermsOfService = () => {
                 <address className="text-muted border-start border-4 border-danger ps-3">
                   <strong>Fedha Land Ventures Ltd</strong>
                   <br />
-                  Nyongo House, Ruiru Town
+                  Nyongo Plaza 1st floor, Ruiru Town
                   <br />
-                  Kiambu County, Kenya
+                  Kiambu County, Kenya.
                   <br />
                   Email:{" "}
                   <a href="mailto:fedhalandventures@gmail.com">
