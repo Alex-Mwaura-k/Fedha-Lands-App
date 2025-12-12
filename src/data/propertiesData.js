@@ -44,8 +44,15 @@ export const properties = [
     img: "/img/properties/kijani-garden-malindi/main.png",
 
     images: [
+<<<<<<< HEAD
       "/img/properties/kijani-garden-malindi/main.png",
       // Add other images here if you rename them, e.g. "/img/properties/kijani-garden-malindi/1.png"
+=======
+      "/img/properties/MAL-1.png",
+      "/img/properties/MAL-2.png",
+      "/img/properties/MAL-3.png",
+      "/img/properties/MAL-4.png"
+>>>>>>> 9962555ad85e31ba5fb6b906b73f9d43b7d2a89e
     ],
 
     description:
