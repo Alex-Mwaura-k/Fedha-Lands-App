@@ -216,9 +216,9 @@ const Navbar = () => {
               {/* === END PROPERTIES === */}
 
               <li className="nav-item">
-                <a className="nav-link" href="/#about-us" onClick={closeMenu}>
+                <Link className="nav-link" to="/about">
                   About
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/blogs">
