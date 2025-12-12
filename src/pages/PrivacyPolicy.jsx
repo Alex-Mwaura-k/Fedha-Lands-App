@@ -25,7 +25,7 @@ const PrivacyPolicy = () => {
       <div className="container-md">
         <div className="row md-justify-content-center">
           <div className="col-lg-12">
-            <div className="bg-white py-4 px-5 rounded shadow-sm">
+            <div className="bg-white py-md-4 px-md-5 py-2 px-3 rounded shadow-sm">
               <h1 className="fw-bold text-dark mb-4">Privacy Policy</h1>
               <p className="text-muted mb-4">
                 Last Updated: {new Date().toLocaleDateString()}
