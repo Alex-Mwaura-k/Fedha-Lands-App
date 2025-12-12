@@ -8,10 +8,8 @@ export const properties = [
     price: "130,000",
     status: "Available",
 
-    // Main image from your new folder
     img: "/img/properties/royal-garden-kithyoko/main.png",
 
-    // Gallery images from your new folder
     images: [
       "/img/properties/royal-garden-kithyoko/main.png",
       "/img/properties/royal-garden-kithyoko/1.png",
@@ -44,15 +42,10 @@ export const properties = [
     img: "/img/properties/kijani-garden-malindi/main.png",
 
     images: [
-<<<<<<< HEAD
       "/img/properties/kijani-garden-malindi/main.png",
-      // Add other images here if you rename them, e.g. "/img/properties/kijani-garden-malindi/1.png"
-=======
-      "/img/properties/MAL-1.png",
-      "/img/properties/MAL-2.png",
-      "/img/properties/MAL-3.png",
-      "/img/properties/MAL-4.png"
->>>>>>> 9962555ad85e31ba5fb6b906b73f9d43b7d2a89e
+      "/img/properties/kijani-garden-malindi/1.png",
+      "/img/properties/kijani-garden-malindi/2.png",
+      "/img/properties/kijani-garden-malindi/3.png",
     ],
 
     description:
@@ -94,13 +87,12 @@ export const properties = [
   {
     id: 4,
     title: "Royal Garden Kithyoko - Phase 4",
-    slug: "royal-garden-kithyoko", // Reusing the same folder/images as Phase 5 for now since they are the same location
+    slug: "royal-garden-kithyoko",
     location: "Kithyoko",
     size: "50x100",
     price: "120,000",
     status: "Available",
 
-    // Using the same images as Phase 5 for now
     img: "/img/properties/royal-garden-kithyoko/main.png",
     images: ["/img/properties/royal-garden-kithyoko/main.png"],
 
@@ -151,7 +143,7 @@ export const properties = [
   {
     id: 7,
     title: "Royal Garden Phase 6 (Coming Soon)",
-    slug: "royal-garden-kithyoko", // Placeholder using Phase 5 images
+    slug: "royal-garden-kithyoko",
     location: "Kithyoko",
     size: "50x100",
     price: "180,000",

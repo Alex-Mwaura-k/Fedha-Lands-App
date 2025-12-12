@@ -43,7 +43,7 @@ const Gallery = ({ limit }) => {
       <section id="gallery" className="gallery-section">
         <div className="container-md">
           {/* Header */}
-          <div className="row mb-5 align-items-center">
+          <div className="row mb-4 align-items-center">
             <div className="col-lg-4">
               <span className="text-danger fw-bold text-uppercase small ls-2">
                 Our Gallery
@@ -116,7 +116,7 @@ const Gallery = ({ limit }) => {
 
           {/* View All Button (Only show if limited) */}
           {limit && (
-            <div className="row mt-5">
+            <div className="row mt-4">
               <div className="col-12 text-center">
                 <Link to="/gallery" className="btn btn-custom-red px-3 py-1">
                   View Full Gallery
