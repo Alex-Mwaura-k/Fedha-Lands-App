@@ -1,19 +1,34 @@
 import { Link } from "react-router-dom";
-import { properties } from "../data/propertiesData"; // Import the data
+import { properties } from "../data/propertiesData";
 
-const Properties = ({ limit }) => {
-  // Logic: If a limit is provided, slice the array. Otherwise, show everything.
-  const displayProperties = limit ? properties.slice(0, limit) : properties;
+// ADDED: customData prop to receive filtered results
+const Properties = ({ limit, customData }) => {
+  // LOGIC: Use customData if it exists, otherwise check for limit (Home Page)
+  const displayProperties = customData
+    ? customData
+    : limit
+    ? properties.slice(0, limit)
+    : properties;
 
   return (
     <section id="properties" className="container-md mt-2 mb-3">
-      {/* Only show title on Home Page or if specifically desired */}
-      {limit && <h1 className="text-start mb-3 h4">Featured Properties</h1>}
+      {/* Only show title on Home Page */}
+      {limit && !customData && (
+        <h1 className="text-start mb-3 h4">Featured Properties</h1>
+      )}
+
+      {/* Show "No Results" Message if list is empty */}
+      {displayProperties.length === 0 && (
+        <div className="text-center py-5">
+          <h4 className="text-muted">
+            No properties found matching your search.
+          </h4>
+        </div>
+      )}
 
       <div className="row g-4 mb-3">
         {displayProperties.map((prop) => (
           <div key={prop.id} className="col-lg-4 col-md-6 col-sm-12">
-            {/* Wrap the whole card in a Link to the Detail Page */}
             <Link
               to={`/property/${prop.id}`}
               className="text-decoration-none text-dark"
@@ -51,7 +66,6 @@ const Properties = ({ limit }) => {
                     </div>
                   </div>
 
-                  {/* Truncate description for the card view using JS substring */}
                   <p className="card-text small">
                     {prop.description.length > 100
                       ? `${prop.description.substring(0, 125)}...`
@@ -73,8 +87,8 @@ const Properties = ({ limit }) => {
         ))}
       </div>
 
-      {/* Show "View All" button ONLY if we are limiting the list (Home Page) */}
-      {limit && (
+      {/* Show View All Button only on Home Page */}
+      {limit && !customData && (
         <div className="text-center mt-4">
           <Link to="/properties" className="btn btn-custom-red px-3 py-1">
             View All Properties
