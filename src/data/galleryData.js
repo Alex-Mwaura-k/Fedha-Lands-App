@@ -25,7 +25,7 @@ export const galleryData = [
     type: "poster",
     img: "/img/gallery/company events/1.png",
     title: "Makutano Title Deeds issuance",
-    desc: "August 2025. Join us for a fun day of investment education.",
+    desc: "August 2025. Congratulations to the newest investors.",
   },
   {
     id: 5,
