@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+// Link is no longer needed here since it's inside the component
 import { Helmet } from "react-helmet-async";
 import Contact from "../components/Contact";
 
@@ -9,7 +10,7 @@ const ContactPage = () => {
   }, []);
 
   return (
-    // Wrapper with padding for the fixed navbar and matching background color
+    // Wrapper with padding for the fixed navbar
     <div>
       <Helmet>
         <title>Contact Us</title>
@@ -22,19 +23,12 @@ const ContactPage = () => {
           content="Contact Fedha Land, Real Estate Kenya Contact, Buy Land Ruiru, Site Visit Booking, Land for sale contacts"
         />
         <link rel="canonical" href="https://fedha.netlify.app/contact" />
-
-        {/* Open Graph / Social Media */}
         <meta property="og:title" content="Contact Fedha Land Ventures" />
-        <meta
-          property="og:description"
-          content="Ready to own your piece of Kenya? Reach out to us today to schedule a site visit."
-        />
-        <meta property="og:url" content="https://fedha.netlify.app/contact" />
         <meta property="og:type" content="website" />
       </Helmet>
 
-      {/* Render the reusable Contact Section */}
-      <Contact />
+      {/* Render the Contact Section with the Breadcrumb enabled */}
+      <Contact showBreadcrumb={true} />
     </div>
   );
 };

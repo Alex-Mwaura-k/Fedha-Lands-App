@@ -1,4 +1,8 @@
-const Contact = () => {
+import React from "react";
+import { Link } from "react-router-dom";
+
+// ADDED: showBreadcrumb prop
+const Contact = ({ showBreadcrumb }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     alert("Message sent! (This is a demo)");
@@ -10,6 +14,26 @@ const Contact = () => {
       <div className="tech-grid-bg"></div>
 
       <div className="container-md h-100 position-relative z-2">
+        {/* --- ADDED BREADCRUMB (Inside the component) --- */}
+        {/* It sits on the correct background now. Only shows if showBreadcrumb is true */}
+        {showBreadcrumb && (
+          <nav aria-label="breadcrumb" className="pt-3 mb-2">
+            <ol
+              className="breadcrumb"
+              style={{ backgroundColor: "transparent", padding: 0, margin: 0 }}
+            >
+              <li className="breadcrumb-item">
+                <Link to="/" className="text-danger text-decoration-none">
+                  Home
+                </Link>
+              </li>
+              <li className="breadcrumb-item active" aria-current="page">
+                Contact Us
+              </li>
+            </ol>
+          </nav>
+        )}
+
         <div className="row h-100 align-items-stretch justify-content-center g-4">
           {/* LEFT COLUMN: Info (Top) + Map (Bottom) */}
           <div className="col-lg-6 col-md-10 d-flex flex-column">
@@ -141,7 +165,6 @@ const Contact = () => {
                     </div>
                   </div>
 
-                  {/* Send Button */}
                   <div className="col-12 mt-2">
                     <button
                       type="submit"
@@ -151,14 +174,12 @@ const Contact = () => {
                     </button>
                   </div>
 
-                  {/* Divider */}
                   <div className="col-12 text-center my-0">
                     <span className="text-muted x-small text-uppercase ls-2">
                       Or Contact Directly
                     </span>
                   </div>
 
-                  {/* Action Buttons */}
                   <div className="col-6">
                     <a
                       href="tel:+254715113103"
