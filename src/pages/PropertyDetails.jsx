@@ -3,8 +3,11 @@ import { useParams, Link } from "react-router-dom";
 import { properties } from "../data/propertiesData";
 
 const PropertyDetails = () => {
-  const { id } = useParams();
-  const property = properties.find((p) => p.id === parseInt(id));
+  // 1. FIXED: Extract 'slug' from the URL (this must match path="/property/:slug" in App.jsx)
+  const { slug } = useParams();
+
+  // 2. FIXED: Find the property by matching the 'slug' string from your data
+  const property = properties.find((p) => p.slug === slug);
 
   // Determine images (Fallback to cover image if no array)
   const propertyImages = property ? property.images || [property.img] : [];
@@ -19,7 +22,7 @@ const PropertyDetails = () => {
     if (property) {
       setMainImage(property.img);
     }
-  }, [id, property]);
+  }, [slug, property]); // Dependency updated to slug
 
   // --- AUTO-CAROUSEL LOGIC ---
   useEffect(() => {
@@ -59,12 +62,36 @@ const PropertyDetails = () => {
     return (
       <div className="text-center py-5 mt-5">
         <h2>Property Not Found</h2>
+        <p className="text-muted small">Requested: {slug}</p>
         <Link to="/properties" className="btn btn-dark mt-3">
           Back to Listings
         </Link>
       </div>
     );
   }
+
+  // SEO RECOMMENDATION: JSON-LD Schema Logic
+  const schemaData = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    name: property.title,
+    image: window.location.origin + property.img,
+    description: property.metaDescription || property.description,
+    brand: {
+      "@type": "Brand",
+      name: "Fedha Land Ventures",
+    },
+    offers: {
+      "@type": "Offer",
+      url: window.location.href,
+      priceCurrency: "KES",
+      price: property.price.replace(/,/g, ""),
+      availability:
+        property.status === "Available"
+          ? "https://schema.org/InStock"
+          : "https://schema.org/SoldOut",
+    },
+  };
 
   // Lightbox Handlers
   const openLightbox = (index) => setLightboxIndex(index);
@@ -84,13 +111,16 @@ const PropertyDetails = () => {
     );
   };
 
+  // 3. FIXED: Filter related properties using slugs to match new routing
   const relatedProperties = properties
-    .filter((p) => p.id !== property.id)
+    .filter((p) => p.slug !== property.slug)
     .slice(0, 4);
 
   return (
-    // FIX: Removed 'style={{ paddingTop: "80px" }}' to remove the large gap
     <div className="property-details-page bg-light pb-5">
+      {/* SEO rich snippet script */}
+      <script type="application/ld+json">{JSON.stringify(schemaData)}</script>
+
       {/* HEADER */}
       <div className="container-md mb-4 pt-3">
         <nav aria-label="breadcrumb">
@@ -157,6 +187,7 @@ const PropertyDetails = () => {
                 <img
                   src={mainImage}
                   alt={property.title}
+                  loading="lazy"
                   className="w-100 object-fit-cover"
                   style={{
                     maxHeight: "500px",
@@ -165,7 +196,7 @@ const PropertyDetails = () => {
                   }}
                 />
 
-                {/* FAINT NAVIGATION BUTTONS */}
+                {/* NAVIGATION BUTTONS */}
                 {propertyImages.length > 1 && (
                   <>
                     <button
@@ -197,6 +228,7 @@ const PropertyDetails = () => {
                     key={index}
                     src={img}
                     alt={`View ${index + 1}`}
+                    loading="lazy"
                     className={`thumbnail-img rounded ${
                       mainImage === img ? "active-thumb" : ""
                     }`}
@@ -285,12 +317,6 @@ const PropertyDetails = () => {
                 >
                   <i className="bi bi-whatsapp me-2"></i> WhatsApp Us
                 </a>
-                <a
-                  href="tel:+254715113103"
-                  className="btn btn-outline-secondary py-2 fw-bold"
-                >
-                  <i className="bi bi-telephone me-2"></i> Call Now
-                </a>
               </div>
             </div>
 
@@ -300,24 +326,23 @@ const PropertyDetails = () => {
               <div className="d-flex flex-column gap-3">
                 {relatedProperties.map((rel) => (
                   <div
-                    key={rel.id}
+                    key={rel.slug}
                     className="card property-card h-100 border-0 shadow-sm"
                   >
                     <div className="position-relative">
                       <img
                         src={rel.img}
+                        loading="lazy"
                         className="card-img-top"
                         alt={rel.title}
                         style={{ height: "180px", objectFit: "cover" }}
                       />
-                      <span className="badge bg-danger position-absolute top-0 start-0 m-2">
-                        Ksh {rel.price}
-                      </span>
                     </div>
                     <div className="card-body">
                       <h6 className="card-title fw-bold">{rel.title}</h6>
+                      {/* FIXED: Links must use slug to match new routing */}
                       <Link
-                        to={`/property/${rel.id}`}
+                        to={`/property/${rel.slug}`}
                         className="btn btn-sm btn-outline-danger mt-2 stretched-link w-100"
                       >
                         View Details
@@ -349,11 +374,6 @@ const PropertyDetails = () => {
               alt="Fullscreen"
               className="lightbox-img"
             />
-            <div className="lightbox-caption">
-              <p className="mb-0">
-                {lightboxIndex + 1} / {propertyImages.length}
-              </p>
-            </div>
           </div>
           <button className="lightbox-next" onClick={nextLightboxImage}>
             <i className="bi bi-chevron-right"></i>

@@ -1,21 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { galleryData } from "../data/galleryData";
+import { Helmet } from "react-helmet-async"; // Added for Google display
 
 const Gallery = ({ limit }) => {
   const [filter, setFilter] = useState("all");
-  const [lightboxIndex, setLightboxIndex] = useState(null); // Null means closed
+  const [lightboxIndex, setLightboxIndex] = useState(null);
 
-  // 1. Filter Data
   const filteredItems =
     filter === "all"
       ? galleryData
       : galleryData.filter((item) => item.type === filter);
 
-  // 2. Limit Data (If on Home Page)
   const displayItems = limit ? filteredItems.slice(0, limit) : filteredItems;
 
-  // --- LIGHTBOX HANDLERS ---
+  useEffect(() => {
+    if (!limit) {
+      window.scrollTo(0, 0);
+    }
+  }, [limit]);
+
   const openLightbox = (index) => {
     setLightboxIndex(index);
   };
@@ -40,6 +44,25 @@ const Gallery = ({ limit }) => {
 
   return (
     <>
+      {/* SEO BLOCK: Ensures Google displays the page correctly */}
+      {!limit && (
+        <Helmet>
+          <title>Gallery | Fedha Land Ventures Limited</title>
+          <meta
+            name="description"
+            content="Explore our project gallery featuring Fadhili Gardens, Royal Gardens, and our team events in Ruiru, Makutano, and Malindi."
+          />
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ImageGallery",
+              name: "Fedha Land Ventures Gallery",
+              url: "https://fedha.netlify.app/gallery",
+            })}
+          </script>
+        </Helmet>
+      )}
+
       <section id="gallery" className="gallery-section">
         <div className="container-md">
           {/* Header */}
@@ -99,7 +122,12 @@ const Gallery = ({ limit }) => {
                   onClick={() => openLightbox(index)}
                   style={{ cursor: "pointer" }}
                 >
-                  <img src={item.img} alt={item.title} loading="lazy" />
+                  {/* RESTORED: Your original alt logic and loading attribute */}
+                  <img
+                    src={item.img}
+                    alt={item.alt || item.title}
+                    loading="lazy"
+                  />
                   <div className="gallery-overlay">
                     <div className="overlay-content">
                       <h6 className="text-uppercase text-danger fw-bold ls-2 mb-1">
@@ -114,7 +142,7 @@ const Gallery = ({ limit }) => {
             ))}
           </div>
 
-          {/* View All Button (Only show if limited) */}
+          {/* View All Button */}
           {limit && (
             <div className="row mt-4">
               <div className="col-12 text-center">
@@ -127,7 +155,7 @@ const Gallery = ({ limit }) => {
         </div>
       </section>
 
-      {/* --- LIGHTBOX MODAL --- */}
+      {/* --- LIGHTBOX MODAL (Restored original logic) --- */}
       {lightboxIndex !== null && (
         <div className="lightbox-overlay" onClick={closeLightbox}>
           <button className="lightbox-close" onClick={closeLightbox}>

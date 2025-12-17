@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { properties } from "../data/propertiesData"; // Import properties data for dynamic links
 
 const Navbar = () => {
   // STATE MANAGEMENT
@@ -12,6 +13,25 @@ const Navbar = () => {
 
   const location = useLocation();
 
+  // --- DYNAMIC DROPDOWN LOGIC ---
+  // Helper function to truncate title to maximum of two words
+  const formatTitle = (title) => {
+    const words = title.split(" ");
+    return words.length > 2 ? `${words[0]} ${words[1]}` : title;
+  };
+
+  // 1. Get 2 newest Available plots
+  const recentAvailable = properties
+    .filter((p) => p.status === "Available")
+    .sort((a, b) => b.id - a.id)
+    .slice(0, 2);
+
+  // 2. Get 2 newest Sold Out plots
+  const recentSold = properties
+    .filter((p) => p.status === "Sold Out")
+    .sort((a, b) => b.id - a.id)
+    .slice(0, 2);
+
   // 1. CLOSE MENUS ON ROUTE CHANGE
   useEffect(() => {
     setIsPropertiesOpen(false);
@@ -22,7 +42,6 @@ const Navbar = () => {
   // 2. CLOSE DROPDOWN WHEN CLICKING OUTSIDE
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // If dropdown is open AND click is NOT inside the dropdownRef element
       if (
         isPropertiesOpen &&
         dropdownRef.current &&
@@ -33,10 +52,7 @@ const Navbar = () => {
       }
     };
 
-    // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
-
-    // Unbind on cleanup
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -64,6 +80,25 @@ const Navbar = () => {
       className="navbar navbar-expand-lg fixed-top site-navbar"
       data-bs-theme="dark"
     >
+      {/* MOBILE LAYOUT FIX: Reduced padding for tighter fit on mobile screens */}
+      <style>{`
+        @media (max-width: 991px) {
+          .dropdown-item {
+            white-space: nowrap !important; /* Keep 2-word title on one line */
+            line-height: 1.2 !important;
+            padding: 6px 0 !important; /* Reduced padding from 12px for tighter fit */
+          }
+          .dropdown-menu {
+            border: none !important;
+            background: transparent !important;
+            padding-left: 10px !important; /* Reduced from 15px */
+          }
+          .dropdown-submenu .dropdown-menu {
+            padding-left: 12px !important;
+          }
+        }
+      `}</style>
+
       <div className="container-md">
         {/* LOGO */}
         <Link className="navbar-brand" to="/">
@@ -110,7 +145,6 @@ const Navbar = () => {
               </li>
 
               {/* === PROPERTIES DROPDOWN === */}
-              {/* Added ref={dropdownRef} to the parent LI so we know where the boundary is */}
               <li className="nav-item dropdown" ref={dropdownRef}>
                 <a
                   className={`nav-link dropdown-toggle ${
@@ -142,78 +176,69 @@ const Navbar = () => {
                     <hr className="dropdown-divider my-1" />
                   </li>
 
-                  {/* SUBMENU: ROYAL GARDEN */}
-                  <li className="dropdown-submenu">
-                    <a
-                      className={`dropdown-item dropdown-toggle ${
-                        activeSubmenu === "royal" ? "show" : ""
-                      }`}
-                      href="#"
-                      onClick={(e) => toggleSubmenu(e, "royal")}
-                    >
-                      Royal Gardens
-                    </a>
-                    <ul
-                      className={`dropdown-menu ${
-                        activeSubmenu === "royal" ? "show" : ""
-                      }`}
-                    >
-                      <li>
-                        <Link className="dropdown-item" to="/property/1">
-                          Phase V
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item" to="/property/4">
-                          Phase IV
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
+                  {/* DYNAMIC SUBMENU: NEWEST LISTINGS (Max 2 words) */}
+                  {recentAvailable.length > 0 && (
+                    <li className="dropdown-submenu">
+                      <a
+                        className={`dropdown-item dropdown-toggle ${
+                          activeSubmenu === "new" ? "show" : ""
+                        }`}
+                        href="#"
+                        onClick={(e) => toggleSubmenu(e, "new")}
+                      >
+                        Latest Properties
+                      </a>
+                      <ul
+                        className={`dropdown-menu ${
+                          activeSubmenu === "new" ? "show" : ""
+                        }`}
+                      >
+                        {recentAvailable.map((p) => (
+                          <li key={p.id}>
+                            <Link
+                              className="dropdown-item"
+                              to={`/property/${p.slug}`}
+                            >
+                              {formatTitle(p.title)}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  )}
 
-                  {/* DIRECT LINKS */}
-                  <li>
-                    <Link className="dropdown-item" to="/property/2">
-                      Kijani Gardens
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/property/3">
-                      Unity Garden
-                    </Link>
-                  </li>
-
-                  {/* SUBMENU: KITENGELA */}
-                  <li className="dropdown-submenu">
-                    <a
-                      className={`dropdown-item dropdown-toggle ${
-                        activeSubmenu === "kitengela" ? "show" : ""
-                      }`}
-                      href="#"
-                      onClick={(e) => toggleSubmenu(e, "kitengela")}
-                    >
-                      Kitengela
-                    </a>
-                    <ul
-                      className={`dropdown-menu ${
-                        activeSubmenu === "kitengela" ? "show" : ""
-                      }`}
-                    >
-                      <li>
-                        <Link className="dropdown-item" to="/property/1">
-                          Phase I
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item" to="/property/1">
-                          Phase II
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
+                  {/* DYNAMIC SUBMENU: SOLD OUT (Max 2 words) */}
+                  {recentSold.length > 0 && (
+                    <li className="dropdown-submenu">
+                      <a
+                        className={`dropdown-item dropdown-toggle ${
+                          activeSubmenu === "sold" ? "show" : ""
+                        }`}
+                        href="#"
+                        onClick={(e) => toggleSubmenu(e, "sold")}
+                      >
+                        Sold Out
+                      </a>
+                      <ul
+                        className={`dropdown-menu ${
+                          activeSubmenu === "sold" ? "show" : ""
+                        }`}
+                      >
+                        {recentSold.map((p) => (
+                          <li key={p.id}>
+                            <Link
+                              className="dropdown-item text-muted"
+                              to={`/property/${p.slug}`}
+                            >
+                              {formatTitle(p.title)}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  )}
                 </ul>
               </li>
-              {/* === END PROPERTIES === */}
 
               <li className="nav-item">
                 <Link className="nav-link" to="/about">

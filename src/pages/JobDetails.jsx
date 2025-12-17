@@ -3,12 +3,15 @@ import { useParams, Link } from "react-router-dom";
 import { careersData } from "../data/careersData";
 
 const JobDetails = () => {
-  const { id } = useParams();
-  const job = careersData.find((j) => j.id === parseInt(id));
+  // FIXED: Destructure 'slug' to match App.jsx route
+  const { slug } = useParams();
+
+  // FIXED: Find job by comparing slug strings
+  const job = careersData.find((j) => j.slug === slug);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [slug]);
 
   if (!job) {
     return (

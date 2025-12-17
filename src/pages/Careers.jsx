@@ -145,7 +145,8 @@ const Careers = () => {
                     </p>
 
                     <Link
-                      to={`/careers/${job.id}`}
+                      // FIXED: Used slug instead of id
+                      to={`/careers/${job.slug}`}
                       className={`btn w-100 fw-bold mt-auto ${
                         expired
                           ? "btn-secondary disabled"

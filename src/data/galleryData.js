@@ -5,13 +5,15 @@ export const galleryData = [
     img: "/img/properties/fadhili-garden-makutano/main.png",
     title: "Fadhili Gardens",
     desc: "Phase II - Makutano. Gated community with graded roads.",
+    alt: "Fadhili Gardens Phase II Makutano gated community plots for sale", // Added for SEO
   },
   {
     id: 2,
     type: "team",
-    img: "https://picsum.photos/id/1005/800/800", // Using larger images for lightbox
+    img: "https://picsum.photos/id/1005/800/800",
     title: "John Kamau",
     desc: "Senior Sales Manager guiding a client.",
+    alt: "Fedha Land Ventures sales manager guiding a client on land investment",
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ export const galleryData = [
     img: "/img/properties/amani-garden-malindi/main.png",
     title: "Amani Gardens",
     desc: "Malindi. Beautiful scenery near the ocean.",
+    alt: "Amani Gardens Malindi plots for sale near the ocean",
   },
   {
     id: 4,
@@ -26,6 +29,7 @@ export const galleryData = [
     img: "/img/Gallery/Company events/1.png",
     title: "Makutano Title Deeds issuance",
     desc: "August 2025. Congratulations to the newest investors.",
+    alt: "Fedha Land Ventures title deeds issuance ceremony at Makutano",
   },
   {
     id: 5,
@@ -33,6 +37,7 @@ export const galleryData = [
     img: "/img/properties/royal-garden-kithyoko/main.png",
     title: "Royal Garden Phase I",
     desc: "Masinga. Lush greenery and ready title deeds.",
+    alt: "Royal Garden Phase I Masinga plots with ready title deeds",
   },
   {
     id: 6,
@@ -40,6 +45,7 @@ export const galleryData = [
     img: "https://picsum.photos/id/1011/800/800",
     title: "Customer Care Team",
     desc: "Our Ruiru Office staff ready to serve you.",
+    alt: "Fedha Land Ventures customer care team Ruiru office",
   },
   {
     id: 7,
@@ -47,6 +53,7 @@ export const galleryData = [
     img: "/img/properties/unity-gardens/main.png",
     title: "Unity Garden",
     desc: "Malindi. Perfect for holiday homes.",
+    alt: "Unity Garden Malindi plots for sale for holiday homes",
   },
   {
     id: 8,
@@ -54,6 +61,7 @@ export const galleryData = [
     img: "https://picsum.photos/id/1050/800/800",
     title: "Free Site Visits",
     desc: "Every Wednesday & Saturday. Transport is on us!",
+    alt: "Free land site visits in Kenya by Fedha Land Ventures",
   },
   {
     id: 9,
@@ -61,5 +69,6 @@ export const galleryData = [
     img: "https://picsum.photos/id/1025/800/800",
     title: "Site Engineer",
     desc: "Grading the roads at Royal Garden Phase 5.",
+    alt: "Road grading at Royal Garden Phase 5 site development",
   },
 ];

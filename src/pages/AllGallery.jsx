@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { galleryData } from "../data/galleryData";
 
@@ -6,7 +6,7 @@ const Gallery = ({ limit }) => {
   const [filter, setFilter] = useState("all");
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
-  // 1. Filter Data
+  // 1. Filter Data logic
   const filteredItems =
     filter === "all"
       ? galleryData
@@ -15,13 +15,20 @@ const Gallery = ({ limit }) => {
   // 2. Limit Data (If on Home Page)
   const displayItems = limit ? filteredItems.slice(0, limit) : filteredItems;
 
+  // Ensure scroll position is reset when opening the full page
+  useEffect(() => {
+    if (!limit) window.scrollTo(0, 0);
+  }, [limit]);
+
   // --- LIGHTBOX HANDLERS ---
   const openLightbox = (index) => {
     setLightboxIndex(index);
+    document.body.style.overflow = "hidden"; // Prevent background scroll
   };
 
   const closeLightbox = () => {
     setLightboxIndex(null);
+    document.body.style.overflow = "auto";
   };
 
   const nextImage = (e) => {
@@ -40,10 +47,9 @@ const Gallery = ({ limit }) => {
 
   return (
     <>
-      <section id="gallery" className="gallery-section">
+      <section id="gallery" className="gallery-section bg-black py-5">
         <div className="container-md">
           {/* --- BREADCRUMB --- */}
-          {/* Only visible on the full Gallery Page (when limit is undefined) */}
           {!limit && (
             <nav aria-label="breadcrumb" className="mb-4 pt-2">
               <ol className="breadcrumb">
@@ -52,7 +58,6 @@ const Gallery = ({ limit }) => {
                     Home
                   </Link>
                 </li>
-                {/* text-white makes it visible on the black background */}
                 <li
                   className="breadcrumb-item active text-white"
                   aria-current="page"
@@ -75,71 +80,78 @@ const Gallery = ({ limit }) => {
             </div>
 
             <div className="col-lg-8">
-              <div className="gallery-filters d-flex justify-content-lg-end justify-content-start gap-3 flex-wrap mt-3 mt-lg-0">
-                <button
-                  className={`filter-btn ${filter === "all" ? "active" : ""}`}
-                  onClick={() => setFilter("all")}
-                >
-                  All
-                </button>
-                <button
-                  className={`filter-btn ${
-                    filter === "property" ? "active" : ""
-                  }`}
-                  onClick={() => setFilter("property")}
-                >
-                  Properties
-                </button>
-                <button
-                  className={`filter-btn ${filter === "team" ? "active" : ""}`}
-                  onClick={() => setFilter("team")}
-                >
-                  Team
-                </button>
-                <button
-                  className={`filter-btn ${
-                    filter === "poster" ? "active" : ""
-                  }`}
-                  onClick={() => setFilter("poster")}
-                >
-                  Events
-                </button>
+              <div className="gallery-filters d-flex justify-content-lg-end justify-content-start gap-2 flex-wrap mt-3 mt-lg-0">
+                {["all", "property", "team", "poster"].map((type) => (
+                  <button
+                    key={type}
+                    className={`filter-btn ${filter === type ? "active" : ""}`}
+                    onClick={() => setFilter(type)}
+                    aria-pressed={filter === type}
+                  >
+                    {type === "poster"
+                      ? "Events"
+                      : type.charAt(0).toUpperCase() + type.slice(1)}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
 
           {/* Grid */}
           <div className="row g-3 gallery-container">
-            {displayItems.map((item, index) => (
-              <div
-                key={item.id}
-                className="col-lg-4 col-md-6 gallery-item show"
-              >
+            {displayItems.length > 0 ? (
+              displayItems.map((item, index) => (
                 <div
-                  className="gallery-card"
-                  onClick={() => openLightbox(index)}
-                  style={{ cursor: "pointer" }}
+                  key={item.id}
+                  className="col-lg-4 col-md-6 gallery-item show"
                 >
-                  <img src={item.img} alt={item.title} loading="lazy" />
-                  <div className="gallery-overlay">
-                    <div className="overlay-content">
-                      <h6 className="text-uppercase text-danger fw-bold ls-2 mb-1">
-                        {item.type}
-                      </h6>
-                      <h4 className="text-white fw-bold">{item.title}</h4>
-                      <p className="text-white-50 small">Click to View</p>
+                  <div
+                    className="gallery-card"
+                    onClick={() => openLightbox(index)}
+                    style={{ cursor: "pointer" }}
+                    role="button"
+                    aria-label={`View ${item.title}`}
+                    tabIndex="0"
+                    onKeyDown={(e) => e.key === "Enter" && openLightbox(index)}
+                  >
+                    <img
+                      src={item.img}
+                      alt={item.alt || item.title}
+                      loading="lazy"
+                      className="img-fluid w-100"
+                      style={{ height: "300px", objectFit: "cover" }}
+                    />
+                    <div className="gallery-overlay">
+                      <div className="overlay-content p-3">
+                        <h6 className="text-uppercase text-danger fw-bold ls-2 mb-1">
+                          {item.type}
+                        </h6>
+                        <h4 className="text-white fw-bold">{item.title}</h4>
+                        <p className="text-white-50 small mb-0">
+                          Click to Enlarge
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
+              ))
+            ) : (
+              <div className="col-12 text-center py-5">
+                <p className="text-white-50">
+                  No images found in this category.
+                </p>
               </div>
-            ))}
+            )}
           </div>
 
-          {/* View All Button (Only show if limited) */}
+          {/* View All Button */}
           {limit && (
-            <div className="row mt-4">
+            <div className="row mt-5">
               <div className="col-12 text-center">
-                <Link to="/gallery" className="btn btn-custom-red px-3 py-1">
+                <Link
+                  to="/gallery"
+                  className="btn btn-custom-red px-5 py-2 fw-bold text-uppercase small"
+                >
                   View Full Gallery
                 </Link>
               </div>
@@ -150,12 +162,25 @@ const Gallery = ({ limit }) => {
 
       {/* --- LIGHTBOX MODAL --- */}
       {lightboxIndex !== null && (
-        <div className="lightbox-overlay" onClick={closeLightbox}>
-          <button className="lightbox-close" onClick={closeLightbox}>
+        <div
+          className="lightbox-overlay"
+          onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+        >
+          <button
+            className="lightbox-close"
+            onClick={closeLightbox}
+            aria-label="Close lightbox"
+          >
             &times;
           </button>
 
-          <button className="lightbox-prev" onClick={prevImage}>
+          <button
+            className="lightbox-prev"
+            onClick={prevImage}
+            aria-label="Previous image"
+          >
             <i className="bi bi-chevron-left"></i>
           </button>
 
@@ -165,11 +190,14 @@ const Gallery = ({ limit }) => {
           >
             <img
               src={displayItems[lightboxIndex].img}
-              alt={displayItems[lightboxIndex].title}
-              className="lightbox-img"
+              alt={
+                displayItems[lightboxIndex].alt ||
+                displayItems[lightboxIndex].title
+              }
+              className="lightbox-img shadow-lg"
             />
-            <div className="lightbox-caption">
-              <h4 className="fw-bold mb-1">
+            <div className="lightbox-caption p-3">
+              <h4 className="fw-bold text-white mb-1">
                 {displayItems[lightboxIndex].title}
               </h4>
               <p className="text-white-50 small mb-0">
@@ -178,7 +206,11 @@ const Gallery = ({ limit }) => {
             </div>
           </div>
 
-          <button className="lightbox-next" onClick={nextImage}>
+          <button
+            className="lightbox-next"
+            onClick={nextImage}
+            aria-label="Next image"
+          >
             <i className="bi bi-chevron-right"></i>
           </button>
         </div>

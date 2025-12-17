@@ -5,15 +5,12 @@ import Blog from "../components/Blog";
 import { blogData } from "../data/blogData";
 
 const AllBlogs = () => {
-  // STATE
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [filteredBlogs, setFilteredBlogs] = useState(blogData);
 
-  // Categories
   const categories = ["All", ...new Set(blogData.map((item) => item.category))];
 
-  // FILTER LOGIC
   useEffect(() => {
     let results = blogData;
 
@@ -35,7 +32,10 @@ const AllBlogs = () => {
     <div style={{ paddingTop: "20px", paddingBottom: "30px" }}>
       <Helmet>
         <title>Blogs Center</title>
-        <meta name="description" content="Latest real estate news." />
+        <meta
+          name="description"
+          content="Stay updated with the latest news, investment guides, and land tours in Kenya."
+        />
         <link rel="canonical" href="https://fedha.netlify.app/blogs" />
       </Helmet>
 
@@ -53,7 +53,6 @@ const AllBlogs = () => {
           </ol>
         </nav>
 
-        {/* HEADER & FILTERS */}
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3">
           <div>
             <h1 className="fw-bold text-dark mb-1">Blogs Center</h1>
@@ -88,7 +87,6 @@ const AllBlogs = () => {
         </div>
       </div>
 
-      {/* IMPORTANT: Pass the filtered data to the component */}
       <Blog customData={filteredBlogs} />
     </div>
   );

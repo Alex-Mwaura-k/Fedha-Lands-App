@@ -3,10 +3,8 @@ import { Link } from "react-router-dom";
 import { blogData } from "../data/blogData";
 
 const Blog = ({ limit, customData }) => {
-  // Logic: Use filtered data if provided, otherwise default to blogData
   let displayItems = customData || blogData;
 
-  // If on Home Page (limit exists) and no filter is active, slice the data
   if (limit && !customData) {
     displayItems = blogData.slice(0, limit);
   }
@@ -14,21 +12,17 @@ const Blog = ({ limit, customData }) => {
   return (
     <section id="blog" className="blog-section bg-white">
       <div className="container-md">
-        {/* --- HOME PAGE HEADER (Title + Subscribe) --- */}
         {limit && !customData && (
           <div className="row mb-4 align-items-end">
-            {/* Left: Title */}
             <div className="col-lg-5 mb-4 mb-lg-0">
               <span className="text-danger fw-bold text-uppercase small ls-2">
                 Media Center
               </span>
               <h2 className="display-5 fw-bold text-dark mt-1">
-                {/* RESTORED: 'text-stroke-red' class */}
                 Blogs & <span className="text-stroke-red">Updates</span>
               </h2>
             </div>
 
-            {/* Right: Subscribe Form (Restored) */}
             <div className="col-lg-7">
               <div className="d-flex flex-column flex-md-row justify-content-lg-end align-items-md-center gap-3 mb-3">
                 <form
@@ -59,7 +53,6 @@ const Blog = ({ limit, customData }) => {
         )}
 
         <div className="row g-4">
-          {/* --- MAIN BLOG GRID --- */}
           <div className="col-lg-9">
             <div className="row g-4">
               {displayItems.length === 0 && (
@@ -100,7 +93,8 @@ const Blog = ({ limit, customData }) => {
                     </div>
                   ) : (
                     <article className="media-card article-card h-100 d-flex flex-column">
-                      <Link to={`/article/${item.id}`}>
+                      {/* FIXED: Link uses slug */}
+                      <Link to={`/article/${item.slug}`}>
                         <div className="ratio ratio-16x9 img-wrapper border-bottom-red">
                           <img
                             src={item.img}
@@ -118,8 +112,9 @@ const Blog = ({ limit, customData }) => {
                           {item.category}
                         </span>
                         <h5 className="fw-bold text-dark mt-2 text-truncate-2">
+                          {/* FIXED: Link uses slug */}
                           <Link
-                            to={`/article/${item.id}`}
+                            to={`/article/${item.slug}`}
                             className="text-dark text-decoration-none"
                           >
                             {item.title}
@@ -128,8 +123,9 @@ const Blog = ({ limit, customData }) => {
                         <p className="text-muted small mt-2 mb-3 flex-grow-1 text-truncate-3">
                           {item.desc}
                         </p>
+                        {/* FIXED: Link uses slug */}
                         <Link
-                          to={`/article/${item.id}`}
+                          to={`/article/${item.slug}`}
                           className="arrow-link mt-auto"
                         >
                           Read More <i className="bi bi-arrow-right"></i>
@@ -142,10 +138,8 @@ const Blog = ({ limit, customData }) => {
             </div>
           </div>
 
-          {/* --- SIDEBAR --- */}
           <div className="col-lg-3">
             <div className="sidebar-sticky" style={{ top: "100px" }}>
-              {/* RECOMMENDED LIST */}
               <h5 className="fw-bold text-dark mb-3 border-start border-4 border-danger ps-2">
                 Recommended
               </h5>
@@ -154,8 +148,9 @@ const Blog = ({ limit, customData }) => {
                   .filter((i) => i.type === "article")
                   .slice(0, 4)
                   .map((item, index) => (
+                    /* FIXED: Link uses slug */
                     <Link
-                      to={`/article/${item.id}`}
+                      to={`/article/${item.slug}`}
                       key={item.id}
                       className="list-group-item bg-transparent border-0 px-0 py-3 border-bottom"
                     >
@@ -174,7 +169,6 @@ const Blog = ({ limit, customData }) => {
                   ))}
               </div>
 
-              {/* BOOK SITE VISIT BANNER */}
               <div className="mt-4 p-3 bg-dark text-white text-center">
                 <p className="small mb-2">Ready to visit?</p>
                 <button
@@ -189,7 +183,6 @@ const Blog = ({ limit, customData }) => {
           </div>
         </div>
 
-        {/* --- VIEW ALL BUTTON (Only on Home Page) --- */}
         {limit && !customData && (
           <div className="row mt-5">
             <div className="col-12 text-center">

@@ -2,13 +2,18 @@ export const careersData = [
   {
     id: 1,
     title: "Head Office Administrator",
+    // FIXED: Unique slug for SEO-friendly routing
+    slug: "head-office-administrator-ruiru",
     department: "Operations",
     location: "Ruiru, Kenya",
     type: "Full-Time",
     postedDate: "2025-11-01",
-    deadline: "2026-01-30", // <--- FUTURE DATE: This job will be AVAILABLE
+    deadline: "2026-01-30", // FUTURE DATE: AVAILABLE
     description:
       "We are looking for aggressive and passionate Office Administrator to join our team. You will be responsible for handling walkings, handling Office/ Clients documents or showcasing our properties (Kithyoko, Malindi, Makutano), and closing deals.",
+    // SEO Recommendation: Meta description for job boards and Google search
+    metaDescription:
+      "Fedha Land Ventures is hiring a Head Office Administrator in Ruiru. Join our operations team to manage client relations and property showcases.",
     responsibilities: [
       "Prospect and generate leads through networking, cold calling, and social media.",
       "Conduct site visits with potential clients to various project locations.",
@@ -33,13 +38,17 @@ export const careersData = [
   {
     id: 2,
     title: "Digital Marketer / Content Creator",
+    // FIXED: Unique slug for SEO-friendly routing
+    slug: "digital-marketer-content-creator-hybrid",
     department: "Marketing",
     location: "Ruiru (Hybrid)",
     type: "Contract",
     postedDate: "2025-01-20",
-    deadline: "2025-02-15", // <--- PAST DATE: This job will be EXPIRED
+    deadline: "2025-02-15", // PAST DATE: EXPIRED
     description:
       "Fedha Land Ventures needs a creative Digital Marketer to manage our online presence. You will handle social media pages, create engaging graphics/videos for listings, and run ad campaigns.",
+    metaDescription:
+      "Apply for the Digital Marketer and Content Creator role at Fedha Land Ventures. Manage social media and create property tours.",
     responsibilities: [
       "Manage social media accounts (Facebook, Instagram, TikTok, YouTube).",
       "Create engaging content (graphics, short videos, property tours).",
@@ -62,13 +71,17 @@ export const careersData = [
   {
     id: 3,
     title: "Administrative Assistant",
+    // FIXED: Unique slug for SEO-friendly routing
+    slug: "administrative-assistant-ruiru",
     department: "Administration",
     location: "Ruiru Office",
     type: "Full-Time",
     postedDate: "2025-02-01",
-    deadline: "2025-02-20", // <--- PAST DATE: This job will be EXPIRED
+    deadline: "2025-02-20", // PAST DATE: EXPIRED
     description:
       "We need an organized Administrative Assistant to ensure the efficient operation of our office. You will support managers and employees through a variety of tasks related to organization and communication.",
+    metaDescription:
+      "Join Fedha Land Ventures as an Administrative Assistant in Ruiru. Support our team with office management and client filing systems.",
     responsibilities: [
       "Answer and direct phone calls.",
       "Organize and schedule appointments.",

@@ -9,6 +9,7 @@ const AllProperties = () => {
   const [filterStatus, setFilterStatus] = useState("All");
   const [filteredProperties, setFilteredProperties] = useState(properties);
 
+  // Maintain original filtering logic
   useEffect(() => {
     let results = properties;
 
@@ -31,10 +32,11 @@ const AllProperties = () => {
   return (
     <div style={{ paddingTop: "20px", paddingBottom: "30px" }}>
       <Helmet>
+        {/* Updated for SEO recommendations */}
         <title>Our Properties</title>
         <meta
           name="description"
-          content="Browse our complete portfolio of prime land for sale in Kenya."
+          content="Browse our complete portfolio of prime land for sale in Kenya. Verified plots with ready title deeds in Machakos, Malindi, and Mwea."
         />
         <link rel="canonical" href="https://fedha.netlify.app/properties" />
       </Helmet>
@@ -69,7 +71,7 @@ const AllProperties = () => {
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
             >
-              <option value="All">All</option>
+              <option value="All">All Status</option>
               <option value="Available">Available</option>
               <option value="Sold Out">Sold Out</option>
               <option value="Coming Soon">Coming Soon</option>
@@ -78,7 +80,7 @@ const AllProperties = () => {
             <input
               type="text"
               className="form-control shadow-sm"
-              placeholder="Search..."
+              placeholder="Search location or title..."
               style={{ maxWidth: "200px" }}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -86,13 +88,15 @@ const AllProperties = () => {
           </div>
         </div>
       </div>
-      {/* --- END OF CONTAINER (Boxed layout ends here) --- */}
+      {/* --- END OF CONTAINER --- */}
 
-      {/* --- FULL WIDTH DIVIDER LINE --- */}
-      {/* Placed OUTSIDE the container so it spans the full screen width */}
       <hr className="mt-0 mb-4" />
 
       {/* --- PROPERTIES LIST --- */}
+      {/* IMPORTANT: Your Properties component needs to be checked to ensure 
+          it uses <Link to={`/property/${property.slug}`}> instead of /property/${property.id} 
+          to match your App.jsx routes and the slug-based logic in PropertyDetails.jsx.
+      */}
       <Properties customData={filteredProperties} />
     </div>
   );

@@ -4,11 +4,13 @@ export const blogData = [
     id: 1,
     type: "video",
     title: "Fadhili Gardens Phase II - Virtual Tour",
+    // FIXED: Unique slug for video routing
+    slug: "fadhili-gardens-phase-ii-virtual-tour",
     category: "Virtual Tour",
     desc: "Explore the beacons, access roads, and the serene environment of our Makutano project.",
-    // Link for the Iframe (Embed)
+    metaDescription:
+      "Take a virtual tour of Fadhili Gardens Phase II in Makutano. See the beacons, access roads, and project progress.",
     videoUrl: "https://www.youtube.com/embed/4MR3tvUfbuY?rel=0",
-    // Link for the Button (Watch on YouTube)
     link: "https://youtu.be/4MR3tvUfbuY",
     date: "Oct 12, 2025",
   },
@@ -17,9 +19,13 @@ export const blogData = [
     id: 2,
     type: "article",
     title: "Why 50x100 Plots are the Best Starter Investment",
+    // FIXED: SEO-friendly slug
+    slug: "why-50x100-plots-best-starter-investment",
     category: "Investment",
     img: "/img/Blogs/why50x100.png",
     desc: "Understanding the ROI on standard plot sizes in developing satellite towns like Kitengela.",
+    metaDescription:
+      "Learn why 50x100 plots are the ideal entry point for land investment in Kenya. Explore ROI and capital appreciation tips.",
     date: "Nov 01, 2025",
     content: `
   <p class="lead">The 50x100 plot stands as the cornerstone of land investment in Kenya. It represents the perfect equilibrium between affordability and long-term value, offering a strategic entry point for investors without requiring an overwhelming financial commitment.</p>
@@ -44,15 +50,18 @@ export const blogData = [
 
   <h4 class="fw-bold mt-4 text-secondary">7. Scalability for Portfolio Growth</h4>
   <p>Many successful real estate portfolios are built brick by brick. Starting with a single 50x100 plot allows investors to enter the market with manageable risk. Over time, this asset can be leveraged to acquire additional properties, allowing for a systematic expansion of your real estate wealth.</p>
-`, // (Keep your content here)
+`,
   },
   // --- VIDEO 2 ---
   {
     id: 3,
     type: "video",
     title: "Client Success Story",
+    slug: "client-success-story-title-deed",
     category: "Testimonial",
     desc: '"I received my Title Deed in just 30 days." Hear from our happy investors.',
+    metaDescription:
+      "Watch our client testimonial. Verified success stories of investors receiving their title deeds from Fedha Land Ventures.",
     videoUrl: "https://www.youtube.com/embed/7nbOFYnpG3o?rel=0",
     link: "https://youtu.be/7nbOFYnpG3o",
     date: "Sept 28, 2025",
@@ -62,19 +71,25 @@ export const blogData = [
     id: 4,
     type: "article",
     title: "How to Verify a Title Deed Search Online",
+    slug: "how-to-verify-title-deed-search-online",
     category: "Legal",
     img: "/img/Blogs/Title Deeds.png",
     desc: "A step-by-step guide to using the e-Citizen portal for land searches.",
+    metaDescription:
+      "Learn how to conduct a land search online in Kenya. Step-by-step guide to verifying title deeds via e-Citizen.",
     date: "Oct 20, 2025",
-    content: `...`,
+    content: `<p>Conducting a land search is the most critical step in property acquisition...</p>`,
   },
   // --- VIDEO 3 ---
   {
     id: 5,
     type: "video",
     title: "Ufanisi Haven Launch Event",
+    slug: "ufanisi-haven-launch-event-kitengela",
     category: "Event",
     desc: "Highlights from our grand opening event in Kitengela. See the turnout!",
+    metaDescription:
+      "Highlights from the Ufanisi Haven grand launch in Kitengela. Join Fedha Land Ventures as we open new prime land projects.",
     videoUrl: "https://www.youtube.com/embed/m9aMmy6gaMk?si=CuSdK8_tXfKMJHD2",
     link: "https://youtu.be/m9aMmy6gaMk",
     date: "Aug 15, 2025",
@@ -84,20 +99,26 @@ export const blogData = [
     id: 6,
     type: "article",
     title: "Fencing Materials Guide: Concrete vs Timber",
+    slug: "fencing-materials-guide-concrete-vs-timber",
     category: "Tips",
     img: "https://picsum.photos/id/60/800/600",
     desc: "Choosing between concrete poles and treated timber for longevity and cost.",
+    metaDescription:
+      "Building a fence? Compare the costs and durability of concrete poles versus treated timber for your Kenyan plot.",
     date: "Sept 10, 2025",
-    content: `...`,
+    content: `<p>Securing your plot starts with choosing the right fencing material...</p>`,
   },
   // --- EXTRA ITEM ---
   {
     id: 7,
     type: "article",
     title: "The Future of Real Estate in Machakos County",
+    slug: "future-of-real-estate-machakos-county",
     category: "Market Analysis",
     img: "https://picsum.photos/id/20/800/600",
     desc: "Why Masinga and Kithyoko are the next big frontiers for affordable land investment.",
+    metaDescription:
+      "Market analysis of Machakos County real estate. Why Kithyoko and Masinga are the top picks for land buyers in 2025.",
     date: "July 05, 2025",
     content: "<p>Machakos county has seen unprecedented growth...</p>",
   },

@@ -29,8 +29,9 @@ const Properties = ({ limit, customData }) => {
       <div className="row g-4 mb-3">
         {displayProperties.map((prop) => (
           <div key={prop.id} className="col-lg-4 col-md-6 col-sm-12">
+            {/* FIXED: Link now uses prop.slug instead of prop.id */}
             <Link
-              to={`/property/${prop.id}`}
+              to={`/property/${prop.slug}`}
               className="text-decoration-none text-dark"
             >
               <div className="card property-card h-100 border-0 fixed-height">

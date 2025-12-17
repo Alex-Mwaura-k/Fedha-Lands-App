@@ -3,18 +3,22 @@ import { useParams, Link } from "react-router-dom";
 import { blogData } from "../data/blogData";
 
 const ArticleDetails = () => {
-  const { id } = useParams();
-  const article = blogData.find((item) => item.id === parseInt(id));
+  // FIXED: Extract 'slug' to match App.jsx
+  const { slug } = useParams();
+  // FIXED: Find by slug string
+  const article = blogData.find((item) => item.slug === slug);
 
-  // Scroll to top when opening
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [slug]);
 
   if (!article) {
     return (
       <div className="text-center py-5 mt-5">
         <h2>Article Not Found</h2>
+        <Link to="/blogs" className="btn btn-dark mt-3">
+          Back to Blogs
+        </Link>
       </div>
     );
   }
@@ -25,7 +29,6 @@ const ArticleDetails = () => {
       style={{ paddingTop: "20px" }}
     >
       <div className="container-md">
-        {/* Breadcrumb */}
         <nav aria-label="breadcrumb" className="mb-4">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -54,13 +57,10 @@ const ArticleDetails = () => {
               Posted on {article.date} by Admin
             </p>
 
-            {/* --- IMAGE ADJUSTMENT START --- */}
-            {/* Added 'text-center' to parent to align the image */}
             <div className="text-center mb-2">
               <img
                 src={article.img}
                 alt={article.title}
-                // Removed 'w-100' behavior by handling width in style
                 className="img-fluid rounded shadow-sm"
                 style={{
                   maxHeight: "500px",
@@ -70,9 +70,7 @@ const ArticleDetails = () => {
                 }}
               />
             </div>
-            {/* --- IMAGE ADJUSTMENT END --- */}
 
-            {/* Injects the HTML content from data file */}
             <div
               className="article-content bg-white p-3 p-md-5 rounded shadow-sm"
               dangerouslySetInnerHTML={{ __html: article.content }}
