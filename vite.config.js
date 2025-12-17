@@ -9,9 +9,6 @@ export default defineConfig({
       registerType: "autoUpdate",
       injectRegister: "inline",
 
-      // Removed the strict 'includeAssets' line to prevent "404" crashes
-      // includeAssets: ["favicon.ico", "icons/*.png"],
-
       // 1. ENABLE DEV MODE
       devOptions: {
         enabled: true,
@@ -21,16 +18,16 @@ export default defineConfig({
       manifest: false,
 
       workbox: {
-        // Reduced glob patterns to just the essentials to avoid "missing file" crashes
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,webp}"],
-        navigateFallback: "/index.html",
+        // 3. FONT FIX: Added 'woff' and 'woff2' to the list
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,webp,woff,woff2}"],
 
-        // Force Immediate Control
+        // 4. SIZE LIMIT FIX: Allow files up to 10MB (important for bundled fonts)
+        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
+
+        navigateFallback: "/index.html",
+        cleanupOutdatedCaches: true,
         skipWaiting: true,
         clientsClaim: true,
-
-        // Ignore "404" errors if an old file version is missing
-        cleanupOutdatedCaches: true,
 
         runtimeCaching: [
           {
@@ -43,8 +40,7 @@ export default defineConfig({
                 maxEntries: 50,
                 maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
               },
-              // 3. CRITICAL FIX: Allow "Opaque" (Status 0) responses
-              // This lets the SW cache YouTube thumbnails without throwing errors
+              // Allow "Opaque" (Status 0) responses for YouTube thumbnails
               cacheableResponse: {
                 statuses: [0, 200],
               },

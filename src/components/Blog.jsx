@@ -31,6 +31,7 @@ const Blog = ({ limit, customData }) => {
                 >
                   <input
                     type="email"
+                    id="cEmail"
                     className="form-control rounded-0"
                     placeholder="Email Subscribe..."
                     required

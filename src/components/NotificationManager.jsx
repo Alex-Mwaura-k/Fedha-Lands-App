@@ -16,7 +16,7 @@ const NotificationManager = () => {
 
     // If not installed, stop here. Do not ask for permission.
     if (!isStandalone && !isIOSStandalone) {
-      console.log("App not installed. Skipping notification prompt.");
+      console.log("App not installed.");
       return;
     }
 

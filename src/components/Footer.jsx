@@ -170,6 +170,7 @@ const Footer = () => {
               <div className="input-group">
                 <input
                   type="email"
+                  id="cEmail"
                   className="form-control rounded-0 bg-dark border-secondary text-white"
                   placeholder="Email Address"
                   required
