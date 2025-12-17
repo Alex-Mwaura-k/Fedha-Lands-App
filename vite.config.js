@@ -7,61 +7,44 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: [
-        "favicon.ico",
-        "apple-touch-icon.png",
-        "mask-icon.svg",
-        "fonts/*.woff",
-        "fonts/*.woff2",
-      ],
+      injectRegister: "inline",
 
-      manifest: {
-        name: "Fedha Land Ventures",
-        short_name: "Fedha Land",
-        description: "Prime, affordable land for sale in Kenya.",
-        theme_color: "#ff0000",
-        background_color: "#000000",
-        display: "standalone",
-        orientation: "portrait",
-        icons: [
-          {
-            src: "icons/icon.png",
-            sizes: "192x192",
-            type: "image/png",
-          },
-          {
-            src: "icons/icon.png",
-            sizes: "512x512",
-            type: "image/png", // Note: 'purpose: any maskable' is good practice if you have a maskable icon
-          },
-        ],
+      // Removed the strict 'includeAssets' line to prevent "404" crashes
+      // includeAssets: ["favicon.ico", "icons/*.png"],
+
+      // 1. ENABLE DEV MODE
+      devOptions: {
+        enabled: true,
       },
 
+      // 2. Keep this false since you have the file in /public
+      manifest: false,
+
       workbox: {
-        // 1. Force the Service Worker to update immediately
+        // Reduced glob patterns to just the essentials to avoid "missing file" crashes
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,webp}"],
+        navigateFallback: "/index.html",
+
+        // Force Immediate Control
         skipWaiting: true,
         clientsClaim: true,
 
-        // 2. Force all navigation to go to index.html (Fixes the "You're offline" screen)
-        navigateFallback: "/index.html",
-
-        // 3. Ensure fonts and large images are cached
-        globPatterns: [
-          "**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,woff,woff2}",
-        ],
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        // Ignore "404" errors if an old file version is missing
+        cleanupOutdatedCaches: true,
 
         runtimeCaching: [
           {
-            // Cache Google Fonts (if any)
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: "CacheFirst",
+            // Match ALL images (including external ones like YouTube)
+            urlPattern: ({ request }) => request.destination === "image",
+            handler: "StaleWhileRevalidate",
             options: {
-              cacheName: "google-fonts-cache",
+              cacheName: "images-cache",
               expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365,
+                maxEntries: 50,
+                maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
               },
+              // 3. CRITICAL FIX: Allow "Opaque" (Status 0) responses
+              // This lets the SW cache YouTube thumbnails without throwing errors
               cacheableResponse: {
                 statuses: [0, 200],
               },
