@@ -1,7 +1,4 @@
-# --- ROOT SECURITY ---
-
 # Python / Django Security
-backend/
 backend/venv/
 backend/env/
 backend/__pycache__/
