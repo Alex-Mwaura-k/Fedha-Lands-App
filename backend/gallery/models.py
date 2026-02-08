@@ -1,12 +1,17 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from cloudinary.models import CloudinaryField  # <--- NEW IMPORT
 
 # --- VALIDATOR: Enforce 1MB Limit ---
 def validate_image_size(image):
-    file_size = image.size
-    limit_mb = 1
-    if file_size > limit_mb * 1024 * 1024:
-        raise ValidationError(f"Max size of file is {limit_mb} MB")
+    try:
+        file_size = image.size
+        limit_mb = 1
+        if file_size > limit_mb * 1024 * 1024:
+            raise ValidationError(f"Max size of file is {limit_mb} MB")
+    except (AttributeError, ValueError):
+        # Skip validation if it's already a Cloudinary object (on resave)
+        pass
 
 class GalleryItem(models.Model):
     TYPE_CHOICES = [
@@ -27,8 +32,10 @@ class GalleryItem(models.Model):
         verbose_name="Category"
     )
     
-    image = models.ImageField(
-        upload_to='gallery/', 
+    # UPDATED: Changed to CloudinaryField
+    image = CloudinaryField(
+        'Gallery Image',
+        folder='fedha/gallery/', 
         validators=[validate_image_size],
         help_text="Upload an image (Max Size: 1MB)"
     )
@@ -51,7 +58,6 @@ class GalleryItem(models.Model):
     # --- AUTO-GENERATE ALT TEXT ---
     def save(self, *args, **kwargs):
         if not self.alt_text:
-            # If title is "John Kamau", alt becomes "John Kamau - Fedha Land Ventures Gallery"
             self.alt_text = f"{self.title} - Fedha Land Ventures Gallery"
         super().save(*args, **kwargs)
 

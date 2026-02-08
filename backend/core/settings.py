@@ -1,5 +1,5 @@
 """
-Django settings for core project - PRODUCTION READY FOR RENDER
+Django settings for core project - PRODUCTION READY FOR RENDER & CLOUDINARY
 """
 from pathlib import Path
 import os
@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # =========================================================
 # [RENDER] SECURITY CONFIGURATION
 # =========================================================
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key-for-local-dev-only')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-z#p(p^$m&0!r*j@5u+v=9!k7_dx)@(vo=tqvqz)c=&qtc4^@xz')
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
@@ -56,6 +56,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 # Application definition
 INSTALLED_APPS = [
     'jazzmin', 
+    'cloudinary_storage', # MUST be before staticfiles
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -64,6 +65,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # --- Third Party Tools ---
+    'cloudinary',         # Add Cloudinary
     'rest_framework',
     'corsheaders',
     'django_ckeditor_5',
@@ -133,7 +135,7 @@ USE_I18N = True
 USE_TZ = True
 
 # =========================================================
-# [RENDER] STATIC FILES & MEDIA
+# [RENDER] STATIC FILES & MEDIA (CLOUDINARY)
 # =========================================================
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -142,11 +144,26 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# Whitenoise configuration
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Configure Global Storage for Media (Cloudinary) and Static (WhiteNoise)
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
+# Media Settings (Used as a fallback)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Cloudinary Credentials
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
 
 # =========================================================
 # CORS SETTINGS

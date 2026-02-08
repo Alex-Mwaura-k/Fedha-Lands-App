@@ -1,14 +1,22 @@
-import re  # <--- IMPORT RE FOR REGEX PATTERN MATCHING
+import re
 from django.db import models
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
+from cloudinary.models import CloudinaryField  # <--- NEW IMPORT
 
 # --- VALIDATOR: Enforce 1MB Limit ---
+# Note: Cloudinary also has its own size limits, but keeping this is 
+# great for preventing heavy uploads from the admin side.
 def validate_image_size(image):
-    file_size = image.size
-    limit_mb = 1
-    if file_size > limit_mb * 1024 * 1024:
-        raise ValidationError(f"Max size of file is {limit_mb} MB")
+    # CloudinaryField sometimes returns a wrapper; we check if size is available
+    try:
+        file_size = image.size
+        limit_mb = 1
+        if file_size > limit_mb * 1024 * 1024:
+            raise ValidationError(f"Max size of file is {limit_mb} MB")
+    except (AttributeError, ValueError):
+        # If it's already a Cloudinary object during a resave, skip validation
+        pass
 
 # --- MODEL: Locations ---
 class Location(models.Model):
@@ -30,20 +38,21 @@ class Property(models.Model):
     location = models.ForeignKey(Location, on_delete=models.PROTECT, related_name="properties")
     size = models.CharField(max_length=50, help_text="e.g. 50x100 or 1 Acre")
     
-    # UPDATED: Changed to PositiveIntegerField for numeric consistency
     price = models.PositiveIntegerField(help_text="Enter numbers only. Commas are added automatically on the site.")
     
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Available')
-    image = models.ImageField(
-        upload_to='properties/main/', 
-        verbose_name="Cover Image", 
+    
+    # UPDATED: Changed to CloudinaryField
+    image = CloudinaryField(
+        'Cover Image', 
+        folder='fedha/properties/main/', 
         validators=[validate_image_size],
         help_text="Max size 1MB. This will be the main display image."
     )
+    
     description = models.TextField()
     meta_description = models.TextField(blank=True, help_text="Auto-generated from description, but you can edit it.")
     
-    # UPDATED: map_src logic handles both raw links and iframe embeds
     map_src = models.TextField(blank=True, help_text="Paste the full Google Maps Embed <iframe...> code.")
     
     created_at = models.DateTimeField(auto_now_add=True)
@@ -57,16 +66,12 @@ class Property(models.Model):
         if not self.meta_description and self.description:
             self.meta_description = self.description[:155] + "..."
 
-        # 3. SMART MAP CLEANER (Works for Both)
+        # 3. SMART MAP CLEANER
         if self.map_src:
-            # Check if it looks like an iframe tag
             if "<iframe" in self.map_src:
-                # Regex to find the url inside src="..." or src='...'
-                # This handles both double and single quotes
                 match = re.search(r'src=["\']([^"\']+)["\']', self.map_src)
                 if match:
-                    self.map_src = match.group(1)  # Extract just the link
-            # ELSE: It's just a regular link, so we do nothing and save it as is.
+                    self.map_src = match.group(1)
 
         super().save(*args, **kwargs)
 
@@ -87,8 +92,11 @@ class PropertyFeature(models.Model):
 # --- MODEL: Gallery Images ---
 class PropertyImage(models.Model):
     property = models.ForeignKey(Property, related_name='gallery_images', on_delete=models.CASCADE)
-    image = models.ImageField(
-        upload_to='properties/gallery/', 
+    
+    # UPDATED: Changed to CloudinaryField
+    image = CloudinaryField(
+        'image', 
+        folder='fedha/properties/gallery/', 
         validators=[validate_image_size],
         help_text="Max size 1MB."
     )

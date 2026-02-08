@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField  # <--- NEW IMPORT
 from .validators import validate_file_size, validate_image_extension, validate_real_image
 
 class ValidSerial(models.Model):
@@ -7,9 +8,7 @@ class ValidSerial(models.Model):
         unique=True, 
         help_text="Enter the Title Deed/Plot Number (e.g. FEDHA-001)"
     )
-    # REMOVED: client_name field
     
-    # This is handled by the system now
     is_used = models.BooleanField(default=False, help_text="System checks this automatically when a review is submitted.")
 
     def __str__(self):
@@ -27,7 +26,6 @@ class Testimonial(models.Model):
         ('Partner', 'Partner'),
     ]
 
-    # --- APPROVAL AT THE TOP ---
     is_approved = models.BooleanField(
         default=False, 
         help_text="Check this box and hit save to make the review visible on the website."
@@ -46,11 +44,14 @@ class Testimonial(models.Model):
         help_text="The serial number provided by the client."
     )
     
-    image = models.ImageField(
-        upload_to='testimonials/', 
+    # UPDATED: Changed to CloudinaryField
+    image = CloudinaryField(
+        'Client Photo',
+        folder='fedha/testimonials/',
         validators=[validate_file_size, validate_image_extension, validate_real_image], 
         blank=True, 
-        null=True
+        null=True,
+        help_text="Client photo (Optional). Max 1MB."
     )
     
     date_submitted = models.DateTimeField(auto_now_add=True)

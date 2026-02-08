@@ -22,13 +22,20 @@ class Job(models.Model):
     meta_description = models.TextField(blank=True, help_text="SEO description (150 chars)")
 
     # We use TextFields. In Admin, put each point on a NEW LINE.
+    # Your React frontend will .split('\n') these to make bullet points.
     responsibilities = models.TextField(help_text="Enter each point on a new line.")
     requirements = models.TextField(help_text="Enter each point on a new line.")
     benefits = models.TextField(help_text="Enter each point on a new line.")
 
     def save(self, *args, **kwargs):
+        # 1. Auto-Slug
         if not self.slug:
             self.slug = slugify(self.title)
+        
+        # 2. Auto-Meta Description (Consistency with Blog/Properties)
+        if not self.meta_description and self.description:
+            self.meta_description = self.description[:155].strip() + "..."
+            
         super().save(*args, **kwargs)
 
     def __str__(self):

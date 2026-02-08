@@ -3,15 +3,19 @@ from django.db import models
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
 from django_ckeditor_5.fields import CKEditor5Field
+from cloudinary.models import CloudinaryField
 
 # --- VALIDATOR: Enforce 1MB Limit ---
 def validate_image_size(image):
-    file_size = image.size
-    limit_mb = 1
-    if file_size > limit_mb * 1024 * 1024:
-        raise ValidationError(f"Max size of file is {limit_mb} MB")
+    try:
+        file_size = image.size
+        limit_mb = 1
+        if file_size > limit_mb * 1024 * 1024:
+            raise ValidationError(f"Max size of file is {limit_mb} MB")
+    except (AttributeError, ValueError):
+        pass
 
-# --- MODEL: Category (For Dropdown Consistency) ---
+# --- MODEL: Category ---
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(unique=True, blank=True)
@@ -34,7 +38,6 @@ class BlogPost(models.Model):
         ('video', 'Video'),
     ]
 
-    # Core Identifiers
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True, help_text="Auto-generated from title if left empty")
     
@@ -52,21 +55,19 @@ class BlogPost(models.Model):
         help_text="Select a category from the list."
     )
 
-    # Media & Display
-    image = models.ImageField(
-        upload_to='blogs/covers/', 
-        verbose_name="Cover Image", 
+    # FIXED: Removed 'verbose_name' keyword to prevent multiple values error
+    image = CloudinaryField(
+        'Cover Image', # This string now serves as the verbose_name
+        folder='fedha/blog/covers/', 
         validators=[validate_image_size],
         blank=True, 
         null=True,
         help_text="Max size 1MB. Required for Articles."
     )
 
-    # Descriptions & SEO
     description = models.TextField(verbose_name="Short Description", help_text="Used for the card summary.")
     meta_description = models.TextField(blank=True, help_text="Auto-generated from description if empty.")
 
-    # Video Specific Fields
     video_url = models.URLField(
         blank=True, 
         null=True, 
@@ -74,17 +75,13 @@ class BlogPost(models.Model):
         help_text="e.g. https://www.youtube.com/embed/..."
     )
 
-    # Article Specific Content
     content = CKEditor5Field('Article Content', config_name='default', blank=True, null=True)
 
     date_published = models.DateField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # --- SAVE LOGIC ---
     def save(self, *args, **kwargs):
-        # 1. Sanitize HTML Content (XSS Protection)
         if self.content:
-            # We allow standard formatting tags but strip dangerous ones like <script>
             allowed_tags = [
                 'p', 'b', 'i', 'u', 'em', 'strong', 'a', 
                 'ul', 'ol', 'li', 'br', 'h1', 'h2', 'h3', 
@@ -96,11 +93,9 @@ class BlogPost(models.Model):
             }
             self.content = bleach.clean(self.content, tags=allowed_tags, attributes=allowed_attrs)
 
-        # 2. Auto-generate slug if missing
         if not self.slug:
             self.slug = slugify(self.title)
         
-        # 3. Auto-generate meta_description if missing
         if not self.meta_description and self.description:
             self.meta_description = self.description[:155].strip() + "..."
             
