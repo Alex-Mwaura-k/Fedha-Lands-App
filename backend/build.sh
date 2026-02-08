@@ -5,12 +5,15 @@ set -o errexit
 # 1. Install Dependencies
 pip install -r requirements.txt
 
-# 2. Collect Static Files (CSS/JS)
-python manage.py collectstatic --no-input
+# 2. Collect Static Files (The Nuclear Option)
+# --clear deletes the existing 'staticfiles' folder entirely before refilling it.
+# This fixes the "0 static files copied" bug.
+python manage.py collectstatic --no-input --clear
 
 # 3. Apply Database Migrations
 python manage.py migrate
 
+# 4. Superuser Creation
 python manage.py shell << END
 import os
 from django.contrib.auth import get_user_model
