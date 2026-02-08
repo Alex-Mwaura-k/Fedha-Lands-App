@@ -10,6 +10,3 @@ python manage.py collectstatic --no-input
 
 # 3. Apply Database Migrations
 python manage.py migrate
-
-export DJANGO_SUPERUSER_PASSWORD="RA_Technologies@2026*"
-python manage.py createsuperuser --no-input --username "Ventures" --email "alecsmwaura@gmail.com"
