@@ -1,42 +1,57 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { careersData } from "../data/careersData";
+import api from "../api/axios"; // ✅ UPDATED: Using centralized API instance
+import { Helmet } from "react-helmet-async";
 
 const Careers = () => {
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState("All"); // All, Available, Expired
+  const [filterStatus, setFilterStatus] = useState("All");
   const [filteredJobs, setFilteredJobs] = useState([]);
 
+  // 1. FETCH JOBS
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchJobs = async () => {
+      try {
+        // ✅ UPDATED: Using api.get with relative path
+        const response = await api.get("/careers/");
+        setJobs(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+        setLoading(false);
+      }
+    };
+    fetchJobs();
   }, []);
 
-  // Helper to check if a job is expired
+  // 2. HELPER: Check Expiration
   const isJobExpired = (deadline) => {
+    if (!deadline) return false;
     const today = new Date();
     const deadlineDate = new Date(deadline);
-    // Reset time parts for accurate date comparison
     today.setHours(0, 0, 0, 0);
     deadlineDate.setHours(0, 0, 0, 0);
     return today > deadlineDate;
   };
 
-  // Filter Logic
+  // 3. FILTER LOGIC
   useEffect(() => {
-    let results = careersData;
+    let results = jobs;
 
-    // 1. Search Filter
     if (searchTerm) {
       const lowerTerm = searchTerm.toLowerCase();
       results = results.filter(
         (job) =>
           job.title.toLowerCase().includes(lowerTerm) ||
           job.location.toLowerCase().includes(lowerTerm) ||
-          job.department.toLowerCase().includes(lowerTerm)
+          job.department.toLowerCase().includes(lowerTerm),
       );
     }
 
-    // 2. Status Filter
     if (filterStatus !== "All") {
       results = results.filter((job) => {
         const expired = isJobExpired(job.deadline);
@@ -45,12 +60,63 @@ const Careers = () => {
     }
 
     setFilteredJobs(results);
-  }, [searchTerm, filterStatus]);
+  }, [jobs, searchTerm, filterStatus]);
+
+  // 4. GENERATE STRUCTURED DATA (Schema.org) for Google Jobs
+  const generateJobSchema = () => {
+    return {
+      "@context": "https://schema.org",
+      "@graph": filteredJobs.map((job) => ({
+        "@type": "JobPosting",
+        title: job.title,
+        datePosted: job.created_at || new Date().toISOString(),
+        validThrough: job.deadline,
+        description: job.description,
+        employmentType: job.type,
+        hiringOrganization: {
+          "@type": "Organization",
+          name: "Fedha Land Ventures",
+          sameAs: "https://fedhalandventures.co.ke",
+        },
+        jobLocation: {
+          "@type": "Place",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: job.location,
+            addressCountry: "KE",
+          },
+        },
+      })),
+    };
+  };
+
+  if (loading)
+    return (
+      <div className="text-center py-5" aria-live="polite">
+        Loading Careers...
+      </div>
+    );
 
   return (
-    <div className="careers-page bg-light pb-5">
-      {/* HERO SECTION */}
-      <div className="bg-black text-white py-5 mb-5 text-center">
+    <main className="careers-page bg-light pb-5">
+      <Helmet>
+        <title>Careers</title>
+        <meta
+          name="description"
+          content="Explore exciting career opportunities at Fedha Land Ventures. We are hiring for multiple positions. Help us build futures in real estate."
+        />
+        <meta
+          name="keywords"
+          content="Real Estate Jobs, Careers Kenya, Fedha Land Ventures Jobs, Hiring"
+        />
+        <link rel="canonical" href="https://fedhalandventures.co.ke/careers" />
+
+        <script type="application/ld+json">
+          {JSON.stringify(generateJobSchema())}
+        </script>
+      </Helmet>
+
+      <header className="bg-black text-white py-5 mb-5 text-center">
         <div className="container">
           <span className="text-danger fw-bold text-uppercase small ls-2">
             Join Our Team
@@ -59,34 +125,39 @@ const Careers = () => {
             Build Your <span className="text-stroke-white">Career</span> With Us
           </h1>
           <p className="text-secondary mx-auto" style={{ maxWidth: "600px" }}>
-            At Fedha Land Ventures, we don't just sell land we build futures. If
-            you are passionate, driven, and ready to make an impact, we want to
-            hear from you.
+            At Fedha Land Ventures, we don't just sell land we build futures.
           </p>
         </div>
-      </div>
+      </header>
 
-      {/* FILTERS & LISTINGS */}
-      <div className="container-md">
-        <div className="row mb-4 align-items-center">
+      <section
+        className="container-md"
+        aria-labelledby="open-positions-heading"
+      >
+        <div className="row mb-4 align-items-center" role="search">
           <div className="col-md-6 mb-3 mb-md-0">
-            <h3 className="fw-bold text-dark border-start border-4 border-danger ps-3 mb-0">
+            <h2
+              id="open-positions-heading"
+              className="fw-bold text-dark border-start border-4 border-danger ps-3 mb-0 h3"
+            >
               Open Positions
-            </h3>
+            </h2>
           </div>
           <div className="col-md-6">
             <div className="d-flex gap-2">
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search job title or location..."
+                placeholder="Search job title..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                aria-label="Search job openings by title, location, or department"
               />
               <select
                 className="form-select w-auto"
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
+                aria-label="Filter jobs by status"
               >
                 <option value="All">All Jobs</option>
                 <option value="Available">Available</option>
@@ -101,7 +172,7 @@ const Careers = () => {
             const expired = isJobExpired(job.deadline);
 
             return (
-              <div key={job.id} className="col-md-6 col-lg-4">
+              <article key={job.id} className="col-md-6 col-lg-4">
                 <div
                   className={`card h-100 border-0 shadow-sm hover-shadow transition-all ${
                     expired ? "opacity-75 bg-light" : ""
@@ -117,17 +188,23 @@ const Careers = () => {
                       )}
                     </div>
 
-                    <h5 className="card-title fw-bold text-dark">
+                    <h3 className="card-title fw-bold text-dark h5">
                       {job.title}
-                    </h5>
+                    </h3>
 
                     <div className="text-muted small mb-4 mt-2">
                       <p className="mb-1">
-                        <i className="bi bi-geo-alt-fill text-secondary me-2"></i>
+                        <i
+                          className="bi bi-geo-alt-fill text-secondary me-2"
+                          aria-hidden="true"
+                        ></i>
                         {job.location}
                       </p>
                       <p className="mb-1">
-                        <i className="bi bi-clock-fill text-secondary me-2"></i>
+                        <i
+                          className="bi bi-clock-fill text-secondary me-2"
+                          aria-hidden="true"
+                        ></i>
                         {job.type}
                       </p>
                       <p
@@ -135,47 +212,54 @@ const Careers = () => {
                           expired ? "text-danger" : "text-success"
                         }`}
                       >
-                        <i className="bi bi-calendar-event me-2"></i>
-                        Deadline: {job.deadline}
+                        <i
+                          className="bi bi-calendar-event me-2"
+                          aria-hidden="true"
+                        ></i>
+                        Deadline:{" "}
+                        <time dateTime={job.deadline}>{job.deadline}</time>
                       </p>
                     </div>
 
                     <p className="card-text text-secondary small mb-4 flex-grow-1">
-                      {job.description.substring(0, 100)}...
+                      {job.description
+                        ? job.description.substring(0, 100) + "..."
+                        : ""}
                     </p>
 
                     <Link
-                      // FIXED: Used slug instead of id
                       to={`/careers/${job.slug}`}
                       className={`btn w-100 fw-bold mt-auto ${
                         expired
                           ? "btn-secondary disabled"
                           : "btn-outline-danger"
                       }`}
-                      style={{ pointerEvents: expired ? "none" : "auto" }} // Prevent click if disabled
+                      style={{ pointerEvents: expired ? "none" : "auto" }}
+                      aria-label={
+                        expired
+                          ? `Applications closed for ${job.title}`
+                          : `View details and apply for ${job.title}`
+                      }
+                      tabIndex={expired ? -1 : 0}
                     >
                       {expired ? "Applications Closed" : "View Details & Apply"}
                     </Link>
                   </div>
                 </div>
-              </div>
+              </article>
             );
           })}
 
           {filteredJobs.length === 0 && (
             <div className="col-12 text-center py-5">
-              <div className="text-muted mb-3">
-                <i className="bi bi-search display-1 opacity-25"></i>
-              </div>
-              <h4 className="text-dark">No jobs found.</h4>
-              <p className="text-secondary">
-                Try adjusting your search or filter settings.
-              </p>
+              <h4 className="text-dark">
+                No jobs found matching your criteria.
+              </h4>
             </div>
           )}
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

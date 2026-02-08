@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { COMPANY_DATA } from "../data/contactData"; // ✅ Import Data
 
 const PrivacyPolicy = () => {
   useEffect(() => {
@@ -16,9 +17,7 @@ const PrivacyPolicy = () => {
       }}
     >
       <Helmet>
-        <title>Privacy Policy</title>
-
-        {/* This tag tells Google & Bing to IGNORE this page completely */}
+        <title>Privacy Policy | {COMPANY_DATA.name}</title>
         <meta name="robots" content="noindex" />
       </Helmet>
 
@@ -34,13 +33,13 @@ const PrivacyPolicy = () => {
               <section className="mb-4">
                 <h4 className="fw-bold text-secondary">1. Introduction</h4>
                 <p>
-                  Welcome to <strong>Fedha Land Ventures Ltd</strong>. We are
+                  Welcome to <strong>{COMPANY_DATA.name}</strong>. We are
                   committed to protecting your personal information and your
                   right to privacy. If you have any questions or concerns about
                   our policy, or our practices with regards to your personal
                   information, please contact us at{" "}
-                  <a href="mailto:fedhalandventures@gmail.com">
-                    fedhalandventures@gmail.com
+                  <a href={`mailto:${COMPANY_DATA.email}`}>
+                    {COMPANY_DATA.email}
                   </a>
                   .
                 </p>
@@ -81,20 +80,20 @@ const PrivacyPolicy = () => {
                 </h4>
                 <p>
                   We use personal information collected via our website for a
-                  variety of business purposes described below:
+                  variety of business purposes described below
                 </p>
                 <ul>
                   <li>
-                    <strong>To facilitate land transactions:</strong> Processing
-                    site visits and title deed transfers.
+                    <strong>To facilitate land transactions - </strong>{" "}
+                    Processing site visits and title deed transfers.
                   </li>
                   <li>
-                    <strong>To send administrative information:</strong> Sending
-                    you product, service, and new feature information.
+                    <strong>To send administrative information - </strong>{" "}
+                    Sending you product, service, and new feature information.
                   </li>
                   <li>
                     <strong>
-                      To send marketing and promotional communications:
+                      To send marketing and promotional communications -
                     </strong>{" "}
                     We may use your email to send you updates on new plots (only
                     with your consent).
@@ -132,19 +131,19 @@ const PrivacyPolicy = () => {
                 <p>
                   If you have questions or comments about this policy, you may
                   email us at{" "}
-                  <a href="mailto:fedhalandventures@gmail.com">
-                    fedhalandventures@gmail.com
+                  <a href={`mailto:${COMPANY_DATA.email}`}>
+                    {COMPANY_DATA.email}
                   </a>{" "}
-                  or by post to:
+                  or by post to;
                 </p>
                 <address className="text-muted border-start border-4 border-danger ps-3">
-                  <strong>Fedha Land Ventures Ltd</strong>
+                  <strong>{COMPANY_DATA.name}</strong>
                   <br />
-                  Nyongo House, Ruiru Town
+                  {COMPANY_DATA.location}
                   <br />
-                  Kiambu County, Kenya
+                  {COMPANY_DATA.county}
                   <br />
-                  Phone: +254 715 113 103
+                  Phone: {COMPANY_DATA.phone}
                 </address>
               </section>
             </div>

@@ -4,7 +4,7 @@
     url("/fonts/bootstrap-icons.woff") format("woff");
   font-weight: normal;
   font-style: normal;
-  font-display: block;
+  font-display: swap;
 }
 :root {
   --primary-color: #ff0000;
@@ -35,6 +35,7 @@ main {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 /* =========================================
    GLOBAL & SCROLLBAR
@@ -61,7 +62,10 @@ main {
 body {
   padding-top: 56px;
 }
-
+#fedhaHero {
+  contain: content;
+  overflow: hidden;
+}
 /* =========================================
    NAVBAR & OFFCANVAS
    ========================================= */
@@ -329,6 +333,8 @@ nav i:hover {
 }
 
 .css-img {
+  height: auto;
+  aspect-ratio: 1850 / 785;
   object-fit: cover;
   filter: brightness(90%);
 }
@@ -455,6 +461,10 @@ button {
   transition: transform 0.5s;
   border-radius: 0 !important;
   width: 100%;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
 }
 
 .property-card:hover .property-img {
@@ -501,11 +511,16 @@ button {
 .card-title {
   border-bottom: 0.5px solid rgba(128, 128, 128, 0.23) !important;
   padding-bottom: 12px !important;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  line-height: 1.5rem;
+  overflow: hidden;
 }
-
 /* =========================================
    ABOUT US SECTION
    ========================================= */
+
 #about-us.about-section {
   background-color: #0f0f0f !important;
   color: #b0b0b0;
@@ -1104,6 +1119,10 @@ button {
 /* =========================================
    FOOTER SECTION
    ========================================= */
+footer p,
+footer a {
+  transform: translateZ(0);
+}
 .footer-section {
   background-color: #050505;
   color: #fff;
@@ -1420,7 +1439,6 @@ nav[aria-label="breadcrumb"] {
 .breadcrumb-item a:hover {
   color: #ff0000 !important; /* Darker red on hover */
 }
-/* PROPERTY DETAILS THUMBNAILS */
 .thumbnails-container::-webkit-scrollbar {
   height: 6px;
 }
@@ -1440,7 +1458,6 @@ nav[aria-label="breadcrumb"] {
 }
 
 .about-page-container #about-us.about-section {
-  /* We use !important to override the existing styles */
   padding-top: 1rem !important;
 }
 
@@ -1550,7 +1567,7 @@ nav[aria-label="breadcrumb"] {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.3); /* Black with 30% opacity (Faint) */
+  background-color: rgba(0, 0, 0, 0.3);
   color: white;
   border: none;
   width: 40px;
@@ -1575,8 +1592,8 @@ nav[aria-label="breadcrumb"] {
 
 /* Hover over the specific button makes it Red */
 .img-nav-btn:hover {
-  background-color: #dc3545 !important; /* Bootstrap Danger Red */
-  transform: translateY(-50%) scale(1.1); /* Slight zoom effect */
+  background-color: #dc3545 !important;
+  transform: translateY(-50%) scale(1.1);
 }
 
 .img-nav-btn.prev {

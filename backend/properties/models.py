@@ -1,3 +1,4 @@
+import re  # <--- IMPORT RE FOR REGEX PATTERN MATCHING
 from django.db import models
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
@@ -41,14 +42,32 @@ class Property(models.Model):
     )
     description = models.TextField()
     meta_description = models.TextField(blank=True, help_text="Auto-generated from description, but you can edit it.")
-    map_src = models.TextField(blank=True, help_text="Google Maps Embed Link")
+    
+    # UPDATED: map_src logic handles both raw links and iframe embeds
+    map_src = models.TextField(blank=True, help_text="Paste the full Google Maps Embed <iframe...> code.")
+    
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
+        # 1. Auto-Slug
         if not self.slug:
             self.slug = slugify(self.title)
+            
+        # 2. Auto-Meta Description
         if not self.meta_description and self.description:
             self.meta_description = self.description[:155] + "..."
+
+        # 3. SMART MAP CLEANER (Works for Both)
+        if self.map_src:
+            # Check if it looks like an iframe tag
+            if "<iframe" in self.map_src:
+                # Regex to find the url inside src="..." or src='...'
+                # This handles both double and single quotes
+                match = re.search(r'src=["\']([^"\']+)["\']', self.map_src)
+                if match:
+                    self.map_src = match.group(1)  # Extract just the link
+            # ELSE: It's just a regular link, so we do nothing and save it as is.
+
         super().save(*args, **kwargs)
 
     def __str__(self):

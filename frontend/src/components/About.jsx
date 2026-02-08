@@ -1,10 +1,10 @@
 import Stats from "./Stats";
+import { COMPANY_DATA } from "../data/contactData";
 
 const About = () => {
   return (
     <section id="about-us" className="about-section py-5">
       <div className="container-md">
-        {/* Header */}
         <div className="row mb-5">
           <div className="col-12">
             <div className="section-header">
@@ -15,15 +15,14 @@ const About = () => {
                 Building Your <span className="text-stroke-white">Future</span>
               </h2>
               <p className="text-secondary mw-600">
-                Located at Nyongo Plaza, Ruiru. We bridge the gap between dream
-                and reality with title-deed-inclusive pricing and transparent
-                processes.
+                Located at {COMPANY_DATA.location}. We bridge the gap between
+                dream and reality with title-deed-inclusive pricing and
+                transparent processes.
               </p>
             </div>
           </div>
         </div>
 
-        {/* Mission & Vision + Values */}
         <div className="row g-5 align-items-center mb-5 pb-5 border-bottom-dark">
           <div className="col-lg-6">
             <div className="info-block mb-5">
@@ -90,7 +89,6 @@ const About = () => {
           </div>
         </div>
 
-        {/* Ownership Process */}
         <div className="row mb-5">
           <div className="col-12 mb-4">
             <h3 className="text-white h4">

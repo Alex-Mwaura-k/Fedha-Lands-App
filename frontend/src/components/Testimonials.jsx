@@ -1,19 +1,35 @@
-import { useState, useEffect } from "react";
-import { soldTitlesDB, initialReviews } from "../data/testimonialsData";
+import React, { useState, useEffect } from "react";
+import api from "../api/axios"; // ✅ UPDATED: Using centralized API instance
 
 const Testimonials = () => {
-  const [reviews, setReviews] = useState(initialReviews);
+  const [reviews, setReviews] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
+  // ✅ 1. ADDED: Honeypot state to trap bots
+  const [confirmHoneypot, setConfirmHoneypot] = useState("");
+
+  // --- 1. FETCH APPROVED REVIEWS ---
   useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        // ✅ UPDATED: Using api.get with relative path
+        const response = await api.get("/testimonials/");
+        setReviews(response.data);
+      } catch (error) {
+        console.error("Error fetching testimonials:", error);
+      }
+    };
+    fetchReviews();
+
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // --- CAROUSEL LOGIC ---
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const itemsPerPage = isMobile ? 1 : 6;
+  const itemsPerPage = isMobile ? 1 : 3;
   const isCarouselMode = reviews.length > itemsPerPage;
 
   useEffect(() => {
@@ -40,6 +56,7 @@ const Testimonials = () => {
     ? reviews.slice(activeIndex, activeIndex + itemsPerPage)
     : reviews;
 
+  // --- FORM STATE ---
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -52,6 +69,7 @@ const Testimonials = () => {
   });
   const [imagePreview, setImagePreview] = useState(null);
   const [status, setStatus] = useState("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -61,10 +79,8 @@ const Testimonials = () => {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 2 * 1024 * 1024) {
-        alert("File size exceeds 2MB limit. Please choose a smaller image.");
+        alert("File size exceeds 2MB limit.");
         e.target.value = "";
-        setFormData({ ...formData, image: null });
-        setImagePreview(null);
         return;
       }
       setFormData({ ...formData, image: file });
@@ -72,34 +88,57 @@ const Testimonials = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  // --- 2. SUBMIT TO BACKEND ---
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.message.length < 85 || formData.message.length > 150) return;
+
+    // ✅ 2. BOT CHECK: If hidden field is filled, stop silently
+    if (confirmHoneypot) {
+      return;
+    }
+
+    if (formData.message.length < 50 || formData.message.length > 200) return;
 
     setStatus("checking");
-    setTimeout(() => {
-      const isValid = soldTitlesDB.includes(
-        formData.titleNumber.trim().toUpperCase()
-      );
-      if (isValid) {
-        const newReview = {
-          id: Date.now(),
-          name: formData.name,
-          role: formData.role || "Verified Client",
-          location: formData.location,
-          text: formData.message,
-          rating: parseInt(formData.rating),
-          img:
-            imagePreview ||
-            `https://ui-avatars.com/api/?name=${formData.name}&background=random`,
-          date: new Date(),
-        };
-        setReviews([newReview, ...reviews]);
-        setStatus("success");
+    setErrorMessage("");
+
+    const uploadData = new FormData();
+    uploadData.append("name", formData.name);
+    uploadData.append("titleNumber", formData.titleNumber);
+    uploadData.append("role", formData.role);
+    uploadData.append("location", formData.location);
+    uploadData.append("text", formData.message);
+    uploadData.append("rating", formData.rating);
+    if (formData.image) {
+      uploadData.append("image", formData.image);
+    }
+
+    try {
+      // ✅ UPDATED: Using api.post with automatic baseURL prepending
+      await api.post("/testimonials/", uploadData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setStatus("success");
+    } catch (error) {
+      console.error("Submission error:", error);
+      setStatus("error");
+
+      if (error.response && error.response.data) {
+        if (error.response.data.error) {
+          setErrorMessage(error.response.data.error);
+        } else {
+          const firstField = Object.keys(error.response.data)[0];
+          const firstErrorData = error.response.data[firstField];
+          const firstErrorMsg = Array.isArray(firstErrorData)
+            ? firstErrorData[0]
+            : firstErrorData;
+
+          setErrorMessage(`${firstField}: ${firstErrorMsg}`);
+        }
       } else {
-        setStatus("error");
+        setErrorMessage("Network error. Please try again later.");
       }
-    }, 1500);
+    }
   };
 
   const closeModal = () => {
@@ -114,11 +153,12 @@ const Testimonials = () => {
       rating: 5,
       image: null,
     });
+    setConfirmHoneypot(""); // Clear honeypot
     setImagePreview(null);
   };
 
   const isMessageValid =
-    formData.message.length >= 85 && formData.message.length <= 150;
+    formData.message.length >= 50 && formData.message.length <= 200;
 
   return (
     <section className="testimonials-section pt-3 pb-3 bg-white position-relative">
@@ -150,16 +190,23 @@ const Testimonials = () => {
                   key={review.id}
                   className="d-flex col-md-4 fade-in-animation"
                 >
-                  <div className="card border-0 shadow-sm p-4 bg-light position-relative h-100">
+                  <div className="card border-0 shadow-sm p-4 bg-light position-relative h-100 w-100">
                     <div className="position-absolute top-0 end-0 p-3 opacity-25 text-danger">
                       <i className="bi bi-quote fs-1"></i>
                     </div>
                     <div className="d-flex align-items-center mb-4">
                       <img
-                        src={review.img}
+                        src={
+                          review.image ||
+                          `https://ui-avatars.com/api/?name=${review.name}&background=random`
+                        }
                         alt={review.name}
                         className="rounded-circle me-3 testimonial-img"
-                        // Style moved to CSS class 'testimonial-img'
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          objectFit: "cover",
+                        }}
                       />
                       <div>
                         <h6 className="fw-bold mb-0 text-dark">
@@ -200,9 +247,7 @@ const Testimonials = () => {
                         className="text-muted"
                         style={{ fontSize: "0.7rem" }}
                       >
-                        {review.date
-                          ? review.date.toLocaleDateString()
-                          : "Recent"}
+                        {new Date(review.date_submitted).toLocaleDateString()}
                       </small>
                     </div>
                   </div>
@@ -216,19 +261,15 @@ const Testimonials = () => {
           </div>
         </div>
       </div>
+
       {isCarouselMode && (
         <div className="d-flex justify-content-center gap-3 mt-4">
-          <button
-            className="btn btn-outline-danger"
-            onClick={prevSlide}
-            title="Previous"
-          >
+          <button className="btn btn-outline-danger" onClick={prevSlide}>
             <i className="bi bi-chevron-left"></i>
           </button>
           <button
             className={`btn ${isPaused ? "btn-danger" : "btn-outline-danger"}`}
             onClick={togglePause}
-            title={isPaused ? "Resume" : "Pause"}
           >
             {isPaused ? (
               <i className="bi bi-play-fill"></i>
@@ -236,21 +277,16 @@ const Testimonials = () => {
               <i className="bi bi-pause-fill"></i>
             )}
           </button>
-          <button
-            className="btn btn-outline-danger"
-            onClick={nextSlide}
-            title="Next"
-          >
+          <button className="btn btn-outline-danger" onClick={nextSlide}>
             <i className="bi bi-chevron-right"></i>
           </button>
         </div>
       )}
+
       {showModal && (
-        // Added 'testimonials-modal' class for scoping CSS
         <div
           className="modal show d-block testimonials-modal"
           style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-          tabIndex="-1"
         >
           <div className="modal-dialog modal-dialog-centered modal-lg">
             <div className="modal-content border-0 shadow-lg">
@@ -275,28 +311,36 @@ const Testimonials = () => {
                     </h4>
                     <p className="text-muted">
                       Thank you, <strong>{formData.name}</strong>. Your review
-                      has been submitted.
+                      has been submitted and is pending Admin approval.
                     </p>
                     <button
                       className="btn btn-dark mt-3 px-4"
                       onClick={closeModal}
                     >
-                      Close & View
+                      Close
                     </button>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit}>
                     {status === "error" && (
-                      <div
-                        className="alert alert-danger mb-4 shadow-sm"
-                        role="alert"
-                      >
-                        <strong>Verification Failed:</strong> Title Number not
-                        found.
+                      <div className="alert alert-danger mb-4 shadow-sm">
+                        <strong>Error:</strong> {errorMessage}
                       </div>
                     )}
                     <div className="row g-3">
                       <div className="col-md-6">
+                        {/* ✅ 3. HIDDEN HONEYPOT FIELD */}
+                        <div style={{ display: "none" }} aria-hidden="true">
+                          <input
+                            type="text"
+                            name="bot_verification"
+                            value={confirmHoneypot}
+                            onChange={(e) => setConfirmHoneypot(e.target.value)}
+                            tabIndex="-1"
+                            autoComplete="off"
+                          />
+                        </div>
+
                         <div className="mb-3">
                           <label className="form-label fw-bold small">
                             Full Name <span className="text-danger">*</span>
@@ -325,7 +369,7 @@ const Testimonials = () => {
                             onChange={handleInputChange}
                           />
                           <div className="form-text x-small">
-                            Used for verification only.
+                            Used for backend verification only.
                           </div>
                         </div>
                         <div className="row">
@@ -339,7 +383,6 @@ const Testimonials = () => {
                               value={formData.role}
                               required
                               onChange={handleInputChange}
-                              defaultValue=""
                             >
                               <option value="" disabled>
                                 Select...
@@ -370,6 +413,7 @@ const Testimonials = () => {
                           </div>
                         </div>
                       </div>
+
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label fw-bold small">
@@ -387,6 +431,7 @@ const Testimonials = () => {
                                 src={imagePreview}
                                 alt="Preview"
                                 className="rounded-circle testimonial-img"
+                                style={{ width: "40px", height: "40px" }}
                               />
                             )}
                           </div>
@@ -406,28 +451,28 @@ const Testimonials = () => {
                             value={formData.message}
                             placeholder="Tell us about your experience..."
                             required
-                            minLength="85"
-                            maxLength="150"
+                            minLength="50"
+                            maxLength="200"
                             onChange={handleInputChange}
                           ></textarea>
                           <div className="d-flex justify-content-between form-text x-small">
                             <span
                               className={
-                                formData.message.length < 85
+                                formData.message.length < 50
                                   ? "text-danger"
                                   : "text-success"
                               }
                             >
-                              Min: 85
+                              Min: 50
                             </span>
                             <span
                               className={
-                                formData.message.length > 150
+                                formData.message.length > 200
                                   ? "text-danger"
                                   : ""
                               }
                             >
-                              {formData.message.length}/150
+                              {formData.message.length}/200
                             </span>
                           </div>
                         </div>

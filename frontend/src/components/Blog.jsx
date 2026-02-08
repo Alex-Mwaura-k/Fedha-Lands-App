@@ -1,16 +1,77 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { blogData } from "../data/blogData";
+import api from "../api/axios";
+import Toast from "../components/Toast";
+import { COMPANY_DATA } from "../data/contactData";
 
 const Blog = ({ limit, customData }) => {
-  let displayItems = customData || blogData;
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const [email, setEmail] = useState("");
+  const [subStatus, setSubStatus] = useState("idle");
+  const [toastMessage, setToastMessage] = useState("");
+
+  useEffect(() => {
+    if (!customData) {
+      const fetchBlogs = async () => {
+        try {
+          const response = await api.get("/blog/");
+          setBlogs(response.data.results || response.data);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching blogs:", error);
+          setLoading(false);
+        }
+      };
+      fetchBlogs();
+    }
+  }, [customData]);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+    setSubStatus("sending");
+
+    try {
+      await api.post("/subscribe/", { email });
+      setSubStatus("success");
+      setToastMessage("Successfully subscribed to updates!");
+      setEmail("");
+    } catch (error) {
+      console.error("Subscription error:", error);
+      setSubStatus("error");
+
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setToastMessage(error.response.data.message);
+      } else {
+        setToastMessage("Subscription failed. Please try again.");
+      }
+    }
+  };
+
+  let displayItems = customData || blogs;
 
   if (limit && !customData) {
-    displayItems = blogData.slice(0, limit);
+    displayItems = blogs.slice(0, limit);
+  }
+
+  if (loading && !customData) {
+    return <div className="text-center py-5">Loading Updates...</div>;
   }
 
   return (
     <section id="blog" className="blog-section bg-white">
+      <Toast
+        status={subStatus}
+        message={toastMessage}
+        onClose={() => setSubStatus("idle")}
+      />
+
       <div className="container-md">
         {limit && !customData && (
           <div className="row mb-4 align-items-end">
@@ -25,23 +86,38 @@ const Blog = ({ limit, customData }) => {
 
             <div className="col-lg-7">
               <div className="d-flex flex-column flex-md-row justify-content-lg-end align-items-md-center gap-3 mb-3">
-                <form
-                  className="newsletter-form d-flex"
-                  onSubmit={(e) => e.preventDefault()}
-                >
-                  <input
-                    type="email"
-                    id="cEmail"
-                    className="form-control rounded-0"
-                    placeholder="Email Subscribe..."
-                    required
-                  />
-                  <button type="submit" className="btn btn-dark rounded-0 px-3">
-                    <i className="bi bi-envelope-fill"></i>
-                  </button>
-                </form>
+                <div className="d-flex flex-column">
+                  <form
+                    className="newsletter-form d-flex"
+                    onSubmit={handleSubscribe}
+                  >
+                    <input
+                      type="email"
+                      id="blogEmail"
+                      className="form-control rounded-0"
+                      placeholder="Email Subscribe..."
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      aria-label="Email address for subscription"
+                    />
+                    <button
+                      type="submit"
+                      className="btn btn-dark rounded-0 px-3"
+                      disabled={subStatus === "sending"}
+                      aria-label="Subscribe to newsletter"
+                    >
+                      {subStatus === "sending" ? (
+                        <span className="spinner-border spinner-border-sm"></span>
+                      ) : (
+                        <i className="bi bi-envelope-fill"></i>
+                      )}
+                    </button>
+                  </form>
+                </div>
+
                 <a
-                  href="https://www.youtube.com/@fedhalandventures"
+                  href={COMPANY_DATA.socials.youtube}
                   target="_blank"
                   rel="noreferrer"
                   className="btn btn-outline-danger rounded-0 px-4 text-nowrap"
@@ -64,11 +140,11 @@ const Blog = ({ limit, customData }) => {
 
               {displayItems.map((item) => (
                 <div key={item.id} className="col-md-6 col-lg-4">
-                  {item.type === "video" ? (
+                  {item.post_type === "video" ? (
                     <div className="media-card video-card h-100 d-flex flex-column">
                       <div className="ratio ratio-16x9">
                         <iframe
-                          src={item.videoUrl}
+                          src={item.video_url}
                           title={item.title}
                           allowFullScreen
                           loading="lazy"
@@ -76,17 +152,18 @@ const Blog = ({ limit, customData }) => {
                       </div>
                       <div className="media-body flex-grow-1 d-flex flex-column">
                         <div className="badge bg-danger mb-2 align-self-start rounded-0">
-                          {item.category}
+                          {item.category_name}
                         </div>
                         <h6 className="fw-bold text-dark mb-2">{item.title}</h6>
                         <p className="text-muted small mb-3 flex-grow-1 text-truncate-3">
-                          {item.desc}
+                          {item.description}
                         </p>
                         <a
-                          href={item.link}
+                          href={item.video_url}
                           target="_blank"
                           rel="noreferrer"
                           className="arrow-link mt-auto"
+                          aria-label={`Watch video: ${item.title}`}
                         >
                           Watch Video <i className="bi bi-play-circle-fill"></i>
                         </a>
@@ -94,11 +171,10 @@ const Blog = ({ limit, customData }) => {
                     </div>
                   ) : (
                     <article className="media-card article-card h-100 d-flex flex-column">
-                      {/* FIXED: Link uses slug */}
                       <Link to={`/article/${item.slug}`}>
                         <div className="ratio ratio-16x9 img-wrapper border-bottom-red">
                           <img
-                            src={item.img}
+                            src={item.image}
                             alt={item.title}
                             className="object-fit-cover"
                             loading="lazy"
@@ -110,10 +186,9 @@ const Blog = ({ limit, customData }) => {
                       </Link>
                       <div className="media-body flex-grow-1 d-flex flex-column">
                         <span className="text-danger small fw-bold text-uppercase">
-                          {item.category}
+                          {item.category_name}
                         </span>
                         <h5 className="fw-bold text-dark mt-2 text-truncate-2">
-                          {/* FIXED: Link uses slug */}
                           <Link
                             to={`/article/${item.slug}`}
                             className="text-dark text-decoration-none"
@@ -122,14 +197,18 @@ const Blog = ({ limit, customData }) => {
                           </Link>
                         </h5>
                         <p className="text-muted small mt-2 mb-3 flex-grow-1 text-truncate-3">
-                          {item.desc}
+                          {item.description}
                         </p>
-                        {/* FIXED: Link uses slug */}
                         <Link
                           to={`/article/${item.slug}`}
                           className="arrow-link mt-auto"
                         >
-                          Read More <i className="bi bi-arrow-right"></i>
+                          Read More{" "}
+                          <span className="visually-hidden">
+                            {" "}
+                            about {item.title}
+                          </span>{" "}
+                          <i className="bi bi-arrow-right"></i>
                         </Link>
                       </div>
                     </article>
@@ -145,15 +224,15 @@ const Blog = ({ limit, customData }) => {
                 Recommended
               </h5>
               <div className="list-group list-group-flush mb-4">
-                {blogData
-                  .filter((i) => i.type === "article")
+                {blogs
+                  .filter((i) => i.post_type === "article")
                   .slice(0, 4)
                   .map((item, index) => (
-                    /* FIXED: Link uses slug */
                     <Link
                       to={`/article/${item.slug}`}
                       key={item.id}
                       className="list-group-item bg-transparent border-0 px-0 py-3 border-bottom"
+                      aria-label={`Read article: ${item.title}`}
                     >
                       <div className="d-flex align-items-center">
                         <span className="text-danger fw-bold fs-4 me-3">

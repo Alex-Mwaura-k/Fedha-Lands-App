@@ -1,3 +1,5 @@
+import { COMPANY_DATA } from "./contactData";
+
 export const faqData = [
   {
     id: 1,
@@ -8,8 +10,7 @@ export const faqData = [
   {
     id: 2,
     question: "Do you offer free site visits?",
-    answer:
-      "Yes! We offer free transport to our projects every Wednesday and Saturday. Pickup is at our Ruiru office (Nyongo Plaza) at 8:00 AM.",
+    answer: `Yes! We offer free transport to our projects every Wednesday and Saturday. Pickup is at our office at ${COMPANY_DATA.location} at 8:00 AM.`,
   },
   {
     id: 3,
@@ -29,11 +30,9 @@ export const faqData = [
     answer:
       "We understand that financial situations change. Contact us immediately to restructure your payment plan. In worst-case scenarios, we can offer a refund as per the terms signed in your Sale Agreement.",
   },
-
   {
     id: 6,
-    question: "How can i reach you from Diaspora?",
-    answer:
-      "We are available 24/7 across all online platforms, Facebook, Instagram, Tiktok, WhatsApp and on calls via 0715 113 103.",
+    question: "How can I reach you from Diaspora?",
+    answer: `We are available 24/7 across all online platforms, Facebook, Instagram, Tiktok, WhatsApp and on calls via ${COMPANY_DATA.phone}.`,
   },
 ];

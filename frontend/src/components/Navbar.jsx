@@ -1,22 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import api from "../api/axios"; // ✅ CHANGED: Import API instead of static data
+import api from "../api/axios";
+import { COMPANY_DATA } from "../data/contactData";
 
 const Navbar = () => {
-  // STATE MANAGEMENT
   const [isPropertiesOpen, setIsPropertiesOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
-
-  // ✅ NEW: State to hold fetched properties
   const [properties, setProperties] = useState([]);
 
-  // REFS
   const closeButtonRef = useRef(null);
   const dropdownRef = useRef(null);
-
   const location = useLocation();
 
-  // ✅ NEW: Fetch Properties for the Menu
   useEffect(() => {
     const fetchMenuData = async () => {
       try {
@@ -29,32 +24,27 @@ const Navbar = () => {
     fetchMenuData();
   }, []);
 
-  // --- DYNAMIC DROPDOWN LOGIC (Applied to real data) ---
   const formatTitle = (title) => {
     const words = title.split(" ");
     return words.length > 2 ? `${words[0]} ${words[1]}` : title;
   };
 
-  // 1. Get 2 newest Available plots
   const recentAvailable = properties
     .filter((p) => p.status === "Available")
     .sort((a, b) => b.id - a.id)
     .slice(0, 2);
 
-  // 2. Get 2 newest Sold Out plots
   const recentSold = properties
     .filter((p) => p.status === "Sold Out")
     .sort((a, b) => b.id - a.id)
     .slice(0, 2);
 
-  // 1. CLOSE MENUS ON ROUTE CHANGE
   useEffect(() => {
     setIsPropertiesOpen(false);
     setActiveSubmenu(null);
     if (closeButtonRef.current) closeButtonRef.current.click();
   }, [location]);
 
-  // 2. CLOSE DROPDOWN WHEN CLICKING OUTSIDE
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -73,7 +63,6 @@ const Navbar = () => {
     };
   }, [isPropertiesOpen]);
 
-  // HANDLERS
   const toggleProperties = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -86,27 +75,22 @@ const Navbar = () => {
     setActiveSubmenu(activeSubmenu === name ? null : name);
   };
 
-  const closeMenu = () => {
-    if (closeButtonRef.current) closeButtonRef.current.click();
-  };
-
   return (
     <nav
       className="navbar navbar-expand-lg fixed-top site-navbar"
       data-bs-theme="dark"
     >
-      {/* MOBILE LAYOUT FIX: Reduced padding for tighter fit on mobile screens */}
       <style>{`
         @media (max-width: 991px) {
           .dropdown-item {
-            white-space: nowrap !important; /* Keep 2-word title on one line */
+            white-space: nowrap !important;
             line-height: 1.2 !important;
-            padding: 6px 0 !important; /* Reduced padding from 12px for tighter fit */
+            padding: 6px 0 !important;
           }
           .dropdown-menu {
             border: none !important;
             background: transparent !important;
-            padding-left: 10px !important; /* Reduced from 15px */
+            padding-left: 10px !important;
           }
           .dropdown-submenu .dropdown-menu {
             padding-left: 12px !important;
@@ -115,27 +99,25 @@ const Navbar = () => {
       `}</style>
 
       <div className="container-md">
-        {/* LOGO */}
         <Link className="navbar-brand" to="/">
           <img
             src="/icons/logo.png"
-            alt="Fedha Land Ventures"
+            alt={COMPANY_DATA.name}
             width="150"
             className="d-inline-block align-text-top"
           />
         </Link>
 
-        {/* TOGGLE BUTTON */}
         <button
           className="navbar-toggler ms-auto"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasNavbar"
+          aria-label="Toggle navigation" // Added helpful label here too
         >
           <i className="bi bi-list"></i>
         </button>
 
-        {/* SIDEBAR (OFFCANVAS) */}
         <div
           className="offcanvas offcanvas-end"
           tabIndex="-1"
@@ -148,6 +130,7 @@ const Navbar = () => {
               className="btn-close"
               data-bs-dismiss="offcanvas"
               ref={closeButtonRef}
+              aria-label="Close menu"
             ></button>
           </div>
 
@@ -159,7 +142,6 @@ const Navbar = () => {
                 </Link>
               </li>
 
-              {/* === PROPERTIES DROPDOWN === */}
               <li className="nav-item dropdown" ref={dropdownRef}>
                 <a
                   className={`nav-link dropdown-toggle ${
@@ -168,6 +150,7 @@ const Navbar = () => {
                   href="#"
                   role="button"
                   onClick={toggleProperties}
+                  aria-expanded={isPropertiesOpen}
                 >
                   Properties
                 </a>
@@ -177,7 +160,6 @@ const Navbar = () => {
                     isPropertiesOpen ? "show" : ""
                   }`}
                 >
-                  {/* LINK 1: VIEW ALL */}
                   <li>
                     <Link
                       className="dropdown-item fw-bold small"
@@ -191,7 +173,6 @@ const Navbar = () => {
                     <hr className="dropdown-divider my-1" />
                   </li>
 
-                  {/* DYNAMIC SUBMENU: NEWEST LISTINGS (Max 2 words) */}
                   {recentAvailable.length > 0 && (
                     <li className="dropdown-submenu">
                       <a
@@ -222,7 +203,6 @@ const Navbar = () => {
                     </li>
                   )}
 
-                  {/* DYNAMIC SUBMENU: SOLD OUT (Max 2 words) */}
                   {recentSold.length > 0 && (
                     <li className="dropdown-submenu">
                       <a
@@ -277,31 +257,61 @@ const Navbar = () => {
               </li>
             </ul>
 
-            {/* CONTACT INFO */}
             <div className="phone d-flex flex-column align-items-end mt-lg-0">
               <div className="p-number d-flex align-items-center gap-2">
                 <a
-                  href="tel:+254715113103"
+                  href={`tel:${COMPANY_DATA.phoneLink}`}
                   className="nav-link p-0 contact-link"
                 >
-                  +254715113103
+                  {COMPANY_DATA.phone}
                 </a>
-                <a href="#" className="text-decoration-none social-icon">
-                  <i className="bi bi-instagram"></i>
-                </a>
-                <a href="#" className="text-decoration-none social-icon">
-                  <i className="bi bi-facebook"></i>
-                </a>
-                <a href="#" className="text-decoration-none social-icon">
-                  <i className="bi bi-tiktok"></i>
-                </a>
+
+                {/* --- FIX 1: INSTAGRAM --- */}
+                {COMPANY_DATA.socials.instagram && (
+                  <a
+                    href={COMPANY_DATA.socials.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-decoration-none social-icon"
+                    aria-label="Visit our Instagram page"
+                  >
+                    <i className="bi bi-instagram"></i>
+                  </a>
+                )}
+
+                {/* --- FIX 2: FACEBOOK --- */}
+                {COMPANY_DATA.socials.facebook && (
+                  <a
+                    href={COMPANY_DATA.socials.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-decoration-none social-icon"
+                    aria-label="Visit our Facebook page"
+                  >
+                    <i className="bi bi-facebook"></i>
+                  </a>
+                )}
+
+                {/* --- FIX 3: TIKTOK --- */}
+                {COMPANY_DATA.socials.tiktok && (
+                  <a
+                    href={COMPANY_DATA.socials.tiktok}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-decoration-none social-icon"
+                    aria-label="Visit our TikTok page"
+                  >
+                    <i className="bi bi-tiktok"></i>
+                  </a>
+                )}
               </div>
+
               <div className="email small">
                 <a
-                  href="mailto:fedhalandventures@gmail.com"
+                  href={`mailto:${COMPANY_DATA.email}`}
                   className="nav-link p-0 contact-link"
                 >
-                  fedhalandventures@gmail.com
+                  {COMPANY_DATA.email}
                 </a>
               </div>
             </div>

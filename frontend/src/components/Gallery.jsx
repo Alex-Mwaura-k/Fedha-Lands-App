@@ -1,16 +1,34 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { galleryData } from "../data/galleryData";
-import { Helmet } from "react-helmet-async"; // Added for Google display
+import api from "../api/axios";
 
 const Gallery = ({ limit }) => {
+  const [galleryItems, setGalleryItems] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
+  // --- 1. FETCH DATA (Moved inside the component) ---
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        // Using the centralized api helper
+        const response = await api.get("/gallery/");
+        setGalleryItems(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching gallery:", error);
+        setLoading(false);
+      }
+    };
+    fetchGallery();
+  }, []);
+
+  // --- 2. FILTER & LIMIT ---
   const filteredItems =
     filter === "all"
-      ? galleryData
-      : galleryData.filter((item) => item.type === filter);
+      ? galleryItems
+      : galleryItems.filter((item) => item.type === filter);
 
   const displayItems = limit ? filteredItems.slice(0, limit) : filteredItems;
 
@@ -20,49 +38,35 @@ const Gallery = ({ limit }) => {
     }
   }, [limit]);
 
+  // --- 3. LIGHTBOX LOGIC ---
   const openLightbox = (index) => {
     setLightboxIndex(index);
+    document.body.style.overflow = "hidden";
   };
 
   const closeLightbox = () => {
     setLightboxIndex(null);
+    document.body.style.overflow = "auto";
   };
 
   const nextImage = (e) => {
     e.stopPropagation();
     setLightboxIndex((prev) =>
-      prev === displayItems.length - 1 ? 0 : prev + 1
+      prev === displayItems.length - 1 ? 0 : prev + 1,
     );
   };
 
   const prevImage = (e) => {
     e.stopPropagation();
     setLightboxIndex((prev) =>
-      prev === 0 ? displayItems.length - 1 : prev - 1
+      prev === 0 ? displayItems.length - 1 : prev - 1,
     );
   };
 
+  if (loading) return null; // Or a small spinner
+
   return (
     <>
-      {/* SEO BLOCK: Ensures Google displays the page correctly */}
-      {!limit && (
-        <Helmet>
-          <title>Gallery | Fedha Land Ventures Limited</title>
-          <meta
-            name="description"
-            content="Explore our project gallery featuring Fadhili Gardens, Royal Gardens, and our team events in Ruiru, Makutano, and Malindi."
-          />
-          <script type="application/ld+json">
-            {JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "ImageGallery",
-              name: "Fedha Land Ventures Gallery",
-              url: "https://fedha.netlify.app/gallery",
-            })}
-          </script>
-        </Helmet>
-      )}
-
       <section id="gallery" className="gallery-section">
         <div className="container-md">
           {/* Header */}
@@ -78,34 +82,17 @@ const Gallery = ({ limit }) => {
 
             <div className="col-lg-8">
               <div className="gallery-filters d-flex justify-content-lg-end justify-content-start gap-3 flex-wrap mt-3 mt-lg-0">
-                <button
-                  className={`filter-btn ${filter === "all" ? "active" : ""}`}
-                  onClick={() => setFilter("all")}
-                >
-                  All
-                </button>
-                <button
-                  className={`filter-btn ${
-                    filter === "property" ? "active" : ""
-                  }`}
-                  onClick={() => setFilter("property")}
-                >
-                  Properties
-                </button>
-                <button
-                  className={`filter-btn ${filter === "team" ? "active" : ""}`}
-                  onClick={() => setFilter("team")}
-                >
-                  Team
-                </button>
-                <button
-                  className={`filter-btn ${
-                    filter === "poster" ? "active" : ""
-                  }`}
-                  onClick={() => setFilter("poster")}
-                >
-                  Events
-                </button>
+                {["all", "property", "team", "poster"].map((type) => (
+                  <button
+                    key={type}
+                    className={`filter-btn ${filter === type ? "active" : ""}`}
+                    onClick={() => setFilter(type)}
+                  >
+                    {type === "poster"
+                      ? "Events"
+                      : type.charAt(0).toUpperCase() + type.slice(1)}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
@@ -114,7 +101,7 @@ const Gallery = ({ limit }) => {
           <div className="row g-3 gallery-container">
             {displayItems.map((item, index) => (
               <div
-                key={item.id}
+                key={item.unique_id || index}
                 className="col-lg-4 col-md-6 gallery-item show"
               >
                 <div
@@ -122,7 +109,6 @@ const Gallery = ({ limit }) => {
                   onClick={() => openLightbox(index)}
                   style={{ cursor: "pointer" }}
                 >
-                  {/* RESTORED: Your original alt logic and loading attribute */}
                   <img
                     src={item.img}
                     alt={item.alt || item.title}
@@ -131,7 +117,7 @@ const Gallery = ({ limit }) => {
                   <div className="gallery-overlay">
                     <div className="overlay-content">
                       <h6 className="text-uppercase text-danger fw-bold ls-2 mb-1">
-                        {item.type}
+                        {item.type === "poster" ? "Event" : item.type}
                       </h6>
                       <h4 className="text-white fw-bold">{item.title}</h4>
                       <p className="text-white-50 small">Click to View</p>
@@ -155,13 +141,12 @@ const Gallery = ({ limit }) => {
         </div>
       </section>
 
-      {/* --- LIGHTBOX MODAL (Restored original logic) --- */}
-      {lightboxIndex !== null && (
+      {/* Lightbox */}
+      {lightboxIndex !== null && displayItems[lightboxIndex] && (
         <div className="lightbox-overlay" onClick={closeLightbox}>
           <button className="lightbox-close" onClick={closeLightbox}>
             &times;
           </button>
-
           <button className="lightbox-prev" onClick={prevImage}>
             <i className="bi bi-chevron-left"></i>
           </button>

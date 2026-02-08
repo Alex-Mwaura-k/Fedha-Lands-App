@@ -25,11 +25,8 @@ const Properties = ({ limit, customData }) => {
     // If it's already a full link, use it
     if (path.startsWith("http")) return path;
 
-    // SAFEGUARD: Define Base URL safely
-    let baseUrl = "http://127.0.0.1:8000";
-    if (import.meta.env && import.meta.env.VITE_MEDIA_URL) {
-      baseUrl = import.meta.env.VITE_MEDIA_URL;
-    }
+    // SAFEGUARD: Define Base URL safely using Environment Variables
+    let baseUrl = import.meta.env.VITE_MEDIA_URL || "http://127.0.0.1:8000";
 
     baseUrl = baseUrl.replace(/\/$/, "");
     const cleanPath = path.startsWith("/") ? path : `/${path}`;

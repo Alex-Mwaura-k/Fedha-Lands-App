@@ -2,11 +2,14 @@
 
 # Python / Django Security
 backend/venv/
+backend/env/
 backend/__pycache__/
 backend/*.py[cod]
 backend/db.sqlite3
 backend/media/
 backend/.env
+backend/staticfiles/
+backend/.python-version
 
 # Node / React Security
 frontend/node_modules/
@@ -14,9 +17,11 @@ frontend/dist/
 frontend/dev-dist/
 frontend/.env
 frontend/.env.local
+frontend/.env*.local
 
 # OS & Editor Files
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+*.log

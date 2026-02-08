@@ -2,24 +2,24 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Properties from "../components/Properties";
-import api from "../api/axios"; // Secure API
+import api from "../api/axios";
+// Optional: Import your constant if you want to use COMPANY_DATA.name
+// import { COMPANY_DATA } from "../data/contactData";
 
 const AllProperties = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
 
-  // Data State
   const [allProperties, setAllProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 1. Fetch Data from Django API
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.get("/properties/");
         setAllProperties(response.data);
-        setFilteredProperties(response.data); // Initial load
+        setFilteredProperties(response.data);
       } catch (error) {
         console.error("Error loading properties", error);
       } finally {
@@ -29,7 +29,6 @@ const AllProperties = () => {
     fetchData();
   }, []);
 
-  // 2. Maintain original filtering logic (Applied to fetched data)
   useEffect(() => {
     let results = allProperties;
 
@@ -42,7 +41,7 @@ const AllProperties = () => {
       results = results.filter(
         (item) =>
           item.title.toLowerCase().includes(lowerTerm) ||
-          item.location.toLowerCase().includes(lowerTerm)
+          item.location.toLowerCase().includes(lowerTerm),
       );
     }
 
@@ -51,16 +50,30 @@ const AllProperties = () => {
 
   return (
     <div style={{ paddingTop: "20px", paddingBottom: "30px" }}>
+      {/* --- FIXED SEO SECTION --- */}
       <Helmet>
         <title>Our Properties</title>
         <meta
           name="description"
-          content="Browse our complete portfolio of prime land for sale in Kenya. Verified plots with ready title deeds in Machakos, Malindi, and Mwea."
+          // Updated to be country-wide as requested
+          content="Browse our complete portfolio of prime land for sale across Kenya. Verified plots with ready title deeds and flexible payment plans."
         />
-        <link rel="canonical" href="https://fedha.netlify.app/properties" />
+        {/* Fixed: Uses your actual domain */}
+        <link
+          rel="canonical"
+          href="https://fedhalandventures.co.ke/properties"
+        />
+        <meta
+          property="og:title"
+          content="Prime Properties for Sale in Kenya"
+        />
+        <meta
+          property="og:url"
+          content="https://fedhalandventures.co.ke/properties"
+        />
       </Helmet>
+      {/* ------------------------- */}
 
-      {/* --- HEADER CONTAINER (Boxed content) --- */}
       <div className="container-md mb-4">
         <nav aria-label="breadcrumb" className="mb-3">
           <ol className="breadcrumb">
@@ -89,6 +102,9 @@ const AllProperties = () => {
               style={{ width: "auto", minWidth: "130px" }}
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
+              id="status-filter"
+              name="status"
+              aria-label="Filter properties by status"
             >
               <option value="All">All Status</option>
               <option value="Available">Available</option>
@@ -103,15 +119,17 @@ const AllProperties = () => {
               style={{ maxWidth: "200px" }}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              id="property-search"
+              name="search"
+              autoComplete="off"
+              aria-label="Search properties"
             />
           </div>
         </div>
       </div>
-      {/* --- END OF CONTAINER --- */}
 
       <hr className="mt-0 mb-4" />
 
-      {/* --- PROPERTIES LIST --- */}
       {loading ? (
         <div className="container text-center">Loading properties...</div>
       ) : (

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { COMPANY_DATA } from "../data/contactData"; // ✅ Import Data
 
 const TermsOfService = () => {
   useEffect(() => {
@@ -16,8 +17,7 @@ const TermsOfService = () => {
       }}
     >
       <Helmet>
-        <title>Terms of Service</title>
-        {/* Noindex tells search engines not to list this legal page */}
+        <title>Terms of Service | {COMPANY_DATA.name}</title>
         <meta name="robots" content="noindex" />
       </Helmet>
 
@@ -37,10 +37,10 @@ const TermsOfService = () => {
                 <p>
                   These Terms of Service constitute a legally binding agreement
                   made between you, whether personally or on behalf of an entity
-                  (“you”) and <strong>Fedha Land Ventures Ltd</strong>,
-                  concerning your access to and use of the{" "}
-                  <strong>fedhalandventures.co.ke</strong> website as well as
-                  any other media form, mobile application, or related channel.
+                  (“you”) and <strong>{COMPANY_DATA.name}</strong>, concerning
+                  your access to and use of the{" "}
+                  <strong>{COMPANY_DATA.website}</strong> website as well as any
+                  other media form, mobile application, or related channel.
                 </p>
                 <p>
                   By accessing the Site, you agree that you have read,
@@ -63,11 +63,12 @@ const TermsOfService = () => {
                 </p>
                 <ul>
                   <li>
-                    <strong>Price Changes:</strong> Property prices are subject
-                    to change without prior notice due to market conditions.
+                    <strong>Price Changes - </strong> Property prices are
+                    subject to change without prior notice due to market
+                    conditions.
                   </li>
                   <li>
-                    <strong>Availability:</strong> Plots are sold on a
+                    <strong>Availability - </strong> Plots are sold on a
                     first-come, first-served basis. A plot marked "Available" on
                     the website may have been booked offline moments prior.
                   </li>
@@ -103,23 +104,23 @@ const TermsOfService = () => {
                   4. Payments & Installments
                 </h4>
                 <p>
-                  Fedha Land Ventures offers flexible payment plans for most
+                  {COMPANY_DATA.name} offers flexible payment plans for most
                   properties.
                 </p>
                 <ul>
                   <li>
-                    <strong>Deposits:</strong> A booking fee/deposit is required
-                    to reserve a specific plot. This deposit is part of the
-                    total purchase price.
+                    <strong>Deposits - </strong> A booking fee/deposit is
+                    required to reserve a specific plot. This deposit is part of
+                    the total purchase price.
                   </li>
                   <li>
-                    <strong>Installments:</strong> Failure to complete monthly
+                    <strong>Installments - </strong> Failure to complete monthly
                     installments within the agreed period may result in the
                     forfeiture of the plot or penalties as outlined in your
                     specific Sale Agreement.
                   </li>
                   <li>
-                    <strong>Payment Methods:</strong> We accept payments via
+                    <strong>Payment Methods - </strong> We accept payments via
                     Bank Transfer and M-PESA.{" "}
                     <strong>Do not pay cash to any individual agent.</strong>{" "}
                     All payments must be made to official company accounts.
@@ -169,15 +170,15 @@ const TermsOfService = () => {
                   us at:
                 </p>
                 <address className="text-muted border-start border-4 border-danger ps-3">
-                  <strong>Fedha Land Ventures Ltd</strong>
+                  <strong>{COMPANY_DATA.name}</strong>
                   <br />
-                  Nyongo Plaza 1st floor, Ruiru Town
+                  {COMPANY_DATA.location}
                   <br />
-                  Kiambu County, Kenya.
+                  {COMPANY_DATA.county}
                   <br />
                   Email:{" "}
-                  <a href="mailto:fedhalandventures@gmail.com">
-                    fedhalandventures@gmail.com
+                  <a href={`mailto:${COMPANY_DATA.email}`}>
+                    {COMPANY_DATA.email}
                   </a>
                 </address>
               </section>

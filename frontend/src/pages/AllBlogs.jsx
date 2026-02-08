@@ -2,41 +2,75 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Blog from "../components/Blog";
-import { blogData } from "../data/blogData";
+import api from "../api/axios";
 
 const AllBlogs = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [filteredBlogs, setFilteredBlogs] = useState(blogData);
-
-  const categories = ["All", ...new Set(blogData.map((item) => item.category))];
+  const [blogs, setBlogs] = useState([]);
+  const [categories, setCategories] = useState(["All"]);
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let results = blogData;
+    const fetchInitialData = async () => {
+      try {
+        const [blogRes, catRes] = await Promise.all([
+          api.get("/blog/"),
+          api.get("/categories/"),
+        ]);
+
+        const fetchedBlogs = blogRes.data.results
+          ? blogRes.data.results
+          : blogRes.data;
+        const fetchedCategories = catRes.data.results
+          ? catRes.data.results
+          : catRes.data;
+
+        const safeBlogs = Array.isArray(fetchedBlogs) ? fetchedBlogs : [];
+        const safeCategories = Array.isArray(fetchedCategories)
+          ? fetchedCategories
+          : [];
+
+        setBlogs(safeBlogs);
+        setCategories(["All", ...safeCategories.map((c) => c.name)]);
+        setFilteredBlogs(safeBlogs);
+        setLoading(false);
+      } catch (err) {
+        console.error("Connection error:", err);
+        setLoading(false);
+      }
+    };
+    fetchInitialData();
+  }, []);
+
+  useEffect(() => {
+    let results = blogs;
 
     if (selectedCategory !== "All") {
-      results = results.filter((item) => item.category === selectedCategory);
+      results = results.filter(
+        (item) => item.category_name === selectedCategory
+      );
     }
 
     if (searchTerm) {
       const lowerTerm = searchTerm.toLowerCase();
-      results = results.filter((item) =>
-        item.title.toLowerCase().includes(lowerTerm)
+      results = results.filter(
+        (item) =>
+          item.title.toLowerCase().includes(lowerTerm) ||
+          item.description.toLowerCase().includes(lowerTerm)
       );
     }
 
     setFilteredBlogs(results);
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, blogs]);
+
+  if (loading) return <div className="text-center py-5 mt-5">Loading...</div>;
 
   return (
     <div style={{ paddingTop: "20px", paddingBottom: "30px" }}>
       <Helmet>
         <title>Blogs Center</title>
-        <meta
-          name="description"
-          content="Stay updated with the latest news, investment guides, and land tours in Kenya."
-        />
-        <link rel="canonical" href="https://fedha.netlify.app/blogs" />
       </Helmet>
 
       <div className="container-md mb-4">
@@ -67,6 +101,9 @@ const AllBlogs = () => {
               style={{ width: "auto", minWidth: "130px" }}
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
+              id="blog-category"
+              name="category"
+              aria-label="Filter blogs by category"
             >
               {categories.map((cat, index) => (
                 <option key={index} value={cat}>
@@ -82,6 +119,10 @@ const AllBlogs = () => {
               style={{ maxWidth: "200px" }}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              id="blog-search"
+              name="search"
+              autoComplete="off"
+              aria-label="Search blogs"
             />
           </div>
         </div>

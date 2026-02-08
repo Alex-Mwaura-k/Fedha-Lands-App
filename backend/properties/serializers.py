@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from .models import Property, PropertyImage, PropertyFeature
+from .models import Property, PropertyImage, PropertyFeature, Location
+
+# --- NEW: Added Location Serializer ---
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = '__all__'
 
 class PropertySerializer(serializers.ModelSerializer):
     # 1. Get the list of images
@@ -8,8 +14,11 @@ class PropertySerializer(serializers.ModelSerializer):
     # 2. Get the list of features (Extract text from the new model)
     features = serializers.SerializerMethodField()
     
-    # 3. Get the Location Name (Instead of ID number)
+    # 3. Get the Location Name (Keeps your frontend working)
     location = serializers.CharField(source='location.name', read_only=True)
+    
+    # OPTIONAL: Send full location details if you need the image/ID later
+    # location_details = LocationSerializer(source='location', read_only=True)
     
     # Map Python names to JS names
     metaDescription = serializers.CharField(source='meta_description')
