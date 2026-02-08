@@ -148,17 +148,19 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        # FIX: Switched from CompressedManifestStaticFilesStorage to CompressedStaticFilesStorage
+        # This stops WhiteNoise from looking for missing .map files and crashing the build.
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
 # --- FIX 1: STOP MissingFileError ---
-# Tells WhiteNoise to ignore missing .map files (like Bootstrap's) instead of crashing the build.
+# Extra safety to ensure WhiteNoise doesn't crash on missing references.
 WHITENOISE_MANIFEST_STRICT = False
 
 # --- FIX 2: LEGACY STORAGE SETTING ---
-# Provides the old setting the Cloudinary library expects to prevent AttributeError.
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# Provides the backend that Cloudinary/WhiteNoise requires to prevent AttributeError.
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
