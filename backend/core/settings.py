@@ -142,25 +142,23 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# Configure Global Storage (Django 4.2+)
+# THE ULTIMATE FIX FOR THE BUILD ERROR:
+# We use the basic StaticFilesStorage. This stops WhiteNoise from trying to 
+# compress files (like filters.js) before they even exist in the staticroot.
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # FIX: Switched from CompressedManifestStaticFilesStorage to CompressedStaticFilesStorage
-        # This stops WhiteNoise from looking for missing .map files and crashing the build.
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.StaticFilesStorage",
     },
 }
 
-# --- FIX 1: STOP MissingFileError ---
-# Extra safety to ensure WhiteNoise doesn't crash on missing references.
-WHITENOISE_MANIFEST_STRICT = False
+# Ensure compatibility with older package logic
+STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
 
-# --- FIX 2: LEGACY STORAGE SETTING ---
-# Provides the backend that Cloudinary/WhiteNoise requires to prevent AttributeError.
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+# Disable strict manifest checks
+WHITENOISE_MANIFEST_STRICT = False
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
