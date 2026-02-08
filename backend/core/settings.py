@@ -137,11 +137,13 @@ USE_TZ = True
 # =========================================================
 # [RENDER] STATIC FILES & MEDIA (CLOUDINARY)
 # =========================================================
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/' # Added leading slash for standard compliance
+
+# FIX: Use Path object syntax to ensure the path is correctly constructed
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    BASE_DIR / 'static',
 ]
 
 # FIXED STORAGE CONFIGURATION:
@@ -163,7 +165,7 @@ STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
 WHITENOISE_MANIFEST_STRICT = False
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
