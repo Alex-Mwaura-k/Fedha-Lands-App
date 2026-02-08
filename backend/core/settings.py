@@ -19,13 +19,10 @@ ALLOWED_HOSTS = [
     'api.fedhalandventures.co.ke',
     'fedhalandventures.co.ke',
     'www.fedhalandventures.co.ke',
+    '.onrender.com',  # Allows all Render subdomains
     'localhost',
     '127.0.0.1'
 ]
-
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # --- PRODUCTION SECURITY HEADERS ---
 if not DEBUG:
@@ -50,6 +47,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://fedhalandventures.co.ke',
     'https://www.fedhalandventures.co.ke',
 ]
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
 
@@ -65,7 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # --- Third Party Tools ---
-    'cloudinary',         # Add Cloudinary
+    'cloudinary', 
     'rest_framework',
     'corsheaders',
     'django_ckeditor_5',
@@ -144,7 +142,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# Configure Global Storage for Media (Cloudinary) and Static (WhiteNoise)
+# Configure Global Storage (Django 4.2+)
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
@@ -154,11 +152,13 @@ STORAGES = {
     },
 }
 
-# Media Settings (Used as a fallback)
+# --- FIX: LEGACY STORAGE SETTING FOR CLOUDINARY-STORAGE COMPATIBILITY ---
+# This prevents the AttributeError: 'Settings' object has no attribute 'STATICFILES_STORAGE'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Cloudinary Credentials
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
