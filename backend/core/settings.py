@@ -152,8 +152,12 @@ STORAGES = {
     },
 }
 
-# --- FIX: LEGACY STORAGE SETTING FOR CLOUDINARY-STORAGE COMPATIBILITY ---
-# This prevents the AttributeError: 'Settings' object has no attribute 'STATICFILES_STORAGE'
+# --- FIX 1: STOP MissingFileError ---
+# Tells WhiteNoise to ignore missing .map files (like Bootstrap's) instead of crashing the build.
+WHITENOISE_MANIFEST_STRICT = False
+
+# --- FIX 2: LEGACY STORAGE SETTING ---
+# Provides the old setting the Cloudinary library expects to prevent AttributeError.
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = '/media/'
