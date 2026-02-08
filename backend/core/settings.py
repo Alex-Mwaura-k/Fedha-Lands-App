@@ -82,7 +82,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # MUST BE FIRST
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Serves static files on Render
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -111,8 +111,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # =========================================================
-# [RENDER] DATABASE CONFIGURATION
+# [RENDER] DATABASE CONFIGURATION (SUPABASE POOLER)
 # =========================================================
+# Uses dj_database_url to parse the DATABASE_URL environment variable.
+# Ensure your Render environment variable uses the Supabase Pooler URI (Port 6543).
 DATABASES = {
     'default': dj_database_url.config(
         default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
@@ -142,9 +144,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# THE ULTIMATE FIX FOR THE BUILD ERROR:
-# We use the basic StaticFilesStorage. This stops WhiteNoise from trying to 
-# compress files (like filters.js) before they even exist in the staticroot.
+# FIXED STORAGE CONFIGURATION:
+# We use whitenoise.storage.StaticFilesStorage to prevent build crashes
+# caused by missing .map files or strict manifest hashing.
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
@@ -154,10 +156,10 @@ STORAGES = {
     },
 }
 
-# Ensure compatibility with older package logic
+# Ensure compatibility with older package logic (e.g., Cloudinary Storage)
 STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
 
-# Disable strict manifest checks
+# Tells WhiteNoise not to crash the build if a file is missing during collectstatic.
 WHITENOISE_MANIFEST_STRICT = False
 
 MEDIA_URL = '/media/'
