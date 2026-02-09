@@ -6,8 +6,11 @@ backend/*.py[cod]
 backend/db.sqlite3
 backend/media/
 backend/.env
-backend/staticfiles/
 backend/.python-version
+
+# --- STATIC FILES CONFIG ---
+backend/staticfiles/  
+backend/static/
 
 # Node / React Security
 frontend/node_modules/
