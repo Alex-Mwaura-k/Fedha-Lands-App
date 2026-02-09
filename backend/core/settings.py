@@ -113,8 +113,6 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # =========================================================
 # [RENDER] DATABASE CONFIGURATION (SUPABASE POOLER)
 # =========================================================
-# Uses dj_database_url to parse the DATABASE_URL environment variable.
-# Ensure your Render environment variable uses the Supabase Pooler URI (Port 6543).
 DATABASES = {
     'default': dj_database_url.config(
         default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
@@ -137,34 +135,32 @@ USE_TZ = True
 # =========================================================
 # [RENDER] STATIC FILES & MEDIA (CLOUDINARY)
 # =========================================================
-STATIC_URL = '/static/' # Added leading slash for standard compliance
+STATIC_URL = '/static/' 
 
 # FIX: Use Path object syntax to ensure the path is correctly constructed
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# FIXED: We point this to 'assets' now. 
-# The build.sh script will create this folder for us.
+# FIXED: We point this to 'assets'. The build.sh script creates this folder.
 STATICFILES_DIRS = [
     BASE_DIR / 'assets',
 ]
 
-# FIXED STORAGE CONFIGURATION:
-# We use whitenoise.storage.StaticFilesStorage to prevent build crashes
-# caused by missing .map files or strict manifest hashing.
+# =========================================================
+# [CRITICAL FIX] STORAGE CONFIGURATION
+# =========================================================
+# We use standard Django storage for static files to prevent 
+# build crashes when minor file conflicts occur.
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.StaticFilesStorage",
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
-# Ensure compatibility with older package logic (e.g., Cloudinary Storage)
-STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
-
-# Tells WhiteNoise not to crash the build if a file is missing during collectstatic.
-WHITENOISE_MANIFEST_STRICT = False
+# Ensure compatibility with older package logic
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
