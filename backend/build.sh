@@ -5,29 +5,47 @@ set -o errexit
 echo "🚀 Starting Build Process..."
 
 # 1. Install Dependencies
-# We use --upgrade to ensure we get the latest compatible versions
 echo "📥 Installing dependencies..."
-pip install --upgrade pip
-pip install -r requirements.txt
+pip install --force-reinstall -r requirements.txt
 
-# 2. Safe Setup
-# Create the 'assets' folder if it's missing (prevents settings.py crash)
-# We do NOT run any delete commands here to avoid accidental 'friendly fire'.
+# 2. [NUCLEAR FIX] FORCE-PATCH SETTINGS
+# Since Git isn't updating settings.py, we force the correct storage backend here.
+# This appends the fix to the end of the file on the server.
+echo "🔧 FORCE-PATCHING settings.py..."
+echo "
+# --- AUTO-PATCHED BY BUILD.SH ---
+STORAGES = {
+    'default': {
+        'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+    },
+}
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+" >> core/settings.py
+
+# 3. Safe Cleanup & Setup
 echo "🛠️  Preparing static directories..."
-mkdir -p assets
+python -c "
+import os
+import shutil
+# Ensure assets folder exists
+if not os.path.exists('assets'):
+    os.makedirs('assets')
+"
 
-# 3. Collect Static Files
-# This will collect files from 'assets' and 'django.contrib.admin'
-# and put them into 'staticfiles'. Standard Django storage handles conflicts automatically.
+# 4. Collect Static Files
+# Now that settings are forced to be correct, this WILL work.
 echo "📦 Collecting static files..."
 python manage.py collectstatic --no-input --clear
 
-# 4. Apply Database Migrations
+# 5. Database Migrations
 echo "🗄️  Applying database migrations..."
 python manage.py makemigrations
 python manage.py migrate
 
-# 5. Create Superuser (Automatic)
+# 6. Create Superuser
 echo "👤 Checking superuser..."
 python manage.py shell << END
 import os
@@ -37,14 +55,9 @@ username = os.environ.get('DJANGO_SUPERUSER_USERNAME')
 email = os.environ.get('DJANGO_SUPERUSER_EMAIL')
 password = os.environ.get('DJANGO_SUPERUSER_PASSWORD')
 
-if username and password:
-    if not User.objects.filter(username=username).exists():
-        User.objects.create_superuser(username, email, password)
-        print(f"✅ Superuser '{username}' created.")
-    else:
-        print(f"ℹ️  Superuser '{username}' already exists.")
-else:
-    print("⚠️  Skipping superuser creation: Missing env variables.")
+if username and password and not User.objects.filter(username=username).exists():
+    User.objects.create_superuser(username, email, password)
+    print(f"✅ Created superuser: {username}")
 END
 
 echo "✅ Build Finished Successfully!"
