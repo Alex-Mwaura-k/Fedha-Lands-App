@@ -2,21 +2,23 @@
 # Exit on error
 set -o errexit
 
-# 1. Install Dependencies
-pip install -r requirements.txt
+# 1. FORCE REINSTALL DEPENDENCIES
+# We use --force-reinstall to repair the Django files that were accidentally deleted.
+pip install --force-reinstall -r requirements.txt
 
-# 2. FORCE DELETE THE ZOMBIE 'admin' FOLDER
-# This Python script finds any 'admin' folder inside 'static' and deletes it.
-# It fixes the "0 files copied" error by removing the conflict source.
-python -c "import os, shutil; [shutil.rmtree(os.path.join(root, d)) for root, dirs, files in os.walk('.') for d in dirs if d == 'admin' and 'static' in root]"
+# 2. CLEANUP USER STATIC FOLDERS
+# This removes your local 'static' folder to ensure no conflicts exist.
+# We recreate it empty so Django doesn't complain.
+rm -rf backend/static
+mkdir -p backend/static
 
-# 3. Collect Static Files
+# 3. COLLECT STATIC FILES
 python manage.py collectstatic --no-input --clear
 
-# 4. Apply Migrations
+# 4. MIGRATE DATABASE
 python manage.py migrate
 
-# 5. Create Superuser (Optional)
+# 5. CREATE SUPERUSER
 python manage.py shell << END
 import os
 from django.contrib.auth import get_user_model
