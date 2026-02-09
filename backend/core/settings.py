@@ -142,9 +142,9 @@ STATIC_URL = '/static/' # Added leading slash for standard compliance
 # FIX: Use Path object syntax to ensure the path is correctly constructed
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+#STATICFILES_DIRS = [
+#    BASE_DIR / 'static',
+#]
 
 # FIXED STORAGE CONFIGURATION:
 # We use whitenoise.storage.StaticFilesStorage to prevent build crashes
