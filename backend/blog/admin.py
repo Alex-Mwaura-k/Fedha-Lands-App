@@ -27,8 +27,3 @@ class BlogPostAdmin(admin.ModelAdmin):
             'description': "Use this section for YouTube videos."
         }),
     )
-
-    class Media:
-        # 1. This points to 'backend/static/js/blog_admin.js'
-        # 2. The syntax error is fixed.
-        js = ('js/blog_admin.js',)
