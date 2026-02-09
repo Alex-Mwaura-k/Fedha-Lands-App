@@ -29,5 +29,6 @@ class BlogPostAdmin(admin.ModelAdmin):
     )
 
     class Media:
-        # High-speed script for instant tab switching
-        js = ('admin/js/blog_admin.js',)
+        # 1. This points to 'backend/static/js/blog_admin.js'
+        # 2. The syntax error is fixed.
+        js = ('js/blog_admin.js',)
