@@ -2,26 +2,24 @@
 # Exit on error
 set -o errexit
 
-# 1. Install Dependencies
-# We use --force-reinstall to ensure all system files (like Django Admin) are fresh.
+# 1. REPAIR DJANGO (Crucial!)
+# We force reinstall to restore the admin files that were deleted by the previous script.
 pip install --force-reinstall -r requirements.txt
 
-# 2. DELETE THE ZOMBIE FOLDER (The Fix)
-# We try to delete 'static' directly (if we are in backend)
-# AND 'backend/static' (if we are in root).
-# One of these will hit the target.
-echo "Removing conflicting static folders..."
-rm -rf static
-rm -rf backend/static
+# 2. CREATE CLEAN STATIC SOURCE
+# We create an empty 'assets' folder. 
+# This matches the new setting in settings.py.
+rm -rf backend/assets
+mkdir -p backend/assets
 
-# 3. Collect Static Files
-# Now that the 'static' folder is gone, Django will only copy the correct system files.
+# 3. COLLECT STATIC
+# Now Django looks in 'assets' (finds nothing) 
+# AND looks in 'django.contrib.admin' (finds the restored files!).
 python manage.py collectstatic --no-input --clear
 
-# 4. Apply Migrations
+# 4. MIGRATE & SUPERUSER
 python manage.py migrate
 
-# 5. Create Superuser
 python manage.py shell << END
 import os
 from django.contrib.auth import get_user_model

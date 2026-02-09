@@ -142,9 +142,11 @@ STATIC_URL = '/static/' # Added leading slash for standard compliance
 # FIX: Use Path object syntax to ensure the path is correctly constructed
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-#STATICFILES_DIRS = [
-#    BASE_DIR / 'static',
-#]
+# FIXED: We point this to 'assets' now. 
+# The build.sh script will create this folder for us.
+STATICFILES_DIRS = [
+    BASE_DIR / 'assets',
+]
 
 # FIXED STORAGE CONFIGURATION:
 # We use whitenoise.storage.StaticFilesStorage to prevent build crashes
