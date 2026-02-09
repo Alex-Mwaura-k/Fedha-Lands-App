@@ -2,49 +2,33 @@
 # Exit on error
 set -o errexit
 
+echo "🚀 Starting Build Process..."
+
 # 1. Install Dependencies
+# We use --upgrade to ensure we get the latest compatible versions
 echo "📥 Installing dependencies..."
-pip install --force-reinstall -r requirements.txt
+pip install --upgrade pip
+pip install -r requirements.txt
 
-# 2. NUCLEAR FIX: Force-Write the Correct Settings
-# We append the correct storage configuration to the END of your settings file.
-# This overrides whatever is currently inside the file.
-echo "🔧 FORCE-PATCHING settings.py on the server..."
-cat <<EOF >> core/settings.py
+# 2. Safe Setup
+# Create the 'assets' folder if it's missing (prevents settings.py crash)
+# We do NOT run any delete commands here to avoid accidental 'friendly fire'.
+echo "🛠️  Preparing static directories..."
+mkdir -p assets
 
-# [AUTO-PATCH FROM BUILD.SH]
-# Forcing standard storage to bypass '0 files copied' error
-STORAGES = {
-    "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-    },
-}
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
-EOF
-
-# 3. Clean & Prepare
-echo "🧹 Cleaning up..."
-python -c "
-import os
-import shutil
-if not os.path.exists('assets'):
-    os.makedirs('assets')
-"
-
-# 4. Collect Static Files
-# Now that settings are forced to be correct, this WILL work.
+# 3. Collect Static Files
+# This will collect files from 'assets' and 'django.contrib.admin'
+# and put them into 'staticfiles'. Standard Django storage handles conflicts automatically.
 echo "📦 Collecting static files..."
 python manage.py collectstatic --no-input --clear
 
-# 5. Migrations
-echo "🗄️  Migrating database..."
+# 4. Apply Database Migrations
+echo "🗄️  Applying database migrations..."
+python manage.py makemigrations
 python manage.py migrate
 
-# 6. Create Superuser
-echo "👤 Creating superuser..."
+# 5. Create Superuser (Automatic)
+echo "👤 Checking superuser..."
 python manage.py shell << END
 import os
 from django.contrib.auth import get_user_model
@@ -52,6 +36,15 @@ User = get_user_model()
 username = os.environ.get('DJANGO_SUPERUSER_USERNAME')
 email = os.environ.get('DJANGO_SUPERUSER_EMAIL')
 password = os.environ.get('DJANGO_SUPERUSER_PASSWORD')
-if username and password and not User.objects.filter(username=username).exists():
-    User.objects.create_superuser(username, email, password)
+
+if username and password:
+    if not User.objects.filter(username=username).exists():
+        User.objects.create_superuser(username, email, password)
+        print(f"✅ Superuser '{username}' created.")
+    else:
+        print(f"ℹ️  Superuser '{username}' already exists.")
+else:
+    print("⚠️  Skipping superuser creation: Missing env variables.")
 END
+
+echo "✅ Build Finished Successfully!"
