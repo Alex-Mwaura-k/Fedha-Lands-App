@@ -2,41 +2,44 @@
 # Exit on error
 set -o errexit
 
-# 1. Install Dependencies (Force reinstall to ensure system files are clean)
+# 1. Install Dependencies
+# We force reinstall to restore the Django files that were deleted by the previous script.
 pip install --force-reinstall -r requirements.txt
 
-# 2. DEEP SEARCH & DESTROY (The Fix)
-# This Python script walks through the ENTIRE project tree.
-# It finds ANY folder named 'admin' that lives inside a 'static' folder and deletes it.
+# 2. SAFER CLEANUP (Excludes .venv)
+# This script cleans up your project but strictly AVOIDS hidden folders.
 python -c "
 import os
 import shutil
 
-print('🕵️  Starting Deep Search for conflicting admin folders...')
+print('🕵️  Starting Safe Search for conflicting admin folders...')
 base_dir = os.getcwd()
 
-# Walk through every folder in the project
 for root, dirs, files in os.walk(base_dir):
-    # If we find a folder named 'static'
+    # CRITICAL: Skip hidden folders like .venv, .git, .render
+    # This prevents the script from deleting Django's own files.
+    dirs[:] = [d for d in dirs if not d.startswith('.')]
+
     if 'static' in dirs:
         static_path = os.path.join(root, 'static')
-        # Check if that static folder contains an 'admin' folder
         admin_path = os.path.join(static_path, 'admin')
-        if os.path.exists(admin_path):
+        
+        # Only delete if it's NOT in a site-packages folder (double safety)
+        if os.path.exists(admin_path) and 'site-packages' not in static_path:
             print(f'❌ DESTROYING CONFLICT: {admin_path}')
             shutil.rmtree(admin_path)
 
-# Also ensure the 'assets' folder exists for settings.py
+# Ensure assets folder exists for settings.py
 if not os.path.exists('assets'):
     print('✅ Creating assets folder...')
     os.makedirs('assets')
 "
 
 # 3. Collect Static Files
-# Now that ALL conflicting 'admin' folders are gone, this will work.
+# Now that we haven't deleted the system files, this will find ~165 files.
 python manage.py collectstatic --no-input --clear
 
-# 4. Migrate & Superuser
+# 4. Migrate & Create Superuser
 python manage.py migrate
 
 python manage.py shell << END
