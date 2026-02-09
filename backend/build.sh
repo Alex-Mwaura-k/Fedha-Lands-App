@@ -2,38 +2,35 @@
 # Exit on error
 set -o errexit
 
-echo "🚀 Starting Build Process (The Sacrifice Strategy)..."
+echo "🚀 Starting Build Process (Override Strategy)..."
 
 # 1. Install Dependencies
 pip install --force-reinstall -r requirements.txt
 
-# 2. THE SACRIFICE: WIPE LOCAL FOLDERS
-# We delete 'assets' and 'static' to ensure NO local files conflict with Django.
-echo "🔥 Sacrificing local static folders..."
-rm -rf assets static staticfiles
-
-# 3. FORCE-PATCH SETTINGS
-# We overwrite STATICFILES_DIRS to be empty. 
-# This forces Django to ignore local folders and ONLY use system files (Admin).
-echo "🔧 FORCE-PATCHING settings.py..."
-echo "" >> core/settings.py
+# 2. CREATE TEMPORARY BUILD SETTINGS
+# We create a python file that imports your settings but overrides the storage engine.
+# This guarantees we bypass the "Conflict" error, no matter what is in your settings.py.
+echo "🔧 Creating temporary build settings..."
 echo "
-# [AUTO-PATCH] SACRIFICING CUSTOM FILES FOR STABILITY
+from .settings import *
+# FORCE Standard Storage to ignore Jazzmin/Admin conflicts
 STORAGES = {
     'default': {'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage'},
     'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
 }
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-STATICFILES_DIRS = []  # <--- THE FIX: Ignore all local folders
-" >> core/settings.py
+" > core/build_settings.py
 
-# 4. Collect Static Files
-# Now that we removed the local folders and the config, 
-# Django will ONLY find the 165 Admin files. No conflicts possible.
+# 3. COLLECT STATIC FILES (Using the Temporary Settings)
+# We use the --settings flag to use our Safe Config just for this step.
 echo "📦 Collecting static files..."
-python manage.py collectstatic --no-input --clear
+python manage.py collectstatic --no-input --clear --settings=core.build_settings
 
-# 5. Migrations & Superuser
+# 4. CLEANUP
+# Remove the temp file so it doesn't confuse the live server
+rm core/build_settings.py
+
+# 5. MIGRATIONS & SUPERUSER
 echo "🗄️  Database operations..."
 python manage.py migrate
 python manage.py shell << END
