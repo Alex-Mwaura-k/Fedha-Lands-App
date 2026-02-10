@@ -2,45 +2,56 @@
 # Exit on error
 set -o errexit
 
-echo "🚀 Starting Build Process (In-Memory Patch Strategy)..."
+echo "🚀 Starting Build Process (Isolation Strategy)..."
 
 # 1. Install Dependencies
 pip install --force-reinstall -r requirements.txt
 
-# 2. ENSURE ASSETS FOLDER EXISTS
-# Prevents the "directory does not exist" warning
-mkdir -p assets
-
-# 3. RUN PYTHON BUILD SCRIPT
-# We write a temporary Python script to run collectstatic.
-# This allows us to modify the settings in memory, bypassing the file conflict.
-echo "🔧 Running static file collection via Python script..."
+# 2. CREATE ISOLATED BUILD SETTINGS
+# We create a settings file that REMOVES the problematic apps for the build.
+echo "🔧 Creating isolated build settings..."
 python -c "
 import os
-import django
-from django.conf import settings
-from django.core.management import call_command
 
-# Setup Django
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
-django.setup()
+config = \"\"\"
+from .settings import *
 
-# --- THE FIX ---
-# We force the storage engine to Standard Django Storage.
-# This storage engine allows duplicates (Jazzmin overwrites Admin), solving the conflict.
-settings.STORAGES = {
-    'default': {'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage'},
-    'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
+# 1. REMOVE CLOUDINARY STORAGE APP
+# This stops it from hijacking the collectstatic command
+if 'cloudinary_storage' in INSTALLED_APPS:
+    INSTALLED_APPS.remove('cloudinary_storage')
+
+# 2. FORCE STANDARD DJANGO STORAGE
+# This ensures we use the built-in, conflict-tolerant storage engine
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+    },
 }
-# Legacy support
-settings.STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
-# Run the command
-print('📦 Collecting static files with Forced Standard Storage...')
-call_command('collectstatic', interactive=False, clear=True, verbosity=1)
+# 3. EMPTY LOCAL DIRS TO PREVENT MISSING FOLDER ERRORS
+STATICFILES_DIRS = []
+\"\"\"
+
+with open('core/build_settings.py', 'w') as f:
+    f.write(config)
 "
 
-# 4. MIGRATIONS & SUPERUSER
+# 3. COLLECT STATIC FILES
+# Now we run the command using our 'clean' settings.
+# Without 'cloudinary_storage' installed, Django WILL overwrite duplicates.
+echo "📦 Collecting static files (Isolated)..."
+python manage.py collectstatic --no-input --clear --settings=core.build_settings
+
+# 4. CLEANUP
+rm core/build_settings.py
+mkdir -p assets
+
+# 5. MIGRATIONS & SUPERUSER
 echo "🗄️  Database operations..."
 python manage.py migrate
 python manage.py shell << END
