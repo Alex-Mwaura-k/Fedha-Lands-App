@@ -4,6 +4,7 @@ Django settings for core project - PRODUCTION READY FOR RENDER & CLOUDINARY
 from pathlib import Path
 import os
 import dj_database_url
+import cloudinary  # Import Cloudinary for global config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,7 +47,7 @@ if not DEBUG:
 # =========================================================
 # We allow your specific Frontend URL to talk to this Backend.
 CORS_ALLOWED_ORIGINS = [
-    "https://fedha-lands-app.onrender.com",  # <--- YOUR FRONTEND (Critical Fix)
+    "https://fedha-lands-app.onrender.com",  # <--- YOUR FRONTEND
     "https://fedha-backend.onrender.com",    # <--- YOUR BACKEND
     "https://fedhalandventures.co.ke",
     "https://www.fedhalandventures.co.ke",
@@ -58,7 +59,7 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://fedha-lands-app.onrender.com",  # <--- Critical Fix
+    "https://fedha-lands-app.onrender.com",
     "https://fedha-backend.onrender.com",
     "https://fedhalandventures.co.ke",
     "https://www.fedhalandventures.co.ke",
@@ -166,8 +167,6 @@ STATICFILES_DIRS = [
 # =========================================================
 # [CRITICAL FIX] STORAGE CONFIGURATION
 # =========================================================
-# We use standard Django storage for static files to prevent 
-# build crashes when minor file conflicts occur.
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
@@ -189,6 +188,16 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
     'SECURE': True,
 }
+
+# [PERMANENT FIX] FORCE HTTPS GLOBALLY
+# This ensures that even if the storage adapter misses it, 
+# the main Cloudinary library will always generate HTTPS URLs.
+cloudinary.config(
+    cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    api_key = os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret = os.environ.get('CLOUDINARY_API_SECRET'),
+    secure = True
+)
 
 # =========================================================
 # EMAIL SETTINGS
