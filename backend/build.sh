@@ -2,42 +2,45 @@
 # Exit on error
 set -o errexit
 
-echo "🚀 Starting Build Process (The Override Strategy)..."
+echo "🚀 Starting Build Process (In-Memory Patch Strategy)..."
 
 # 1. Install Dependencies
 pip install --force-reinstall -r requirements.txt
 
-# 2. CREATE TEMPORARY BUILD SETTINGS
-# We create a special settings file JUST for this build.
-# This forces the "Safe" storage engine, ignoring whatever is in settings.py.
-echo "🔧 Creating temporary build settings..."
-echo "
-from .settings import *
-import os
+# 2. ENSURE ASSETS FOLDER EXISTS
+# Prevents the "directory does not exist" warning
+mkdir -p assets
 
-# 1. Force Standard Storage (Ignores Jazzmin/Admin conflicts)
-STORAGES = {
+# 3. RUN PYTHON BUILD SCRIPT
+# We write a temporary Python script to run collectstatic.
+# This allows us to modify the settings in memory, bypassing the file conflict.
+echo "🔧 Running static file collection via Python script..."
+python -c "
+import os
+import django
+from django.conf import settings
+from django.core.management import call_command
+
+# Setup Django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+django.setup()
+
+# --- THE FIX ---
+# We force the storage engine to Standard Django Storage.
+# This storage engine allows duplicates (Jazzmin overwrites Admin), solving the conflict.
+settings.STORAGES = {
     'default': {'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage'},
     'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'},
 }
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+# Legacy support
+settings.STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
-# 2. Prevent 'directory does not exist' warnings
-# We ensure STATICFILES_DIRS is empty for the build so it doesn't look for missing folders
-STATICFILES_DIRS = []
-" > core/build_settings.py
+# Run the command
+print('📦 Collecting static files with Forced Standard Storage...')
+call_command('collectstatic', interactive=False, clear=True, verbosity=1)
+"
 
-# 3. COLLECT STATIC FILES
-# We use the --settings flag to use our Safe Config just for this step.
-echo "📦 Collecting static files..."
-python manage.py collectstatic --no-input --clear --settings=core.build_settings
-
-# 4. CLEANUP
-# Remove the temp file and restore the assets folder for the live app
-rm core/build_settings.py
-mkdir -p assets
-
-# 5. MIGRATIONS & SUPERUSER
+# 4. MIGRATIONS & SUPERUSER
 echo "🗄️  Database operations..."
 python manage.py migrate
 python manage.py shell << END
