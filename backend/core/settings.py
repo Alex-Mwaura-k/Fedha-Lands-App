@@ -41,12 +41,30 @@ if not DEBUG:
     SECURE_HSTS_PRELOAD = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
 
-# CSRF TRUSTED ORIGINS
-CSRF_TRUSTED_ORIGINS = [
-    'https://api.fedhalandventures.co.ke',
-    'https://fedhalandventures.co.ke',
-    'https://www.fedhalandventures.co.ke',
+# =========================================================
+# CORS & CSRF SETTINGS (The Guest List)
+# =========================================================
+# We allow your specific Frontend URL to talk to this Backend.
+CORS_ALLOWED_ORIGINS = [
+    "https://fedha-lands-app.onrender.com",  # <--- YOUR FRONTEND (Critical Fix)
+    "https://fedha-backend.onrender.com",    # <--- YOUR BACKEND
+    "https://fedhalandventures.co.ke",
+    "https://www.fedhalandventures.co.ke",
+    "http://localhost:5173",
+    "http://localhost:4173",
 ]
+
+# Allow cookies (session/login) to travel between them
+CORS_ALLOW_CREDENTIALS = True 
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://fedha-lands-app.onrender.com",  # <--- Critical Fix
+    "https://fedha-backend.onrender.com",
+    "https://fedhalandventures.co.ke",
+    "https://www.fedhalandventures.co.ke",
+]
+
+# Handle Render's dynamic domains automatically
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
@@ -170,16 +188,6 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
-
-# =========================================================
-# CORS SETTINGS
-# =========================================================
-CORS_ALLOWED_ORIGINS = [
-    "https://fedhalandventures.co.ke",
-    "https://www.fedhalandventures.co.ke",
-    "http://localhost:5173",
-    "http://localhost:4173",
-]
 
 # =========================================================
 # EMAIL SETTINGS
